@@ -1,398 +1,292 @@
-<!DOCTYPE html>
-<html class="dark" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Recovery Guide — The Post-Rave Blueprint | RaVeVibe</title>
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>RaVeVibe | Recovery Guide</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "primary-container": "#c3f400", "surface-tint": "#abd600",
-          "on-surface": "#e5e2e1", "surface-container-high": "#2a2a2a",
-          "surface-container": "#201f1f", "surface-container-lowest": "#0e0e0e",
-          "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534",
-          "on-surface-variant": "#c4c9ac", "secondary": "#ffabf3",
-          "secondary-container": "#fe00fe", "on-secondary": "#5b005b",
-          "tertiary-fixed": "#00fbfb", "tertiary-fixed-dim": "#00dddd",
-          "on-primary": "#283500", "on-primary-fixed": "#161e00",
-          "primary-fixed-dim": "#abd600", "surface": "#131313",
-          "background": "#131313", "on-background": "#e5e2e1", "primary": "#ffffff"
-        },
-        borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
-        spacing: {
-          "margin-desktop":"80px","stack-md":"32px","margin-mobile":"20px",
-          "base":"8px","gutter":"24px","stack-sm":"12px","stack-lg":"64px"
-        },
-        fontFamily: {
-          "display-lg":["Sora"],"headline-lg":["Sora"],"headline-lg-mobile":["Sora"],
-          "body-md":["Inter"],"body-sm":["Inter"],"label-md":["JetBrains Mono"]
-        },
-        fontSize: {
-          "display-lg":["72px",{lineHeight:"1.1",letterSpacing:"-0.04em",fontWeight:"800"}],
-          "headline-lg":["40px",{lineHeight:"1.2",letterSpacing:"-0.02em",fontWeight:"700"}],
-          "headline-lg-mobile":["32px",{lineHeight:"1.2",fontWeight:"700"}],
-          "body-md":["16px",{lineHeight:"1.6",fontWeight:"400"}],
-          "body-sm":["14px",{lineHeight:"1.5",fontWeight:"400"}],
-          "label-md":["12px",{lineHeight:"1",letterSpacing:"0.1em",fontWeight:"500"}]
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#abd600",
+                        "primary-container": "#c3f400",
+                        "surface-bright": "#3a3939",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed-variant": "#004f4f",
+                        "on-tertiary": "#003737",
+                        "primary-fixed": "#c3f400",
+                        "tertiary-fixed-dim": "#00dddd",
+                        "tertiary-fixed": "#00fbfb",
+                        "surface-dim": "#131313",
+                        "on-primary": "#283500",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "on-secondary-container": "#500050",
+                        "on-secondary-fixed": "#380038",
+                        "surface-container-lowest": "#0e0e0e",
+                        "tertiary-container": "#00fbfb",
+                        "outline": "#8e9379",
+                        "secondary": "#ffabf3",
+                        "on-primary-container": "#556d00",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-variant": "#353534",
+                        "inverse-primary": "#506600",
+                        "secondary-fixed-dim": "#ffabf3",
+                        "on-tertiary-fixed": "#002020",
+                        "on-tertiary-container": "#007070",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#161e00",
+                        "surface": "#131313",
+                        "secondary-container": "#fe00fe",
+                        "on-surface-variant": "#c4c9ac",
+                        "tertiary": "#ffffff",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed": "#ffd7f5",
+                        "outline-variant": "#444933",
+                        "on-secondary-fixed-variant": "#810081",
+                        "inverse-on-surface": "#313030",
+                        "primary-fixed-dim": "#abd600",
+                        "on-secondary": "#5b005b",
+                        "surface-container-highest": "#353534",
+                        "error": "#ffb4ab",
+                        "primary": "#ffffff",
+                        "inverse-surface": "#e5e2e1",
+                        "background": "#131313"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "80px",
+                        "stack-md": "32px",
+                        "margin-mobile": "20px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "stack-sm": "12px",
+                        "stack-lg": "64px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "display-lg": ["Sora"],
+                        "headline-lg": ["Sora"],
+                        "body-md": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Sora"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
+                    }
+                }
+            }
         }
-      }
-    }
-  }
-</script>
+    </script>
 <style>
-  body { background-color: #131313; color: #e5e2e1; overflow-x: hidden; }
-  .glass-card {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.3s ease;
-  }
-  .glass-card:hover { border-color: rgba(195,244,0,0.25); box-shadow: 0 0 24px rgba(195,244,0,0.07); }
-  .neon-glow-primary { box-shadow: 0 0 24px rgba(195,244,0,0.35); }
-  .neon-text { text-shadow: 0 0 20px rgba(195,244,0,0.5); }
-  @keyframes pulse-orb { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.1)} }
-  .pulse-orb { animation: pulse-orb 5s ease-in-out infinite; }
-  @keyframes glitch {
-    0%{transform:translate(0)} 20%{transform:translate(-2px,2px)} 40%{transform:translate(-2px,-2px)}
-    60%{transform:translate(2px,2px)} 80%{transform:translate(2px,-2px)} 100%{transform:translate(0)}
-  }
-  .glitch-hover:hover { animation: glitch 0.3s infinite; }
-  @keyframes pulse-glow { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
-  .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-  .float { animation: float 5s ease-in-out infinite; }
-  .progress-bar-fill { transition: width 1.5s ease-out; }
-  .step-number {
-    font-family: 'Sora', sans-serif;
-    font-size: 80px;
-    font-weight: 800;
-    line-height: 1;
-    color: rgba(195,244,0,0.08);
-    position: absolute;
-    top: -10px;
-    right: 16px;
-    pointer-events: none;
-    user-select: none;
-  }
-</style>
+        body { background-color: #131313; color: #e5e2e1; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(195, 244, 0, 0.4);
+            box-shadow: 0 0 20px rgba(195, 244, 0, 0.1);
+        }
+        .neon-glow-cyan { text-shadow: 0 0 10px rgba(0, 251, 251, 0.6); }
+        .neon-glow-pink { text-shadow: 0 0 10px rgba(255, 0, 255, 0.6); }
+        .bg-glow-orb {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+        }
+        .glow-primary { box-shadow: 0 0 20px rgba(195, 244, 0, 0.4); }
+    </style>
 </head>
-<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-fixed">
-
-<!-- Ambient background orbs -->
-<div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
-  <div class="absolute top-[-100px] left-[-80px] w-[500px] h-[500px] bg-primary-container/8 rounded-full blur-[180px] pulse-orb"></div>
-  <div class="absolute top-[40%] right-[-100px] w-[400px] h-[400px] bg-secondary-container/5 rounded-full blur-[160px] pulse-orb" style="animation-delay:2.5s"></div>
-  <div class="absolute bottom-[-80px] left-[30%] w-[350px] h-[350px] bg-tertiary-fixed/4 rounded-full blur-[140px] pulse-orb" style="animation-delay:1.2s"></div>
-  <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(195,244,0,0.04)_0%,transparent_60%)]"></div>
-</div>
-
-<!-- NAV -->
-<nav class="sticky top-0 z-50 w-full bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_20px_rgba(195,244,0,0.12)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
-  <a href="index.html" class="font-display-lg text-[28px] tracking-tighter text-primary-container">RaVeVibe</a>
-  <div class="hidden md:flex items-center gap-gutter">
-    <a href="science.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">The Science</a>
-    <a href="product.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Shop</a>
-    <a href="recovery.html" class="font-label-md text-label-md text-primary-container border-b-2 border-primary-container pb-1">Recovery Guide</a>
-    <a href="shop.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Bundles</a>
-  </div>
-  <a href="product.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-6 py-2 rounded-full hover:scale-105 neon-glow-primary transition-all duration-300 active:scale-95">Order Now</a>
+<body class="overflow-x-hidden">
+<!-- Atmospheric Background Layers -->
+<div class="bg-glow-orb bg-primary-container top-[-100px] left-[-100px]"></div>
+<div class="bg-glow-orb bg-secondary-container bottom-[-100px] right-[-100px]"></div>
+<div class="bg-glow-orb bg-tertiary-container top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10"></div>
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl docked full-width top-0 sticky z-50 border-b border-white/10 shadow-[0_0_20px_rgba(195,244,0,0.15)]">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-full">
+<a href="index.html" class="font-display-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary-container dark:text-primary-container">RaVeVibe</a>
+<nav class="hidden md:flex gap-gutter items-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="index.html">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="science.html">The Science</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="product.html">Shop</a>
+<a class="font-label-md text-label-md text-primary-container border-b-2 border-primary-container pb-1" href="recovery.html">Recovery Guide</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="shop.html">Bundles</a>
 </nav>
-
-<!-- HERO -->
-<header class="relative px-margin-mobile md:px-margin-desktop pt-stack-lg pb-16 overflow-hidden">
-  <div class="max-w-4xl">
-    <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary-container/10 border border-primary-container/30 rounded-full mb-stack-sm">
-      <span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
-      <span class="font-label-md text-label-md text-primary-container tracking-widest uppercase">Post-Rave Recovery</span>
-    </div>
-    <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg leading-none mt-base mb-stack-md glitch-hover">
-      The Post-Rave<br/><span class="text-primary-container neon-text">Blueprint.</span>
-    </h1>
-    <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
-      Your body went through a marathon. Now it's time for clinical-grade restoration. Follow our expert-led protocol to transition from the dancefloor back to peak performance.
-    </p>
-  </div>
+<a href="product.html" class="bg-primary-container text-on-primary-fixed px-6 py-2 rounded-full font-label-md text-label-md font-bold hover:scale-105 transition-all duration-300 active:scale-95">Order Now</a>
+</div>
 </header>
-
-<!-- SECTION 1: HYDRATION 101 + SLEEP HYGIENE — two-col bento -->
-<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-gutter">
-
-    <!-- Hydration 101 -->
-    <div class="glass-card rounded-2xl overflow-hidden relative group">
-      <div class="absolute inset-0 z-0">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="" class="w-full h-full object-cover opacity-15 group-hover:opacity-20 transition-opacity scale-105"/>
-        <div class="absolute inset-0 bg-gradient-to-br from-primary-container/10 to-transparent"></div>
-      </div>
-      <div class="relative z-10 p-8">
-        <span class="font-label-md text-label-md text-primary-container tracking-widest uppercase">Module 01</span>
-        <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base mb-stack-md leading-tight">
-          Hydration <span class="text-primary-container">101</span>
-        </h2>
-        <div class="flex flex-col gap-4">
-          <div class="flex items-start gap-3">
-            <span class="material-symbols-outlined text-primary-container mt-0.5 flex-shrink-0">check_circle</span>
-            <p class="font-body-md text-body-md text-on-surface-variant">Replenish electrolytes immediately with RaVeVibe's Ionic formula.</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="material-symbols-outlined text-primary-container mt-0.5 flex-shrink-0">check_circle</span>
-            <p class="font-body-md text-body-md text-on-surface-variant">Avoid caffeine for 12 hours post-event to prevent heart strain.</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="material-symbols-outlined text-primary-container mt-0.5 flex-shrink-0">check_circle</span>
-            <p class="font-body-md text-body-md text-on-surface-variant">Target 500ml of water every hour until hourly returns to normal.</p>
-          </div>
-        </div>
-        <!-- Hydration progress indicator -->
-        <div class="mt-8 flex flex-col gap-2">
-          <div class="flex justify-between font-label-md text-label-md text-on-surface-variant">
-            <span>HYDRATION LEVEL</span><span class="text-primary-container">OPTIMAL</span>
-          </div>
-          <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
-            <div class="h-full w-[82%] bg-gradient-to-r from-primary-container to-tertiary-fixed rounded-full animate-pulse-glow"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sleep Hygiene -->
-    <div class="glass-card rounded-2xl overflow-hidden relative group border-secondary/15">
-      <div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/10 blur-[100px] group-hover:bg-secondary-container/18 transition-all duration-700 pointer-events-none rounded-full"></div>
-      <div class="relative z-10 p-8 flex flex-col h-full">
-        <span class="font-label-md text-label-md text-secondary tracking-widest uppercase">Module 02</span>
-        <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base mb-stack-md leading-tight">
-          Sleep <span class="text-secondary">Hygiene</span>
-        </h2>
-        <p class="font-body-md text-body-md text-on-surface-variant mb-6">
-          Circadian rhythms are disrupted after late nights. High stimulating technology and bright lights prevent your brain from reaching 800Hz delta-wave sleep.
-        </p>
-        <div class="grid grid-cols-2 gap-gutter mt-auto">
-          <div class="glass-card rounded-xl p-4 text-center">
-            <span class="material-symbols-outlined text-secondary text-2xl block mb-1">bedtime</span>
-            <p class="font-label-md text-[10px] text-on-surface-variant uppercase">Darken Room</p>
-          </div>
-          <div class="glass-card rounded-xl p-4 text-center">
-            <span class="material-symbols-outlined text-tertiary-fixed text-2xl block mb-1">smartphone</span>
-            <p class="font-label-md text-[10px] text-on-surface-variant uppercase">No Screens</p>
-          </div>
-          <div class="glass-card rounded-xl p-4 text-center">
-            <span class="material-symbols-outlined text-primary-container text-2xl block mb-1">thermostat</span>
-            <p class="font-label-md text-[10px] text-on-surface-variant uppercase">Cool Temp</p>
-          </div>
-          <div class="glass-card rounded-xl p-4 text-center">
-            <span class="material-symbols-outlined text-secondary text-2xl block mb-1">headphones</span>
-            <p class="font-label-md text-[10px] text-on-surface-variant uppercase">No Stimulants</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Hero Section -->
+<section class="mb-stack-lg text-center md:text-left">
+<div class="inline-block bg-surface-container-high border border-white/10 px-4 py-1 rounded-full mb-stack-sm">
+<span class="font-label-md text-label-md text-tertiary-fixed-dim uppercase tracking-widest">Medical Grade Recovery</span>
+</div>
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg mb-stack-sm">
+                The Post-Rave <br class="hidden md:block"> <span class="text-primary-container">Blueprint</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                Your body went through a marathon. Now it's time for clinical-grade restoration. Follow our expert-led protocol to transition from the dancefloor back to peak performance.
+            </p>
 </section>
-
-<!-- SECTION 2: MINDFUL MOMENTS -->
-<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg">
-  <div class="max-w-7xl mx-auto">
-    <div class="glass-card rounded-2xl p-8 md:p-12 relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-[400px] h-[400px] bg-tertiary-fixed/5 blur-[150px] pointer-events-none rounded-full"></div>
-      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
-        <!-- Copy -->
-        <div>
-          <span class="font-label-md text-label-md text-tertiary-fixed tracking-widest uppercase">Module 03</span>
-          <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base mb-stack-md leading-tight">
-            Mindful <span class="text-tertiary-fixed">Moments</span>
-          </h2>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-md">
-            The "comedown" is a chemical reality. Combat the dip with intentional 4-7-8 breathing and low-stimulus audio. Your brain needs to recalibrate its serotonin receptors — be patient with your processing speed.
-          </p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-gutter mt-6">
-            <div class="flex flex-col items-center gap-2 text-center">
-              <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-tertiary-fixed">air</span>
-              </div>
-              <span class="font-label-md text-[10px] text-on-surface-variant uppercase">Breath Work</span>
-            </div>
-            <div class="flex flex-col items-center gap-2 text-center">
-              <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-tertiary-fixed">music_note</span>
-              </div>
-              <span class="font-label-md text-[10px] text-on-surface-variant uppercase">Ambient Sound</span>
-            </div>
-            <div class="flex flex-col items-center gap-2 text-center">
-              <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-tertiary-fixed">nature</span>
-              </div>
-              <span class="font-label-md text-[10px] text-on-surface-variant uppercase">Nature Walk</span>
-            </div>
-            <div class="flex flex-col items-center gap-2 text-center">
-              <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-tertiary-fixed">self_improvement</span>
-              </div>
-              <span class="font-label-md text-[10px] text-on-surface-variant uppercase">Reflection</span>
-            </div>
-          </div>
-        </div>
-        <!-- Visual: Chakra/body illustration -->
-        <div class="flex items-center justify-center float">
-          <div class="relative w-64 h-64">
-            <div class="absolute inset-0 border border-tertiary-fixed/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
-            <div class="absolute inset-6 border border-primary-container/15 rounded-full animate-[spin_14s_linear_infinite_reverse]"></div>
-            <div class="absolute inset-12 border border-secondary/10 rounded-full animate-[spin_8s_linear_infinite]"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="text-center">
-                <span class="material-symbols-outlined text-tertiary-fixed text-6xl block" style="font-variation-settings:'FILL' 0,'wght' 100">self_improvement</span>
-                <p class="font-label-md text-[10px] text-tertiary-fixed uppercase tracking-widest mt-2">Recalibrate</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Recovery Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-stack-lg">
+<!-- Hydration 101 Card (Large) -->
+<div class="md:col-span-8 glass-card rounded-xl p-stack-md flex flex-col md:flex-row gap-gutter group">
+<div class="md:w-1/2 overflow-hidden rounded-lg">
+<img alt="Hydration" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXRS4g5JUbXC0esM8wH1sVKzwXDQzcLkiDQ1SaPciWCdmHYerdg_vKpLeeHgslfYlNAXx8F6PzvHby2rJREBi3aygL2waeFGNd9ZyiT_vXjhKytNEHeDezH1fL2U3sUHURVigMIXZe9WJOhJXlfQxheudqXk0TRuiYC8554OWKL9lfQONeK8vXTO-zwsAC8Kr3Om4Mq1inXuySDzkjqKajXlIE6ZlbOYgPB5UzsJ5cV2WmYZGPnNs--Nntmma4IhiExXsbV0RFH8h3">
+</div>
+<div class="md:w-1/2 flex flex-col justify-center">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-tertiary-fixed mb-4 neon-glow-cyan">Hydration 101</h2>
+<ul class="space-y-4">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Replenish electrolytes immediately with RaVeVibe's ionic formula.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Avoid caffeine for 12 hours post-event to prevent heart strain.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-sm text-body-sm text-on-surface">Target 500ml of water every hour until clarity returns.</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Sleep Hygiene Card -->
+<div class="md:col-span-4 glass-card rounded-xl p-stack-md group">
+<div class="h-48 overflow-hidden rounded-lg mb-4">
+<img alt="Sleep" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM7G4fCWldU8eTgIQZZI3Xb41MXMbI-6CQdVSuc_QnpFW3NR8V0e8uurlqW3Pu1PFD837--Symu5b1IZwbggOs6OC8ZnKNLljESKNRiGjOMgbBoYnQRfJd1PMPOu73ifrpvbBFayvyWcwHQ1R5w5PHdwNgqoDKHSisjqvdmlgAw_GPP-tMVyOS-Em64yzqYRLpPXsUCfyLOvdobqsM6-cpCyR6ADua9XNjlQ1EBuRLZwScb6qX8NoB678CVDFhl3qJZoXEu1tR5ie7">
+</div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-secondary-fixed mb-4 neon-glow-pink">Sleep Hygiene</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+                    Circadian rhythms are disrupted after late nights. Use light-blocking technology and maintain a cool 18°C environment to trigger REM cycles.
+                </p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-high px-3 py-1 rounded text-label-md font-label-md text-secondary border border-secondary/20">DARK ROOM</span>
+<span class="bg-surface-container-high px-3 py-1 rounded text-label-md font-label-md text-secondary border border-secondary/20">NO SCREENS</span>
+</div>
+</div>
+<!-- Mindful Moments Card (Full Width) -->
+<div class="md:col-span-12 glass-card rounded-xl p-stack-md flex flex-col md:flex-row-reverse gap-gutter items-center">
+<div class="md:w-1/3">
+<div class="relative w-full aspect-square max-w-[300px] mx-auto">
+<div class="absolute inset-0 bg-primary-container/20 rounded-full animate-pulse"></div>
+<img alt="Mindfulness" class="w-full h-full object-cover rounded-full border-4 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA58NqhPg8GY9iTFPE-gnfQCPJo8IN-dte4lTORNesMXBQZ3jfmNbvWxASskyxJ4yY7QYsGoicfSYoYp9T5buyz-06yNDzYMAxFF1O1RV15F7yQtwthpCh39kVbNVTlJGzsUxiWkGsQTpoCYlf4cO6HZ6RE74fBusj5RBPQYGJh2D8_0Ix2NhhDFcnqUNzexFkZxBSL2H2lYNGUmz0kSk9zxE7fl3OE7fUsXBOQP_B_gYZYj8mL4yTujx-48x5WGulSiJYWWDwMQHEU">
+</div>
+</div>
+<div class="md:w-2/3">
+<span class="font-label-md text-label-md text-primary-container mb-2 block tracking-widest">MENTAL CLARITY</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white mb-4">Mindful Moments</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 leading-relaxed">
+                        The "comedown" is a chemical reality. Combat the dip with intentional 4-7-8 breathing and low-stimulus audio. Your brain needs to recalibrate its serotonin receptors—be patient with your processing speed.
+                    </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg border border-white/5 hover:border-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-primary-container block mb-2">air</span>
+<span class="text-label-md font-label-md block">BREATH WORK</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-white/5 hover:border-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-primary-container block mb-2">headphones</span>
+<span class="text-label-md font-label-md block">AMBIENT SOUND</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-white/5 hover:border-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-primary-container block mb-2">nature</span>
+<span class="text-label-md font-label-md block">NATURE WALK</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-white/5 hover:border-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-primary-container block mb-2">edit_note</span>
+<span class="text-label-md font-label-md block">REFLECTION</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Lab-Tested Protocol Stats -->
+<section class="py-stack-lg border-y border-white/5">
+<div class="text-center mb-stack-md">
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-2">Lab-Tested Protocol</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Designed by festival-goers, perfected by toxicologists.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-stack-md">
+<div class="text-center">
+<div class="font-display-lg text-headline-lg text-primary-container">98%</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Recovery Speed</div>
+</div>
+<div class="text-center">
+<div class="font-display-lg text-headline-lg text-tertiary-fixed-dim">0%</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Fillers</div>
+</div>
+<div class="text-center">
+<div class="font-display-lg text-headline-lg text-secondary">24h</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Cellular Repair</div>
+</div>
+<div class="text-center">
+<div class="font-display-lg text-headline-lg text-primary-container">12</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase">Essential Ions</div>
+</div>
+</div>
 </section>
-
-<!-- SECTION 3: LAB-TESTED PROTOCOL STATS -->
-<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg bg-surface-container-low/40">
-  <div class="max-w-7xl mx-auto py-stack-lg">
-    <div class="text-center mb-stack-lg">
-      <div class="flex items-center gap-gutter justify-center mb-base">
-        <div class="h-px flex-grow bg-white/10 max-w-[100px]"></div>
-        <span class="font-label-md text-label-md text-primary-container tracking-[0.3em] uppercase">Lab-Tested Protocol</span>
-        <div class="h-px flex-grow bg-white/10 max-w-[100px]"></div>
-      </div>
-      <p class="font-body-sm text-body-sm text-on-surface-variant">Designed by festival gurus, perfected by bioscientists.</p>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
-      <div class="flex flex-col gap-1">
-        <span class="font-display-lg text-headline-lg md:text-display-lg text-primary-container neon-text">98%</span>
-        <span class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Recovery Rate</span>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="font-display-lg text-headline-lg md:text-display-lg text-primary-container neon-text">0%</span>
-        <span class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Fillers</span>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="font-display-lg text-headline-lg md:text-display-lg text-primary-container neon-text">24h</span>
-        <span class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Cellular Repair</span>
-      </div>
-      <div class="flex flex-col gap-1">
-        <span class="font-display-lg text-headline-lg md:text-display-lg text-primary-container neon-text">12</span>
-        <span class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Essential Ions</span>
-      </div>
-    </div>
-  </div>
+<!-- Final CTA -->
+<section class="mt-stack-lg relative overflow-hidden glass-card rounded-2xl p-stack-lg text-center">
+<div class="absolute inset-0 bg-gradient-to-r from-primary-container/5 to-secondary-container/5 pointer-events-none"></div>
+<div class="relative z-10">
+<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mb-4">Stock up for the next session.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-md max-w-xl mx-auto">
+                    Don't let the fatigue linger. Get your RaVeVibe kit delivered before the next beat drops.
+                </p>
+<a href="shop.html" class="inline-block bg-primary-container text-on-primary-fixed px-12 py-4 rounded-full font-headline-lg text-label-md font-extrabold hover:scale-105 transition-all duration-300 active:scale-95 uppercase tracking-widest">
+                    Order RaVeVibe Now
+                </a>
+</div>
 </section>
-
-<!-- SECTION 4: STEP-BY-STEP PROTOCOL -->
-<section class="px-margin-mobile md:px-margin-desktop py-stack-lg">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-stack-lg">
-      <span class="font-label-md text-label-md text-primary-container tracking-widest uppercase">The Full Protocol</span>
-      <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base">Hour-by-Hour<br/><span class="text-primary-container">Recovery Plan.</span></h2>
-    </div>
-    <div class="flex flex-col gap-gutter">
-
-      <div class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        <div class="step-number">01</div>
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 flex-shrink-0 bg-primary-container/20 rounded-xl flex items-center justify-center">
-            <span class="material-symbols-outlined text-primary-container">water_drop</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-3 mb-1 flex-wrap">
-              <h3 class="font-headline-lg text-[20px]">Immediately After</h3>
-              <span class="font-label-md text-[10px] bg-primary-container/15 text-primary-container px-2 py-0.5 rounded-full uppercase">0–2 Hours</span>
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Drink one RaVeVibe bottle. Avoid alcohol completely. Eat a light meal with complex carbohydrates to stabilise blood sugar. Keep movement gentle — a slow walk, not a sprint.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        <div class="step-number">02</div>
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 flex-shrink-0 bg-tertiary-fixed/20 rounded-xl flex items-center justify-center">
-            <span class="material-symbols-outlined text-tertiary-fixed">bedtime</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-3 mb-1 flex-wrap">
-              <h3 class="font-headline-lg text-[20px]">Prepare for Sleep</h3>
-              <span class="font-label-md text-[10px] bg-tertiary-fixed/15 text-tertiary-fixed px-2 py-0.5 rounded-full uppercase">2–6 Hours</span>
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Dark room, no screens. Take magnesium glycinate — it's already in RaVeVibe. Practice 4-7-8 breathing: inhale 4s, hold 7s, exhale 8s. Repeat 4 cycles.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        <div class="step-number">03</div>
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 flex-shrink-0 bg-secondary/20 rounded-xl flex items-center justify-center">
-            <span class="material-symbols-outlined text-secondary">wb_sunny</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-3 mb-1 flex-wrap">
-              <h3 class="font-headline-lg text-[20px]">Morning After</h3>
-              <span class="font-label-md text-[10px] bg-secondary/15 text-secondary px-2 py-0.5 rounded-full uppercase">6–16 Hours</span>
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Second RaVeVibe bottle on waking. Sunlight exposure within 30 minutes resets your circadian clock. Light protein breakfast — eggs are ideal for NAD+ precursors. No heavy exercise.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
-        <div class="step-number">04</div>
-        <div class="flex items-start gap-4">
-          <div class="w-10 h-10 flex-shrink-0 bg-primary-container/20 rounded-xl flex items-center justify-center">
-            <span class="material-symbols-outlined text-primary-container">bolt</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-3 mb-1 flex-wrap">
-              <h3 class="font-headline-lg text-[20px]">Full Restoration</h3>
-              <span class="font-label-md text-[10px] bg-primary-container/15 text-primary-container px-2 py-0.5 rounded-full uppercase">24–48 Hours</span>
-            </div>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">By 48 hours, your dopaminergic system should be re-regulated. Gentle exercise now accelerates BDNF production. You're cleared for peak performance again.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CTA: STOCK UP -->
-<section class="px-margin-mobile md:px-margin-desktop py-stack-lg">
-  <div class="max-w-4xl mx-auto bg-primary-container rounded-[2rem] p-stack-lg flex flex-col md:flex-row justify-between items-center gap-stack-md overflow-hidden relative">
-    <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_30%_50%,#000_0%,transparent_70%)]"></div>
-    <div class="relative z-10">
-      <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-primary leading-tight">Stock Up for the<br/>Next Session.</h2>
-      <p class="font-body-md text-body-md text-on-primary/70 mt-base">Don't let the fatigue linger. Get your RaVeVibe kit delivered before the next beat drops.</p>
-    </div>
-    <div class="relative z-10 flex flex-col gap-base">
-      <a href="shop.html" class="bg-on-primary text-primary-container font-label-md text-label-md font-bold px-8 py-4 rounded-full flex items-center gap-base hover:scale-105 transition-all whitespace-nowrap">
-        <span class="material-symbols-outlined text-sm">shopping_bag</span>
-        ORDER RAVEVIBE NOW
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-surface-container-lowest border-t border-white/5 w-full py-stack-lg px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-base">
-  <div class="font-display-lg text-headline-lg-mobile text-primary-container">RaVeVibe</div>
-  <div class="flex flex-wrap justify-center gap-gutter">
-    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Privacy Policy</a>
-    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Terms of Service</a>
-    <a href="#" class="font-body-sm text-body-sm text-primary-container font-bold hover:text-tertiary-fixed transition-colors">Lab Reports</a>
-    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Contact</a>
-  </div>
-  <div class="font-body-sm text-body-sm text-on-surface-variant">© 2026 RaVeVibe LABS. FOR THE RAVE GENERATION.</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest w-full py-stack-lg border-t border-white/5">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-base">
+<div class="font-display-lg text-headline-lg-mobile text-primary-container">RaVeVibe</div>
+<div class="flex gap-gutter my-stack-sm md:my-0">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Lab Reports</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors" href="#">Contact</a>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">© 2026 RaVeVibe LABS. FOR THE RAVE GENERATION.</div>
+</div>
 </footer>
-
-</body>
-</html>
+<script>
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>
