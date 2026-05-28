@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RaVeVibe — Feel The Frequency</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">RAVE<span>VIBE</span></a>
+      <ul class="nav-links">
+        <li><a href="#events">Events</a></li>
+        <li><a href="#lineup">Lineup</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#vibes">Vibes</a></li>
+        <li><a href="#contact" class="nav-cta">Get Tickets</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#events">Events</a>
+      <a href="#lineup">Lineup</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#vibes">Vibes</a>
+      <a href="#contact">Get Tickets</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Underground Electronic Music</p>
+      <h1 class="hero-title">
+        <span class="line" data-text="FEEL THE">FEEL THE</span>
+        <span class="line glitch" data-text="FREQUENCY">FREQUENCY</span>
+      </h1>
+      <p class="hero-sub">Where bass meets soul. Every night a new dimension.</p>
+      <div class="hero-actions">
+        <a href="#events" class="btn btn-primary pulse-glow">
+          <span>Upcoming Events</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#lineup" class="btn btn-ghost">View Lineup</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-n">50K+</span><span class="stat-l">Ravers</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-n">200+</span><span class="stat-l">Events</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-n">30+</span><span class="stat-l">DJs</span></div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events" id="events">
+    <div class="section-header">
+      <p class="section-tag">Upcoming</p>
+      <h2 class="section-title">Next <span>Events</span></h2>
+    </div>
+    <div class="events-grid">
+
+      <article class="event-card featured">
+        <div class="event-badge">Featured</div>
+        <div class="event-visual" style="--c1:#8b5cf6;--c2:#ec4899;">
+          <div class="event-visual-orb"></div>
+        </div>
+        <div class="event-info">
+          <div class="event-meta">
+            <span class="event-date">Jun 14 · 2026</span>
+            <span class="event-genre">Techno / Dark</span>
+          </div>
+          <h3 class="event-name">VOID PROTOCOL</h3>
+          <p class="event-venue">Warehouse 23 · Berlin</p>
+          <div class="event-artists">
+            <span>KALON</span><span>DRKFRCST</span><span>MXVOID</span>
+          </div>
+          <a href="#contact" class="btn btn-primary btn-sm">Buy Tickets</a>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-visual" style="--c1:#06b6d4;--c2:#8b5cf6;">
+          <div class="event-visual-orb"></div>
+        </div>
+        <div class="event-info">
+          <div class="event-meta">
+            <span class="event-date">Jun 21 · 2026</span>
+            <span class="event-genre">Progressive / Psytrance</span>
+          </div>
+          <h3 class="event-name">NEON MATRIX</h3>
+          <p class="event-venue">The Bunker · NYC</p>
+          <div class="event-artists">
+            <span>SYNTHARA</span><span>ORBITAL X</span>
+          </div>
+          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-visual" style="--c1:#ec4899;--c2:#06b6d4;">
+          <div class="event-visual-orb"></div>
+        </div>
+        <div class="event-info">
+          <div class="event-meta">
+            <span class="event-date">Jul 4 · 2026</span>
+            <span class="event-genre">Acid House / EBM</span>
+          </div>
+          <h3 class="event-name">ACID DAWN</h3>
+          <p class="event-venue">Fabric · London</p>
+          <div class="event-artists">
+            <span>HEXFORM</span><span>BASSLINE</span>
+          </div>
+          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-visual" style="--c1:#a855f7;--c2:#ec4899;">
+          <div class="event-visual-orb"></div>
+        </div>
+        <div class="event-info">
+          <div class="event-meta">
+            <span class="event-date">Jul 19 · 2026</span>
+            <span class="event-genre">Industrial / Noise</span>
+          </div>
+          <h3 class="event-name">STATIC RITUAL</h3>
+          <p class="event-venue">OHM · Berlin</p>
+          <div class="event-artists">
+            <span>TERROR FX</span><span>NULL.OBJ</span>
+          </div>
+          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- LINEUP -->
+  <section class="lineup" id="lineup">
+    <div class="section-header">
+      <p class="section-tag">Artists</p>
+      <h2 class="section-title">The <span>Lineup</span></h2>
+    </div>
+    <div class="lineup-grid">
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#8b5cf6;">
+          <div class="dj-avatar-inner">K</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>KALON</h3>
+        <p>Dark Techno · Berlin</p>
+        <div class="dj-tags"><span>Headliner</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#06b6d4;">
+          <div class="dj-avatar-inner">S</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>SYNTHARA</h3>
+        <p>Progressive · NYC</p>
+        <div class="dj-tags"><span>Headliner</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#ec4899;">
+          <div class="dj-avatar-inner">H</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>HEXFORM</h3>
+        <p>Acid House · London</p>
+        <div class="dj-tags"><span>Live Set</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#a855f7;">
+          <div class="dj-avatar-inner">D</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>DRKFRCST</h3>
+        <p>Industrial · Amsterdam</p>
+        <div class="dj-tags"><span>B2B</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#06b6d4;">
+          <div class="dj-avatar-inner">O</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>ORBITAL X</h3>
+        <p>Psytrance · Melbourne</p>
+        <div class="dj-tags"><span>Live Set</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+      <div class="dj-card">
+        <div class="dj-avatar" style="--c:#ec4899;">
+          <div class="dj-avatar-inner">T</div>
+          <div class="dj-ring"></div>
+        </div>
+        <h3>TERROR FX</h3>
+        <p>Noise · Tokyo</p>
+        <div class="dj-tags"><span>Special Guest</span></div>
+        <div class="dj-social">
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="SoundCloud">SC</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VIBES / AUDIO -->
+  <section class="vibes" id="vibes">
+    <div class="vibes-bg">
+      <div class="orb orb-4"></div>
+      <div class="orb orb-5"></div>
+    </div>
+    <div class="vibes-inner">
+      <div class="section-header">
+        <p class="section-tag">Feel It</p>
+        <h2 class="section-title">The <span>Vibe</span></h2>
+      </div>
+      <div class="vibes-player">
+        <div class="player-card glass">
+          <div class="player-visual">
+            <div class="vinyl" id="vinyl">
+              <div class="vinyl-center">RV</div>
+            </div>
+            <div class="eq-bars" id="eqBars">
+              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+              <div class="eq-bar"></div><div class="eq-bar"></div>
+            </div>
+          </div>
+          <div class="player-info">
+            <span class="player-label">NOW PLAYING</span>
+            <h3 class="player-track">VOID PROTOCOL — Mix 01</h3>
+            <p class="player-artist">KALON × DRKFRCST</p>
+            <div class="player-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="progress-times">
+                <span id="currentTime">0:00</span>
+                <span>4:32</span>
+              </div>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+              </button>
+              <button class="ctrl-btn ctrl-play" id="playBtn" aria-label="Play">
+                <svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="ctrl-btn" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="vibes-tracklist glass">
+          <h4>Tracklist</h4>
+          <ul>
+            <li class="active"><span class="tl-num">01</span><span class="tl-name">VOID PROTOCOL — Mix 01</span><span class="tl-dur">4:32</span></li>
+            <li><span class="tl-num">02</span><span class="tl-name">NEON MATRIX — Live</span><span class="tl-dur">6:15</span></li>
+            <li><span class="tl-num">03</span><span class="tl-name">ACID DAWN — Set</span><span class="tl-dur">5:48</span></li>
+            <li><span class="tl-num">04</span><span class="tl-name">STATIC RITUAL — Intro</span><span class="tl-dur">3:20</span></li>
+            <li><span class="tl-num">05</span><span class="tl-name">HEXFORM — Live Edit</span><span class="tl-dur">7:01</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="section-header">
+      <p class="section-tag">Atmosphere</p>
+      <h2 class="section-title">Visual <span>Gallery</span></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item gi-tall" style="--c1:#8b5cf6;--c2:#ec4899;">
+        <div class="gi-overlay"><span>VOID PROTOCOL 2025</span></div>
+      </div>
+      <div class="gallery-item" style="--c1:#06b6d4;--c2:#8b5cf6;">
+        <div class="gi-overlay"><span>NEON MATRIX</span></div>
+      </div>
+      <div class="gallery-item" style="--c1:#ec4899;--c2:#a855f7;">
+        <div class="gi-overlay"><span>ACID DAWN</span></div>
+      </div>
+      <div class="gallery-item gi-wide" style="--c1:#0891b2;--c2:#ec4899;">
+        <div class="gi-overlay"><span>STATIC RITUAL</span></div>
+      </div>
+      <div class="gallery-item" style="--c1:#7c3aed;--c2:#06b6d4;">
+        <div class="gi-overlay"><span>HEXFORM LIVE</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER / CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner glass">
+      <div class="contact-glow"></div>
+      <p class="section-tag">Stay Connected</p>
+      <h2 class="section-title">Join The <span>Movement</span></h2>
+      <p class="contact-sub">Get early access to tickets, exclusive mixes, and underground drops.</p>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <input type="email" placeholder="your@email.com" required />
+          <button type="submit" class="btn btn-primary pulse-glow">Subscribe</button>
+        </div>
+        <p class="form-note">No spam. Just pure bass.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">RAVE<span>VIBE</span></a>
+        <p>Underground electronic music collective.<br/>Feel the frequency. Live the vibe.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <a href="#events">Events</a>
+          <a href="#lineup">Lineup</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#vibes">Vibes</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect</h5>
+          <a href="#" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" target="_blank" rel="noopener">SoundCloud</a>
+          <a href="#" target="_blank" rel="noopener">Spotify</a>
+          <a href="#" target="_blank" rel="noopener">Resident Advisor</a>
+        </div>
+        <div class="footer-col">
+          <h5>Info</h5>
+          <a href="#">About</a>
+          <a href="#">Press Kit</a>
+          <a href="#">Booking</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RaVeVibe. All rights reserved.</p>
+      <div class="footer-pulse">
+        <div class="fp-dot"></div>
+        <span>Live & Underground</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
