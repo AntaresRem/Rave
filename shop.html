@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Festival Shop — Bundles & Packs | RaVeVibe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary-container": "#c3f400", "surface-tint": "#abd600",
+          "on-surface": "#e5e2e1", "surface-container-high": "#2a2a2a",
+          "surface-container": "#201f1f", "surface-container-lowest": "#0e0e0e",
+          "surface-container-low": "#1c1b1b", "surface-container-highest": "#353534",
+          "on-surface-variant": "#c4c9ac", "secondary": "#ffabf3",
+          "secondary-container": "#fe00fe", "on-secondary": "#5b005b",
+          "tertiary-fixed": "#00fbfb", "tertiary-fixed-dim": "#00dddd",
+          "on-primary": "#283500", "on-primary-fixed": "#161e00",
+          "primary-fixed-dim": "#abd600", "surface": "#131313",
+          "background": "#131313", "on-background": "#e5e2e1", "primary": "#ffffff"
+        },
+        borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
+        spacing: {
+          "margin-desktop":"80px","stack-md":"32px","margin-mobile":"20px",
+          "base":"8px","gutter":"24px","stack-sm":"12px","stack-lg":"64px"
+        },
+        fontFamily: {
+          "display-lg":["Sora"],"headline-lg":["Sora"],"headline-lg-mobile":["Sora"],
+          "body-md":["Inter"],"body-sm":["Inter"],"label-md":["JetBrains Mono"]
+        },
+        fontSize: {
+          "display-lg":["72px",{lineHeight:"1.1",letterSpacing:"-0.04em",fontWeight:"800"}],
+          "headline-lg":["40px",{lineHeight:"1.2",letterSpacing:"-0.02em",fontWeight:"700"}],
+          "headline-lg-mobile":["32px",{lineHeight:"1.2",fontWeight:"700"}],
+          "body-md":["16px",{lineHeight:"1.6",fontWeight:"400"}],
+          "body-sm":["14px",{lineHeight:"1.5",fontWeight:"400"}],
+          "label-md":["12px",{lineHeight:"1",letterSpacing:"0.1em",fontWeight:"500"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #131313; color: #e5e2e1; overflow-x: hidden; }
+  .glass-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+  }
+  .neon-glow-primary { box-shadow: 0 0 24px rgba(195,244,0,0.4); }
+  .neon-glow-secondary { box-shadow: 0 0 24px rgba(254,0,254,0.35); }
+  .neon-text { text-shadow: 0 0 20px rgba(195,244,0,0.5); }
+  @keyframes pulse-orb { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.1)} }
+  .pulse-orb { animation: pulse-orb 5s ease-in-out infinite; }
+  @keyframes glitch {
+    0%{transform:translate(0)} 20%{transform:translate(-2px,2px)} 40%{transform:translate(-2px,-2px)}
+    60%{transform:translate(2px,2px)} 80%{transform:translate(2px,-2px)} 100%{transform:translate(0)}
+  }
+  .glitch-hover:hover { animation: glitch 0.3s infinite; }
+  .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .product-card:hover { transform: translateY(-8px); }
+  .product-card.featured:hover { box-shadow: 0 30px 80px rgba(195,244,0,0.15); }
+  .qty-btn { transition: background 0.15s; }
+  .qty-btn:hover { background: rgba(255,255,255,0.1); }
+  @keyframes badge-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(195,244,0,0.4)} 50%{box-shadow:0 0 0 6px rgba(195,244,0,0)} }
+  .badge-pulse { animation: badge-pulse 2s ease-in-out infinite; }
+  @keyframes float-slow { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-8px) rotate(2deg)} }
+  .float-slow { animation: float-slow 7s ease-in-out infinite; }
+</style>
+</head>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-fixed">
+
+<!-- Ambient orbs -->
+<div class="fixed inset-0 z-[-1] pointer-events-none overflow-hidden">
+  <div class="absolute top-[-60px] right-[-60px] w-[450px] h-[450px] bg-primary-container/8 rounded-full blur-[160px] pulse-orb"></div>
+  <div class="absolute top-[50%] left-[-80px] w-[380px] h-[380px] bg-secondary-container/6 rounded-full blur-[150px] pulse-orb" style="animation-delay:2s"></div>
+  <div class="absolute bottom-[-60px] right-[20%] w-[300px] h-[300px] bg-tertiary-fixed/4 rounded-full blur-[130px] pulse-orb" style="animation-delay:3.5s"></div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-50 w-full bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_20px_rgba(195,244,0,0.12)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+  <a href="index.html" class="font-display-lg text-[28px] tracking-tighter text-primary-container">RaVeVibe</a>
+  <div class="hidden md:flex items-center gap-gutter">
+    <a href="science.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">The Science</a>
+    <a href="product.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Shop</a>
+    <a href="recovery.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Recovery Guide</a>
+    <a href="shop.html" class="font-label-md text-label-md text-primary-container border-b-2 border-primary-container pb-1">Bundles</a>
+  </div>
+  <a href="shop.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-6 py-2 rounded-full hover:scale-105 neon-glow-primary transition-all duration-300 active:scale-95">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<header class="relative px-margin-mobile md:px-margin-desktop py-stack-lg overflow-hidden">
+  <!-- Festival crowd background -->
+  <div class="absolute inset-0 z-0">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC3LTJrbnXJEqbb6YfIHJVFsKVu8bSe5N6_5SBX70A3uGGTOaLKlOuD7nhAv9OLXlfFH4VkVYxmzVh_bU6bQcRf8H_osr5BBsJmZGumgDTZmopfPSQfNeioRvxKfhnntmSUsuMStoTdHmhulsdHVhm0FNkPX67Jagw9rEYAPNDpGqtDuH_oNC_0_nKJ9bzSioTxFsJtb6GGDLAK3tWR3xKMtXPq-s9ogapl4Ugs8bMSMvKfgcfbMKLIUEOlWrurwpi8JDz0_lZUmXI" alt="" class="w-full h-full object-cover opacity-10"/>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"></div>
+  </div>
+  <div class="relative z-10 max-w-4xl">
+    <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary/10 border border-secondary/30 rounded-full mb-stack-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+      <span class="font-label-md text-label-md text-secondary tracking-widest uppercase">Festival Shop</span>
+    </div>
+    <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg leading-none mb-stack-md glitch-hover">
+      Fuel the<br/><span class="text-primary-container neon-text">Entire Front Row.</span>
+    </h1>
+    <p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+      Pick your pack. Every bundle ships in 24 hours with cold-chain delivery. Never run dry again.
+    </p>
+  </div>
+</header>
+
+<!-- PRODUCT GRID -->
+<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-gutter">
+
+    <!-- SOLO PACK -->
+    <div class="product-card glass-card rounded-2xl overflow-hidden flex flex-col">
+      <div class="relative h-48 bg-gradient-to-br from-primary-container/20 to-surface-container flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-container/10 to-transparent"></div>
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="Single bottle" class="h-40 w-auto object-contain relative z-10 float-slow"/>
+      </div>
+      <div class="p-6 flex flex-col flex-1 gap-stack-sm">
+        <div class="flex items-center justify-between">
+          <span class="font-label-md text-label-md text-on-surface-variant uppercase">Solo Pack</span>
+          <span class="font-label-md text-[10px] bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full uppercase">Single</span>
+        </div>
+        <h3 class="font-headline-lg text-[24px] leading-tight">12-Pack Case</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">One case. Two flavours to choose from. Perfect for a single festival weekend.</p>
+        <ul class="flex flex-col gap-1 mt-1">
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>12 x 500ml bottles
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>Choose: Electric Lime or Neon Pink
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>Free tracked delivery
+          </li>
+        </ul>
+        <div class="mt-auto pt-4">
+          <div class="flex items-center justify-between mb-3">
+            <span class="font-display-lg text-headline-lg text-on-surface">$34.99</span>
+            <div class="flex items-center border border-white/10 rounded-full p-1 bg-surface-container-low">
+              <button class="qty-btn w-8 h-8 flex items-center justify-center rounded-full font-label-md" onclick="changeQty(this,-1)">−</button>
+              <span class="w-10 text-center font-label-md text-label-md">01</span>
+              <button class="qty-btn w-8 h-8 flex items-center justify-center rounded-full font-label-md" onclick="changeQty(this,1)">+</button>
+            </div>
+          </div>
+          <button class="w-full bg-surface-container-high text-on-surface font-label-md text-label-md py-3 rounded-xl hover:bg-primary-container hover:text-on-primary-fixed transition-all duration-300 font-bold">ADD TO BAG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SQUAD BUNDLE — FEATURED -->
+    <div class="product-card featured glass-card rounded-2xl overflow-hidden flex flex-col border-primary-container/30 relative">
+      <div class="absolute top-4 left-4 z-20 bg-primary-container text-on-primary-fixed font-label-md text-[10px] font-bold px-3 py-1 rounded-full uppercase badge-pulse">Best Value</div>
+      <div class="relative h-48 bg-gradient-to-br from-primary-container/25 to-secondary-container/10 flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-container/15 to-secondary-container/8"></div>
+        <!-- 4-bottle stack visual -->
+        <div class="relative z-10 flex items-end gap-2 float-slow">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="" class="h-28 w-auto object-contain opacity-90"/>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="" class="h-36 w-auto object-contain"/>
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="" class="h-28 w-auto object-contain opacity-90"/>
+        </div>
+      </div>
+      <div class="p-6 flex flex-col flex-1 gap-stack-sm">
+        <div class="flex items-center justify-between">
+          <span class="font-label-md text-label-md text-primary-container uppercase">Squad Bundle</span>
+          <span class="font-label-md text-[10px] bg-primary-container/15 text-primary-container px-2 py-0.5 rounded-full uppercase">Save 25%</span>
+        </div>
+        <h3 class="font-headline-lg text-[24px] leading-tight">4-Case Bundle</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Fuel the entire front row. 4 cases + limited edition hydration vest.</p>
+        <ul class="flex flex-col gap-1 mt-1">
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>4 × 12-Pack Cases (48 bottles)
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>Limited edition hydration vest
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>Mix flavours across cases
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-primary-container text-sm">check</span>Priority 24h delivery
+          </li>
+        </ul>
+        <div class="mt-auto pt-4">
+          <div class="flex items-center gap-3 mb-3 flex-wrap">
+            <span class="font-display-lg text-headline-lg text-primary-container neon-text">$105</span>
+            <span class="font-label-md text-label-md text-on-surface-variant line-through opacity-50">$139.96</span>
+          </div>
+          <button class="w-full bg-primary-container text-on-primary-fixed font-label-md text-label-md py-3 rounded-xl hover:scale-[1.02] neon-glow-primary transition-all duration-300 font-bold active:scale-[0.98]">
+            CLAIM BUNDLE — $105
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FESTIVAL KIT -->
+    <div class="product-card glass-card rounded-2xl overflow-hidden flex flex-col border-secondary/15">
+      <div class="relative h-48 bg-gradient-to-br from-secondary/15 to-tertiary-fixed/10 flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-secondary-container/10 to-tertiary-fixed/5"></div>
+        <div class="relative z-10 float-slow flex flex-col items-center gap-2">
+          <div class="w-20 h-20 rounded-full bg-secondary/20 border border-secondary/30 flex items-center justify-center">
+            <span class="material-symbols-outlined text-secondary text-4xl">backpack</span>
+          </div>
+          <span class="font-label-md text-[10px] text-secondary uppercase">Festival Kit</span>
+        </div>
+      </div>
+      <div class="p-6 flex flex-col flex-1 gap-stack-sm">
+        <div class="flex items-center justify-between">
+          <span class="font-label-md text-label-md text-secondary uppercase">Weekend Warrior</span>
+          <span class="font-label-md text-[10px] bg-secondary/15 text-secondary px-2 py-0.5 rounded-full uppercase">Limited</span>
+        </div>
+        <h3 class="font-headline-lg text-[24px] leading-tight">Festival Kit Pro</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Everything you need from Friday to Monday. The complete recovery ecosystem.</p>
+        <ul class="flex flex-col gap-1 mt-1">
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-sm">check</span>2 × 12-Pack Cases (24 bottles)
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-sm">check</span>Insulated carry pouch
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-sm">check</span>Recovery guide booklet
+          </li>
+          <li class="flex items-center gap-2 font-label-md text-[10px] text-on-surface-variant">
+            <span class="material-symbols-outlined text-secondary text-sm">check</span>Both flavours included
+          </li>
+        </ul>
+        <div class="mt-auto pt-4">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="font-display-lg text-headline-lg text-on-surface">$64.99</span>
+            <span class="font-label-md text-[10px] bg-secondary/15 text-secondary px-2 py-0.5 rounded-full uppercase">Save 7%</span>
+          </div>
+          <button class="w-full border border-secondary/40 text-secondary font-label-md text-label-md py-3 rounded-xl hover:bg-secondary/10 hover:border-secondary/60 transition-all duration-300 font-bold">ADD TO BAG</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FLAVOUR CHOOSER -->
+<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg">
+  <div class="max-w-7xl mx-auto">
+    <div class="glass-card rounded-2xl p-8 md:p-10 relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-container via-secondary-container to-tertiary-fixed opacity-60"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg items-center">
+        <div>
+          <span class="font-label-md text-label-md text-primary-container tracking-widest uppercase">Flavour Aura</span>
+          <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base mb-stack-md">Choose Your<br/><span class="text-primary-container">Frequency.</span></h2>
+          <div class="flex flex-col gap-gutter">
+            <div class="glass-card rounded-xl p-4 flex items-center gap-4 cursor-pointer hover:border-primary-container/50 transition-all" id="flavourLime">
+              <div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0 neon-glow-primary">
+                <span class="material-symbols-outlined text-on-primary-fixed">electric_bolt</span>
+              </div>
+              <div>
+                <h4 class="font-headline-lg text-[18px]">Electric Lime</h4>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Sharp citrus. Like biting into a voltage capacitor. Zero sugar.</p>
+              </div>
+              <span class="material-symbols-outlined text-primary-container ml-auto">radio_button_checked</span>
+            </div>
+            <div class="glass-card rounded-xl p-4 flex items-center gap-4 cursor-pointer hover:border-secondary/50 transition-all" id="flavourPink">
+              <div class="w-14 h-14 rounded-full bg-secondary flex items-center justify-center flex-shrink-0 neon-glow-secondary">
+                <span class="material-symbols-outlined text-on-secondary">flare</span>
+              </div>
+              <div>
+                <h4 class="font-headline-lg text-[18px]">Neon Pink</h4>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Berry fusion. Smooth and electrolytic. Festival-first formula.</p>
+              </div>
+              <span class="material-symbols-outlined text-on-surface-variant opacity-40 ml-auto">radio_button_unchecked</span>
+            </div>
+          </div>
+        </div>
+        <!-- Bottle close-up -->
+        <div class="flex items-center justify-center">
+          <div class="relative">
+            <div class="absolute inset-0 bg-primary-container/10 blur-3xl rounded-full scale-90"></div>
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi" alt="RaVeVibe bottle" class="relative z-10 h-64 w-auto object-contain drop-shadow-2xl float-slow"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST ROW -->
+<section class="px-margin-mobile md:px-margin-desktop pb-stack-lg bg-surface-container-low/40">
+  <div class="max-w-7xl mx-auto py-stack-lg grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
+    <div class="flex flex-col items-center gap-2">
+      <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center mb-1">
+        <span class="material-symbols-outlined text-primary-container">local_shipping</span>
+      </div>
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">24h Delivery</span>
+    </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center mb-1">
+        <span class="material-symbols-outlined text-tertiary-fixed">verified_user</span>
+      </div>
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">Lab Certified</span>
+    </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center mb-1">
+        <span class="material-symbols-outlined text-secondary">replay</span>
+      </div>
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">30-Day Return</span>
+    </div>
+    <div class="flex flex-col items-center gap-2">
+      <div class="w-12 h-12 glass-card rounded-xl flex items-center justify-center mb-1">
+        <span class="material-symbols-outlined text-primary-container">security</span>
+      </div>
+      <span class="font-label-md text-label-md text-on-surface-variant uppercase text-[10px]">Secure Checkout</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-surface-container-lowest border-t border-white/5 w-full py-stack-lg px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-base">
+  <div class="font-display-lg text-headline-lg-mobile text-primary-container">RaVeVibe</div>
+  <div class="flex flex-wrap justify-center gap-gutter">
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Privacy Policy</a>
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Terms of Service</a>
+    <a href="#" class="font-body-sm text-body-sm text-primary-container font-bold hover:text-tertiary-fixed transition-colors">Lab Reports</a>
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Contact</a>
+  </div>
+  <div class="font-body-sm text-body-sm text-on-surface-variant">© 2026 RaVeVibe LABS. FOR THE RAVE GENERATION.</div>
+</footer>
+
+<script>
+  // Qty buttons
+  function changeQty(btn, delta) {
+    const span = btn.parentElement.querySelector('span');
+    let v = parseInt(span.textContent);
+    v = Math.max(1, v + delta);
+    span.textContent = v.toString().padStart(2, '0');
+  }
+  // Flavour selector
+  document.getElementById('flavourLime').addEventListener('click', function() {
+    this.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_checked';
+    this.querySelector('.material-symbols-outlined:last-child').classList.replace('text-on-surface-variant', 'text-primary-container');
+    const pink = document.getElementById('flavourPink');
+    pink.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_unchecked';
+    pink.querySelector('.material-symbols-outlined:last-child').classList.replace('text-secondary', 'text-on-surface-variant');
+  });
+  document.getElementById('flavourPink').addEventListener('click', function() {
+    this.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_checked';
+    this.querySelector('.material-symbols-outlined:last-child').classList.replace('text-on-surface-variant', 'text-secondary');
+    const lime = document.getElementById('flavourLime');
+    lime.querySelector('.material-symbols-outlined:last-child').textContent = 'radio_button_unchecked';
+    lime.querySelector('.material-symbols-outlined:last-child').classList.replace('text-primary-container', 'text-on-surface-variant');
+  });
+</script>
+</body>
+</html>
