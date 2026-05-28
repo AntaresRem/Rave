@@ -1,398 +1,406 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RaVeVibe — Feel The Frequency</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RaVeVibe — Doctor-Formulated Electrolyte Recovery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-tint": "#abd600",
+          "primary-container": "#c3f400",
+          "surface-bright": "#3a3939",
+          "on-surface": "#e5e2e1",
+          "surface-container-high": "#2a2a2a",
+          "surface-container": "#201f1f",
+          "surface-container-lowest": "#0e0e0e",
+          "surface-container-low": "#1c1b1b",
+          "surface-container-highest": "#353534",
+          "on-surface-variant": "#c4c9ac",
+          "outline": "#8e9379",
+          "outline-variant": "#444933",
+          "secondary": "#ffabf3",
+          "secondary-container": "#fe00fe",
+          "on-secondary": "#5b005b",
+          "tertiary-fixed": "#00fbfb",
+          "tertiary-fixed-dim": "#00dddd",
+          "on-tertiary": "#003737",
+          "on-primary": "#283500",
+          "on-primary-fixed": "#161e00",
+          "primary-fixed-dim": "#abd600",
+          "surface": "#131313",
+          "background": "#131313",
+          "on-background": "#e5e2e1",
+          "inverse-surface": "#e5e2e1",
+          "inverse-on-surface": "#313030",
+          "primary": "#ffffff"
+        },
+        borderRadius: {
+          "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"
+        },
+        spacing: {
+          "margin-desktop": "80px", "stack-md": "32px", "margin-mobile": "20px",
+          "base": "8px", "gutter": "24px", "stack-sm": "12px", "stack-lg": "64px"
+        },
+        fontFamily: {
+          "display-lg": ["Sora"], "headline-lg": ["Sora"], "headline-lg-mobile": ["Sora"],
+          "body-md": ["Inter"], "body-sm": ["Inter"], "label-md": ["JetBrains Mono"]
+        },
+        fontSize: {
+          "display-lg": ["72px", {lineHeight:"1.1", letterSpacing:"-0.04em", fontWeight:"800"}],
+          "headline-lg": ["40px", {lineHeight:"1.2", letterSpacing:"-0.02em", fontWeight:"700"}],
+          "headline-lg-mobile": ["32px", {lineHeight:"1.2", fontWeight:"700"}],
+          "body-md": ["16px", {lineHeight:"1.6", fontWeight:"400"}],
+          "body-sm": ["14px", {lineHeight:"1.5", fontWeight:"400"}],
+          "label-md": ["12px", {lineHeight:"1", letterSpacing:"0.1em", fontWeight:"500"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #131313; color: #e5e2e1; overflow-x: hidden; }
+  .glass-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover { border-color: rgba(195,244,0,0.3); box-shadow: 0 0 20px rgba(195,244,0,0.08); }
+  .neon-glow-primary { box-shadow: 0 0 20px rgba(195,244,0,0.35); }
+  .neon-glow-secondary { box-shadow: 0 0 20px rgba(254,0,254,0.35); }
+  .neon-text { text-shadow: 0 0 20px rgba(195,244,0,0.5); }
+  .bg-mesh {
+    position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(195,244,0,0.12) 0%, transparent 40%),
+      radial-gradient(circle at 85% 75%, rgba(254,0,254,0.08) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(0,251,251,0.04) 0%, transparent 50%);
+  }
+  @keyframes glitch {
+    0%  { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px,-2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px,-2px); }
+    100%{ transform: translate(0); }
+  }
+  .glitch-hover:hover { animation: glitch 0.3s infinite; }
+  @keyframes pulse-orb {
+    0%,100% { opacity: 0.35; transform: scale(1); }
+    50%      { opacity: 0.6;  transform: scale(1.08); }
+  }
+  .pulse-orb { animation: pulse-orb 4s ease-in-out infinite; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-12px); }
+  }
+  .float { animation: float 6s ease-in-out infinite; }
+  @keyframes dash { to { stroke-dashoffset: 0; } }
+  .neon-trail {
+    stroke-dasharray: 600; stroke-dashoffset: 600;
+    animation: dash 6s linear infinite;
+  }
+  @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes spin-slow-rev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+  .spin-slow { animation: spin-slow 20s linear infinite; }
+  .spin-slow-rev { animation: spin-slow-rev 14s linear infinite; }
+</style>
 </head>
-<body>
+<body class="font-body-md text-body-md selection:bg-primary-container selection:text-on-primary">
+<div class="bg-mesh"></div>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">RAVE<span>VIBE</span></a>
-      <ul class="nav-links">
-        <li><a href="#events">Events</a></li>
-        <li><a href="#lineup">Lineup</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#vibes">Vibes</a></li>
-        <li><a href="#contact" class="nav-cta">Get Tickets</a></li>
-      </ul>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#events">Events</a>
-      <a href="#lineup">Lineup</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#vibes">Vibes</a>
-      <a href="#contact">Get Tickets</a>
-    </div>
-  </nav>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 w-full bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_20px_rgba(195,244,0,0.12)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+  <a href="index.html" class="font-display-lg text-headline-lg-mobile md:text-[28px] tracking-tighter text-primary-container">RaVeVibe</a>
+  <div class="hidden md:flex items-center gap-gutter">
+    <a href="science.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">The Science</a>
+    <a href="product.html" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Shop</a>
+    <a href="#recovery" class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors">Recovery Guide</a>
+  </div>
+  <a href="product.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-6 py-2 rounded-full hover:scale-105 neon-glow-primary transition-all duration-300 active:scale-95">Order Now</a>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-bg">
-      <div class="orb orb-1"></div>
-      <div class="orb orb-2"></div>
-      <div class="orb orb-3"></div>
-      <div class="grid-overlay"></div>
-    </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Underground Electronic Music</p>
-      <h1 class="hero-title">
-        <span class="line" data-text="FEEL THE">FEEL THE</span>
-        <span class="line glitch" data-text="FREQUENCY">FREQUENCY</span>
+<!-- HERO -->
+<section class="relative min-h-[92vh] flex items-center overflow-hidden px-margin-mobile md:px-margin-desktop py-stack-lg">
+  <!-- Atmospheric orbs -->
+  <div class="absolute top-[-80px] left-[-60px] w-[500px] h-[500px] bg-primary-container/10 rounded-full blur-[160px] pulse-orb pointer-events-none"></div>
+  <div class="absolute bottom-[-100px] right-[-80px] w-[400px] h-[400px] bg-secondary-container/8 rounded-full blur-[140px] pulse-orb pointer-events-none" style="animation-delay:2s"></div>
+  <div class="absolute top-[40%] right-[20%] w-[250px] h-[250px] bg-tertiary-fixed/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
+    <!-- LEFT: copy -->
+    <div class="flex flex-col gap-stack-md">
+      <div class="flex items-center gap-base">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        <span class="font-label-md text-label-md text-primary-container tracking-[0.25em] uppercase">Doctor-Formulated · Festival Grade</span>
+      </div>
+      <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg leading-none glitch-hover">
+        Recover Like<br/><span class="text-primary-container neon-text">Science</span><br/>Demands.
       </h1>
-      <p class="hero-sub">Where bass meets soul. Every night a new dimension.</p>
-      <div class="hero-actions">
-        <a href="#events" class="btn btn-primary pulse-glow">
-          <span>Upcoming Events</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <p class="font-body-md text-body-md text-on-surface-variant max-w-lg">
+        Created by 2 Cambridge PhDs and a leading Neurosurgeon. RaVeVibe is the only electrolyte drink engineered specifically for the physiological demands of festivals and raves.
+      </p>
+
+      <!-- Credential chips -->
+      <div class="flex flex-wrap gap-base">
+        <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary-container text-sm">verified</span>
+          <span class="font-label-md text-label-md uppercase">Cambridge Formulated</span>
+        </div>
+        <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2">
+          <span class="material-symbols-outlined text-tertiary-fixed text-sm">science</span>
+          <span class="font-label-md text-label-md uppercase">Lab Tested</span>
+        </div>
+        <div class="glass-card px-4 py-2 rounded-full flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-sm">medical_services</span>
+          <span class="font-label-md text-label-md uppercase">Zero Sugar</span>
+        </div>
+      </div>
+
+      <div class="flex gap-gutter pt-stack-sm flex-wrap">
+        <a href="product.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-8 py-4 rounded-full hover:scale-105 neon-glow-primary transition-all duration-300 active:scale-95 flex items-center gap-2">
+          Shop Now
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
         </a>
-        <a href="#lineup" class="btn btn-ghost">View Lineup</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-n">50K+</span><span class="stat-l">Ravers</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-n">200+</span><span class="stat-l">Events</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-n">30+</span><span class="stat-l">DJs</span></div>
+        <a href="science.html" class="glass-card font-label-md text-label-md px-8 py-4 rounded-full hover:border-primary-container/50 transition-all flex items-center gap-2">
+          The Science
+          <span class="material-symbols-outlined text-sm text-primary-container">biotech</span>
+        </a>
       </div>
     </div>
-    <div class="scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
 
-  <!-- EVENTS -->
-  <section class="events" id="events">
-    <div class="section-header">
-      <p class="section-tag">Upcoming</p>
-      <h2 class="section-title">Next <span>Events</span></h2>
-    </div>
-    <div class="events-grid">
+    <!-- RIGHT: product hero visual -->
+    <div class="relative flex items-center justify-center float">
+      <!-- Spinning rings -->
+      <div class="absolute w-[340px] h-[340px] border border-primary-container/20 rounded-full spin-slow"></div>
+      <div class="absolute w-[260px] h-[260px] border border-tertiary-fixed/15 rounded-full spin-slow-rev"></div>
 
-      <article class="event-card featured">
-        <div class="event-badge">Featured</div>
-        <div class="event-visual" style="--c1:#8b5cf6;--c2:#ec4899;">
-          <div class="event-visual-orb"></div>
-        </div>
-        <div class="event-info">
-          <div class="event-meta">
-            <span class="event-date">Jun 14 · 2026</span>
-            <span class="event-genre">Techno / Dark</span>
-          </div>
-          <h3 class="event-name">VOID PROTOCOL</h3>
-          <p class="event-venue">Warehouse 23 · Berlin</p>
-          <div class="event-artists">
-            <span>KALON</span><span>DRKFRCST</span><span>MXVOID</span>
-          </div>
-          <a href="#contact" class="btn btn-primary btn-sm">Buy Tickets</a>
-        </div>
-      </article>
+      <!-- Neon trail SVG -->
+      <svg class="absolute w-[400px] h-[400px] pointer-events-none" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="neon-trail" d="M200 40 C320 40 360 120 360 200 C360 280 320 360 200 360 C80 360 40 280 40 200 C40 120 80 40 200 40" stroke="#c3f400" stroke-width="1.5" stroke-linecap="round"/>
+        <path class="neon-trail" d="M200 40 C320 40 360 120 360 200 C360 280 320 360 200 360 C80 360 40 280 40 200 C40 120 80 40 200 40" stroke="#c3f400" stroke-width="6" stroke-linecap="round" style="filter:blur(6px);opacity:0.4;"/>
+        <path class="neon-trail" d="M80 80 C200 0 380 100 380 200 C380 340 260 400 160 380 C60 360 20 240 40 160" stroke="#00fbfb" stroke-width="1" stroke-linecap="round" style="animation-delay:-3s;animation-duration:9s;"/>
+      </svg>
 
-      <article class="event-card">
-        <div class="event-visual" style="--c1:#06b6d4;--c2:#8b5cf6;">
-          <div class="event-visual-orb"></div>
+      <!-- Bottle image from Stitch -->
+      <div class="relative z-10 w-72 h-auto">
+        <div class="absolute inset-0 bg-primary-container/15 blur-3xl rounded-full scale-75 translate-y-8"></div>
+        <img
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrUaNpRU7pLEyjrhGpKpcFqgoe84EMWKg3YPjlWoGwCxYKlI8XXzZuE6aVbLgH_9DyFRGqa85OGKeTQaGgV8JwlAtoI-d13GWE7Y34zf0KY97RSb6z6VnC3Sd_ZDzVWOWctZ-i94N-D4UGeMvRtLjw64fz608N8w4oJjQtjiugCA0BKd5hL7NSuMh-L2K4dI_aMivLH81MZtf7zsNGM3ViRt6owoZCVgwxVLsoRPr1aikioXs76GCSGXoVdKHRbjlvMY4Kpy0HHRwi"
+          alt="RaVeVibe Electrolyte Bottle"
+          class="relative z-10 w-full h-auto drop-shadow-2xl"
+        />
+        <!-- Floating chips -->
+        <div class="absolute top-4 -left-16 glass-card px-3 py-2 rounded-lg z-20 text-center">
+          <span class="material-symbols-outlined text-primary-container text-base block">bolt</span>
+          <p class="font-label-md text-[10px] uppercase">Bio-Sync</p>
         </div>
-        <div class="event-info">
-          <div class="event-meta">
-            <span class="event-date">Jun 21 · 2026</span>
-            <span class="event-genre">Progressive / Psytrance</span>
-          </div>
-          <h3 class="event-name">NEON MATRIX</h3>
-          <p class="event-venue">The Bunker · NYC</p>
-          <div class="event-artists">
-            <span>SYNTHARA</span><span>ORBITAL X</span>
-          </div>
-          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
-        </div>
-      </article>
-
-      <article class="event-card">
-        <div class="event-visual" style="--c1:#ec4899;--c2:#06b6d4;">
-          <div class="event-visual-orb"></div>
-        </div>
-        <div class="event-info">
-          <div class="event-meta">
-            <span class="event-date">Jul 4 · 2026</span>
-            <span class="event-genre">Acid House / EBM</span>
-          </div>
-          <h3 class="event-name">ACID DAWN</h3>
-          <p class="event-venue">Fabric · London</p>
-          <div class="event-artists">
-            <span>HEXFORM</span><span>BASSLINE</span>
-          </div>
-          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
-        </div>
-      </article>
-
-      <article class="event-card">
-        <div class="event-visual" style="--c1:#a855f7;--c2:#ec4899;">
-          <div class="event-visual-orb"></div>
-        </div>
-        <div class="event-info">
-          <div class="event-meta">
-            <span class="event-date">Jul 19 · 2026</span>
-            <span class="event-genre">Industrial / Noise</span>
-          </div>
-          <h3 class="event-name">STATIC RITUAL</h3>
-          <p class="event-venue">OHM · Berlin</p>
-          <div class="event-artists">
-            <span>TERROR FX</span><span>NULL.OBJ</span>
-          </div>
-          <a href="#contact" class="btn btn-ghost btn-sm">Buy Tickets</a>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- LINEUP -->
-  <section class="lineup" id="lineup">
-    <div class="section-header">
-      <p class="section-tag">Artists</p>
-      <h2 class="section-title">The <span>Lineup</span></h2>
-    </div>
-    <div class="lineup-grid">
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#8b5cf6;">
-          <div class="dj-avatar-inner">K</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>KALON</h3>
-        <p>Dark Techno · Berlin</p>
-        <div class="dj-tags"><span>Headliner</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#06b6d4;">
-          <div class="dj-avatar-inner">S</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>SYNTHARA</h3>
-        <p>Progressive · NYC</p>
-        <div class="dj-tags"><span>Headliner</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#ec4899;">
-          <div class="dj-avatar-inner">H</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>HEXFORM</h3>
-        <p>Acid House · London</p>
-        <div class="dj-tags"><span>Live Set</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#a855f7;">
-          <div class="dj-avatar-inner">D</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>DRKFRCST</h3>
-        <p>Industrial · Amsterdam</p>
-        <div class="dj-tags"><span>B2B</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#06b6d4;">
-          <div class="dj-avatar-inner">O</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>ORBITAL X</h3>
-        <p>Psytrance · Melbourne</p>
-        <div class="dj-tags"><span>Live Set</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-      <div class="dj-card">
-        <div class="dj-avatar" style="--c:#ec4899;">
-          <div class="dj-avatar-inner">T</div>
-          <div class="dj-ring"></div>
-        </div>
-        <h3>TERROR FX</h3>
-        <p>Noise · Tokyo</p>
-        <div class="dj-tags"><span>Special Guest</span></div>
-        <div class="dj-social">
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="SoundCloud">SC</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- VIBES / AUDIO -->
-  <section class="vibes" id="vibes">
-    <div class="vibes-bg">
-      <div class="orb orb-4"></div>
-      <div class="orb orb-5"></div>
-    </div>
-    <div class="vibes-inner">
-      <div class="section-header">
-        <p class="section-tag">Feel It</p>
-        <h2 class="section-title">The <span>Vibe</span></h2>
-      </div>
-      <div class="vibes-player">
-        <div class="player-card glass">
-          <div class="player-visual">
-            <div class="vinyl" id="vinyl">
-              <div class="vinyl-center">RV</div>
-            </div>
-            <div class="eq-bars" id="eqBars">
-              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-              <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
-              <div class="eq-bar"></div><div class="eq-bar"></div>
-            </div>
-          </div>
-          <div class="player-info">
-            <span class="player-label">NOW PLAYING</span>
-            <h3 class="player-track">VOID PROTOCOL — Mix 01</h3>
-            <p class="player-artist">KALON × DRKFRCST</p>
-            <div class="player-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-              </div>
-              <div class="progress-times">
-                <span id="currentTime">0:00</span>
-                <span>4:32</span>
-              </div>
-            </div>
-            <div class="player-controls">
-              <button class="ctrl-btn" aria-label="Previous">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
-              </button>
-              <button class="ctrl-btn ctrl-play" id="playBtn" aria-label="Play">
-                <svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
-              </button>
-              <button class="ctrl-btn" aria-label="Next">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="vibes-tracklist glass">
-          <h4>Tracklist</h4>
-          <ul>
-            <li class="active"><span class="tl-num">01</span><span class="tl-name">VOID PROTOCOL — Mix 01</span><span class="tl-dur">4:32</span></li>
-            <li><span class="tl-num">02</span><span class="tl-name">NEON MATRIX — Live</span><span class="tl-dur">6:15</span></li>
-            <li><span class="tl-num">03</span><span class="tl-name">ACID DAWN — Set</span><span class="tl-dur">5:48</span></li>
-            <li><span class="tl-num">04</span><span class="tl-name">STATIC RITUAL — Intro</span><span class="tl-dur">3:20</span></li>
-            <li><span class="tl-num">05</span><span class="tl-name">HEXFORM — Live Edit</span><span class="tl-dur">7:01</span></li>
-          </ul>
+        <div class="absolute bottom-16 -right-14 glass-card px-3 py-2 rounded-lg z-20 text-center">
+          <span class="material-symbols-outlined text-tertiary-fixed text-base block">science</span>
+          <p class="font-label-md text-[10px] uppercase">Lab Verified</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- GALLERY -->
-  <section class="gallery" id="gallery">
-    <div class="section-header">
-      <p class="section-tag">Atmosphere</p>
-      <h2 class="section-title">Visual <span>Gallery</span></h2>
+<!-- STATS BAR -->
+<div class="border-t border-b border-white/5 bg-surface-container-low/60 px-margin-mobile md:px-margin-desktop py-6">
+  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-stack-md text-center">
+    <div>
+      <div class="font-display-lg text-headline-lg text-primary-container neon-text">2</div>
+      <div class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Cambridge PhDs</div>
     </div>
-    <div class="gallery-grid">
-      <div class="gallery-item gi-tall" style="--c1:#8b5cf6;--c2:#ec4899;">
-        <div class="gi-overlay"><span>VOID PROTOCOL 2025</span></div>
-      </div>
-      <div class="gallery-item" style="--c1:#06b6d4;--c2:#8b5cf6;">
-        <div class="gi-overlay"><span>NEON MATRIX</span></div>
-      </div>
-      <div class="gallery-item" style="--c1:#ec4899;--c2:#a855f7;">
-        <div class="gi-overlay"><span>ACID DAWN</span></div>
-      </div>
-      <div class="gallery-item gi-wide" style="--c1:#0891b2;--c2:#ec4899;">
-        <div class="gi-overlay"><span>STATIC RITUAL</span></div>
-      </div>
-      <div class="gallery-item" style="--c1:#7c3aed;--c2:#06b6d4;">
-        <div class="gi-overlay"><span>HEXFORM LIVE</span></div>
-      </div>
+    <div>
+      <div class="font-display-lg text-headline-lg text-primary-container neon-text">98%</div>
+      <div class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Bio-Availability</div>
     </div>
-  </section>
+    <div>
+      <div class="font-display-lg text-headline-lg text-primary-container neon-text">0g</div>
+      <div class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Sugar</div>
+    </div>
+    <div>
+      <div class="font-display-lg text-headline-lg text-primary-container neon-text">450mg</div>
+      <div class="font-label-md text-label-md text-on-surface-variant opacity-60 uppercase">Sodium</div>
+    </div>
+  </div>
+</div>
 
-  <!-- NEWSLETTER / CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner glass">
-      <div class="contact-glow"></div>
-      <p class="section-tag">Stay Connected</p>
-      <h2 class="section-title">Join The <span>Movement</span></h2>
-      <p class="contact-sub">Get early access to tickets, exclusive mixes, and underground drops.</p>
-      <form class="contact-form" id="contactForm">
-        <div class="form-row">
-          <input type="email" placeholder="your@email.com" required />
-          <button type="submit" class="btn btn-primary pulse-glow">Subscribe</button>
-        </div>
-        <p class="form-note">No spam. Just pure bass.</p>
-      </form>
+<!-- FESTIVAL CROWD SECTION -->
+<section class="relative py-stack-lg px-margin-mobile md:px-margin-desktop overflow-hidden">
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-primary-container/5 blur-[200px] rounded-full"></div>
+  </div>
+  <div class="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
+    <!-- Crowd visual mosaic -->
+    <div class="grid grid-cols-2 gap-gutter">
+      <div class="glass-card rounded-2xl overflow-hidden aspect-square relative group">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC3LTJrbnXJEqbb6YfIHJVFsKVu8bSe5N6_5SBX70A3uGGTOaLKlOuD7nhAv9OLXlfFH4VkVYxmzVh_bU6bQcRf8H_osr5BBsJmZGumgDTZmopfPSQfNeioRvxKfhnntmSUsuMStoTdHmhulsdHVhm0FNkPX67Jagw9rEYAPNDpGqtDuH_oNC_0_nKJ9bzSioTxFsJtb6GGDLAK3tWR3xKMtXPq-s9ogapl4Ugs8bMSMvKfgcfbMKLIUEOlWrurwpi8JDz0_lZUmXI" alt="Festival crowd" class="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 font-label-md text-[10px] text-primary-container uppercase">Festival Ready</div>
+      </div>
+      <div class="glass-card rounded-2xl overflow-hidden aspect-square relative group mt-8">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnvQKmMSPbTZbmPVyF53ycDPWfkNssZJxI9tXilc7akBuPFtcrKnYV92fvM-BiGhknJ-z7FsNfKR6VYnfsR9hzygwty1NYh1pPHDC50ni8Z2WVGq1pfHnEiPJA7ra4RnXjrElDy51bqtiy26-BpMxcGVA48OXARQHX3_taSQpBuHS30ipTkSZ3HW01zgIKBTuMQakt7qVXnm9Qp6YwJEZnTz-FKLX5n_jN4z-4XuLS2Yc-Erai0s8500Aum6UUYiORw0_kLPXUs5xD" alt="Medical grade" class="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity grayscale"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-3 left-3 font-label-md text-[10px] text-tertiary-fixed uppercase">Doctor Led</div>
+      </div>
     </div>
-  </section>
+    <!-- Copy -->
+    <div class="flex flex-col gap-stack-md">
+      <span class="font-label-md text-label-md text-primary-container tracking-[0.25em] uppercase">Built for the Rave</span>
+      <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg leading-tight">
+        Your Body Doesn't Stop.<br/><span class="text-primary-container">Neither Does RaVeVibe.</span>
+      </h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Most electrolyte drinks were designed for gyms. We built ours for 12-hour sets, strobing lights, and the physiological chaos of a festival. Every ingredient is clinically dosed to counter oxidative stress, neuro-inflammation, and cellular dehydration specific to high-intensity sensory environments.
+      </p>
+      <a href="science.html" class="font-label-md text-label-md text-primary-container flex items-center gap-2 hover:gap-3 transition-all group w-fit">
+        Read the Full Science
+        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo">RAVE<span>VIBE</span></a>
-        <p>Underground electronic music collective.<br/>Feel the frequency. Live the vibe.</p>
+<!-- BIO-AVAILABILITY MATRIX -->
+<section class="py-stack-lg bg-surface-container-low/50 px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-4xl mx-auto">
+    <div class="flex items-center gap-gutter mb-stack-lg">
+      <div class="h-px flex-grow bg-white/10"></div>
+      <h2 class="font-label-md text-label-md text-primary-container tracking-[0.4em] uppercase text-center whitespace-nowrap">Bio-Availability Matrix</h2>
+      <div class="h-px flex-grow bg-white/10"></div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="flex flex-col gap-1 border-l border-primary-container/30 pl-4">
+        <span class="font-label-md text-label-md text-on-surface-variant opacity-50">SODIUM</span>
+        <span class="font-display-lg text-headline-lg text-on-surface">450mg</span>
+        <span class="font-label-md text-[10px] text-on-surface-variant opacity-40">Himalayan + Sea</span>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h5>Navigate</h5>
-          <a href="#events">Events</a>
-          <a href="#lineup">Lineup</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#vibes">Vibes</a>
-        </div>
-        <div class="footer-col">
-          <h5>Connect</h5>
-          <a href="#" target="_blank" rel="noopener">Instagram</a>
-          <a href="#" target="_blank" rel="noopener">SoundCloud</a>
-          <a href="#" target="_blank" rel="noopener">Spotify</a>
-          <a href="#" target="_blank" rel="noopener">Resident Advisor</a>
-        </div>
-        <div class="footer-col">
-          <h5>Info</h5>
-          <a href="#">About</a>
-          <a href="#">Press Kit</a>
-          <a href="#">Booking</a>
-          <a href="#">Privacy</a>
-        </div>
+      <div class="flex flex-col gap-1 border-l border-tertiary-fixed/30 pl-4">
+        <span class="font-label-md text-label-md text-on-surface-variant opacity-50">POTASSIUM</span>
+        <span class="font-display-lg text-headline-lg text-on-surface">220mg</span>
+        <span class="font-label-md text-[10px] text-on-surface-variant opacity-40">Citrate Form</span>
+      </div>
+      <div class="flex flex-col gap-1 border-l border-secondary/30 pl-4">
+        <span class="font-label-md text-label-md text-on-surface-variant opacity-50">MAGNESIUM</span>
+        <span class="font-display-lg text-headline-lg text-on-surface">65mg</span>
+        <span class="font-label-md text-[10px] text-on-surface-variant opacity-40">Glycinate Form</span>
+      </div>
+      <div class="flex flex-col gap-1 border-l border-white/20 pl-4">
+        <span class="font-label-md text-label-md text-on-surface-variant opacity-50">B-COMPLEX</span>
+        <span class="font-display-lg text-headline-lg text-on-surface">100%</span>
+        <span class="font-label-md text-[10px] text-on-surface-variant opacity-40">Methylated RDA</span>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© 2026 RaVeVibe. All rights reserved.</p>
-      <div class="footer-pulse">
-        <div class="fp-dot"></div>
-        <span>Live & Underground</span>
-      </div>
-    </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="main.js"></script>
+<!-- PAGE LINKS: SCIENCE + PRODUCT -->
+<section class="py-stack-lg px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-gutter">
+
+    <!-- Science card -->
+    <a href="science.html" class="glass-card rounded-2xl p-stack-md relative overflow-hidden group flex flex-col justify-between min-h-[280px]">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/8 blur-[100px] group-hover:bg-primary-container/15 transition-all duration-700 pointer-events-none"></div>
+      <div class="relative z-10">
+        <span class="font-label-md text-label-md text-primary-container tracking-widest uppercase">Cambridge Research</span>
+        <h3 class="font-display-lg text-headline-lg-mobile md:text-headline-lg leading-tight mt-base mb-stack-sm">The Science<br/>Behind the Formula</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Synaptic Shield™ Technology, Mitochondrial Support, and clinical-grade electrolyte ratios explained.</p>
+      </div>
+      <div class="relative z-10 flex items-center gap-2 mt-stack-md font-label-md text-label-md text-primary-container group-hover:gap-3 transition-all">
+        Explore the Science <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </div>
+    </a>
+
+    <!-- Product card -->
+    <a href="product.html" class="glass-card rounded-2xl p-stack-md relative overflow-hidden group flex flex-col justify-between min-h-[280px] border-secondary/20">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-secondary-container/6 blur-[100px] group-hover:bg-secondary-container/12 transition-all duration-700 pointer-events-none"></div>
+      <div class="relative z-10">
+        <span class="font-label-md text-label-md text-secondary tracking-widest uppercase">Shop</span>
+        <h3 class="font-display-lg text-headline-lg-mobile md:text-headline-lg leading-tight mt-base mb-stack-sm">Electrolyte<br/>Refresh Formula</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Electric Lime or Neon Pink. 12-pack case. Squad bundles available. $34.99.</p>
+      </div>
+      <div class="relative z-10 flex items-center gap-2 mt-stack-md font-label-md text-label-md text-secondary group-hover:gap-3 transition-all">
+        Shop Now <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- RECOVERY GUIDE TEASER -->
+<section id="recovery" class="py-stack-lg px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-stack-lg">
+      <span class="font-label-md text-label-md text-tertiary-fixed tracking-[0.25em] uppercase">Recovery Guide</span>
+      <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg mt-base">Festival Survival<br/><span class="text-tertiary-fixed">Protocol.</span></h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+      <div class="glass-card p-6 rounded-2xl flex flex-col gap-stack-sm">
+        <span class="material-symbols-outlined text-primary-container text-3xl">water_drop</span>
+        <span class="font-label-md text-label-md text-primary-container uppercase">Step 01</span>
+        <h4 class="font-headline-lg text-[20px]">Pre-Load</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Take one RaVeVibe 2 hours before the event. Prime your ionic channels before the music starts.</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl flex flex-col gap-stack-sm">
+        <span class="material-symbols-outlined text-tertiary-fixed text-3xl">bolt</span>
+        <span class="font-label-md text-label-md text-tertiary-fixed uppercase">Step 02</span>
+        <h4 class="font-headline-lg text-[20px]">Maintain</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">One bottle every 3–4 hours during the event. Keep electrolyte levels steady, never crash.</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl flex flex-col gap-stack-sm">
+        <span class="material-symbols-outlined text-secondary text-3xl">bedtime</span>
+        <span class="font-label-md text-label-md text-secondary uppercase">Step 03</span>
+        <h4 class="font-headline-lg text-[20px]">Recover</h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant">Take one more before sleep. NAC and B-complex kickstart the cellular repair cycle overnight.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="py-stack-lg px-margin-mobile md:px-margin-desktop">
+  <div class="max-w-4xl mx-auto bg-primary-container rounded-[2rem] p-stack-lg flex flex-col md:flex-row justify-between items-center gap-stack-md overflow-hidden relative">
+    <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_center,#000_0%,transparent_70%)]"></div>
+    <div class="relative z-10">
+      <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-primary leading-tight">Ready to Upgrade<br/>Your Recovery?</h2>
+      <p class="font-body-md text-body-md text-on-primary/70 mt-base">Join 50,000+ ravers who don't compromise on science.</p>
+    </div>
+    <div class="relative z-10 flex flex-col sm:flex-row gap-base">
+      <a href="product.html" class="bg-on-primary text-primary-container font-label-md text-label-md font-bold px-8 py-4 rounded-full flex items-center gap-base hover:scale-105 transition-all">
+        <span class="material-symbols-outlined text-sm">shopping_bag</span>
+        Shop RaVeVibe
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-surface-container-lowest border-t border-white/5 w-full py-stack-lg px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-base">
+  <div class="font-display-lg text-headline-lg-mobile text-primary-container">RaVeVibe</div>
+  <div class="flex flex-wrap justify-center gap-gutter">
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Privacy Policy</a>
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Terms of Service</a>
+    <a href="#" class="font-body-sm text-body-sm text-primary-container font-bold hover:text-tertiary-fixed transition-colors">Lab Reports</a>
+    <a href="#" class="font-body-sm text-body-sm text-on-surface-variant hover:text-tertiary-fixed transition-colors">Contact</a>
+  </div>
+  <div class="font-body-sm text-body-sm text-on-surface-variant">© 2026 RaVeVibe LABS. FOR THE RAVE GENERATION.</div>
+</footer>
+
+<script>
+  // Parallax bg mesh on scroll
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const mesh = document.querySelector('.bg-mesh');
+    if (mesh) mesh.style.transform = `translateY(${scrolled * 0.08}px)`;
+  });
+</script>
 </body>
 </html>
