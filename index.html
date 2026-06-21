@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>RaVeVibe — Rave Hard. Recover Right.</title>
+<title>Ravive — Rave Hard. Recover Right.</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -50,6 +50,49 @@ a { text-decoration: none; }
   filter: blur(40px);
 }
 
+/* ── Cursor glow ── */
+#cursor-glow {
+  position: fixed; width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(150,0,201,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
+  transition: opacity 0.3s; will-change: transform;
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Neural canvas ── */
+#neural-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border-radius: 24px;
+}
+
+/* ── Stat count-up ── */
+.count-up { display: inline-block; }
+
+/* ── Hero product floating ── */
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.hero-float { animation: float 4s ease-in-out infinite; }
+
+/* ── Synaptic pulse on cards ── */
+@keyframes synapse-in {
+  from { box-shadow: 0 0 0 0 rgba(150,0,201,0); }
+  50%  { box-shadow: 0 0 0 6px rgba(150,0,201,0.12); }
+  to   { box-shadow: 0 0 0 0 rgba(150,0,201,0); }
+}
+.card:hover { animation: synapse-in 0.6s ease-out forwards; }
+
 @media (max-width: 768px) {
   .desktop-nav, .desktop-cta { display: none !important; }
   .mobile-btn { display: flex !important; }
@@ -68,7 +111,7 @@ a { text-decoration: none; }
 <!-- NAV -->
 <nav style="background:rgba(249,249,249,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #e2e2e2;position:sticky;top:0;z-index:50;">
   <div class="nav-wrap" style="max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;">
-    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">RaVeVibe</a>
+    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">Ravive</a>
     <div class="desktop-nav" style="display:flex;align-items:center;gap:36px;">
       <a href="index.html" class="nav-link active">Home</a>
       <a href="science.html" class="nav-link">The Science</a>
@@ -127,17 +170,19 @@ a { text-decoration: none; }
         </div>
       </div>
     </div>
-    <div style="display:flex;justify-content:center;align-items:center;">
-      <div style="width:360px;height:460px;background:linear-gradient(145deg,#1c0033 0%,#3d006b 45%,#1a0030 100%);border-radius:24px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(150,0,201,0.22);">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 65% 25%,rgba(188,0,251,0.32) 0%,transparent 60%);"></div>
-        <div style="text-align:center;z-index:1;padding:32px;">
-          <div style="width:110px;height:190px;background:linear-gradient(180deg,rgba(188,0,251,0.55) 0%,rgba(100,0,150,0.2) 100%);border-radius:55px;margin:0 auto 24px;border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 48px rgba(188,0,251,0.4),inset 0 1px 0 rgba(255,255,255,0.1);"></div>
-          <div class="mono" style="font-size:10px;letter-spacing:0.16em;color:rgba(255,255,255,0.5);text-transform:uppercase;">RaVeVibe</div>
-          <div style="font-size:17px;font-weight:700;color:#fff;margin-top:6px;">Recovery Formula</div>
-          <div style="margin-top:16px;">
-            <span class="mono" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);font-size:10px;padding:5px 14px;border-radius:9999px;letter-spacing:0.08em;">MIDNIGHT BERRY</span>
-          </div>
+    <div style="display:flex;justify-content:center;align-items:center;" class="reveal reveal-delay-2">
+      <div style="width:100%;max-width:440px;height:480px;background:linear-gradient(145deg,#1c0033 0%,#3d006b 45%,#1a0030 100%);border-radius:24px;position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(150,0,201,0.22);">
+        <!-- Live neural network canvas -->
+        <canvas id="neural-canvas"></canvas>
+        <!-- Floating product pill on top -->
+        <div class="hero-float" style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;pointer-events:none;">
+          <div style="width:80px;height:140px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,150,0.3) 100%);border-radius:40px;margin:0 auto 14px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 48px rgba(188,0,251,0.5),inset 0 1px 0 rgba(255,255,255,0.15);"></div>
+          <div class="mono" style="font-size:9px;letter-spacing:0.16em;color:rgba(255,255,255,0.5);text-transform:uppercase;">Ravive</div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-top:4px;">Recovery Formula</div>
+          <span class="mono" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);font-size:9px;padding:4px 12px;border-radius:9999px;letter-spacing:0.08em;margin-top:10px;display:inline-block;">MIDNIGHT BERRY</span>
         </div>
+        <!-- Recovery label top-left -->
+        <div class="mono" style="position:absolute;top:20px;left:20px;font-size:9px;letter-spacing:0.12em;color:rgba(255,255,255,0.4);text-transform:uppercase;z-index:2;">NEURAL RECOVERY NETWORK</div>
       </div>
     </div>
   </div>
@@ -153,13 +198,13 @@ a { text-decoration: none; }
 
 <!-- WHAT IT DOES -->
 <section class="section-pad" style="padding:96px 48px;max-width:1280px;margin:0 auto;">
-  <div style="text-align:center;margin-bottom:64px;">
+  <div style="text-align:center;margin-bottom:64px;" class="reveal">
     <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">The Mechanism</div>
-    <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;">What RaVeVibe does <em style="font-style:italic;color:#9600c9;">while you sleep</em></h2>
+    <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;">What Ravive does <em style="font-style:italic;color:#9600c9;">while you sleep</em></h2>
     <p style="font-size:16px;color:#444748;max-width:520px;margin:0 auto;">Every ingredient serves a physiological purpose. No fillers, no fairy dusting. Just active medical-grade recovery.</p>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="four-col">
-    <div class="card" style="padding:28px;">
+    <div class="card reveal reveal-delay-1" style="padding:28px;">
       <div style="width:42px;height:42px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
         <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">water_drop</span>
       </div>
@@ -167,7 +212,7 @@ a { text-decoration: none; }
       <h3 style="font-size:17px;font-weight:700;color:#000;margin-bottom:10px;">Rapid Electrolytes</h3>
       <p style="font-size:14px;color:#444748;line-height:1.6;">Replaces sodium and potassium lost through hours of dancing. Stops micro-cramping before it starts.</p>
     </div>
-    <div class="card" style="padding:28px;">
+    <div class="card reveal reveal-delay-2" style="padding:28px;">
       <div style="width:42px;height:42px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
         <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">hub</span>
       </div>
@@ -175,7 +220,7 @@ a { text-decoration: none; }
       <h3 style="font-size:17px;font-weight:700;color:#000;margin-bottom:10px;">Synaptic Support</h3>
       <p style="font-size:14px;color:#444748;line-height:1.6;">B-vitamins and amino acids help rebuild depleted neurotransmitter pathways overnight.</p>
     </div>
-    <div class="card" style="padding:28px;">
+    <div class="card reveal reveal-delay-3" style="padding:28px;">
       <div style="width:42px;height:42px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
         <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">shield</span>
       </div>
@@ -183,7 +228,7 @@ a { text-decoration: none; }
       <h3 style="font-size:17px;font-weight:700;color:#000;margin-bottom:10px;">Antioxidant Shield</h3>
       <p style="font-size:14px;color:#444748;line-height:1.6;">Counteracts oxidative stress from extended physical exertion and environmental exposure.</p>
     </div>
-    <div class="card" style="padding:28px;">
+    <div class="card reveal reveal-delay-4" style="padding:28px;">
       <div style="width:42px;height:42px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
         <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">bedtime</span>
       </div>
@@ -198,7 +243,7 @@ a { text-decoration: none; }
 
 <!-- SCIENCE CREDIBILITY -->
 <section class="section-pad" style="padding:96px 48px;background:#fff;">
-  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col reveal">
     <div>
       <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:20px;">Scientific Credibility</div>
       <h2 style="font-size:34px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;line-height:1.15;">Most recovery products are formulated by marketing teams.<br/><span style="color:#9600c9;">Ours was formulated in a lab.</span></h2>
@@ -223,7 +268,7 @@ a { text-decoration: none; }
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
       <div style="background:#000;border-radius:8px;padding:28px 24px;text-align:center;">
-        <div style="font-size:48px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">6</div>
+        <div style="font-size:48px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;" class="count-up" data-target="6" data-suffix="">6</div>
         <div style="color:rgba(255,255,255,0.55);font-size:13px;margin-top:6px;">Active Ingredients</div>
       </div>
       <div class="card card-featured" style="padding:28px 24px;text-align:center;">
@@ -235,7 +280,7 @@ a { text-decoration: none; }
         <div style="color:#444748;font-size:13px;margin-top:6px;">Recovery Window</div>
       </div>
       <div style="background:#000;border-radius:8px;padding:28px 24px;text-align:center;">
-        <div style="font-size:48px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">98%</div>
+        <div style="font-size:48px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;" class="count-up" data-target="98" data-suffix="%">98%</div>
         <div style="color:rgba(255,255,255,0.55);font-size:13px;margin-top:6px;">Would Recommend</div>
       </div>
     </div>
@@ -338,7 +383,7 @@ a { text-decoration: none; }
       <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#000;">Loved every Sunday after.</h2>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="three-col">
-      <div class="card" style="padding:28px;">
+      <div class="card reveal reveal-delay-1" style="padding:28px;">
         <div style="display:flex;gap:2px;margin-bottom:16px;">★★★★★</div>
         <p style="font-size:15px;color:#444748;line-height:1.65;margin-bottom:24px;">"Took this before bed at Glastonbury and genuinely woke up feeling human. No more Sunday Blues. This actually works."</p>
         <div style="border-top:1px solid #e2e2e2;padding-top:14px;">
@@ -346,7 +391,7 @@ a { text-decoration: none; }
           <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.05em;">GLASTONBURY '24</div>
         </div>
       </div>
-      <div class="card card-featured" style="padding:28px;">
+      <div class="card card-featured reveal reveal-delay-2" style="padding:28px;">
         <div style="display:flex;gap:2px;margin-bottom:16px;color:#9600c9;">★★★★★</div>
         <p style="font-size:15px;color:#444748;line-height:1.65;margin-bottom:24px;">"Finally a product that doesn't treat me like an idiot. The ingredient transparency is refreshing. Bought the Season Pass immediately."</p>
         <div style="border-top:1px solid #e2e2e2;padding-top:14px;">
@@ -354,7 +399,7 @@ a { text-decoration: none; }
           <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.05em;">DC-10 IBIZA</div>
         </div>
       </div>
-      <div class="card" style="padding:28px;">
+      <div class="card reveal reveal-delay-3" style="padding:28px;">
         <div style="display:flex;gap:2px;margin-bottom:16px;">★★★★★</div>
         <p style="font-size:15px;color:#444748;line-height:1.65;margin-bottom:24px;">"No more Monday write-offs. The Midnight Berry flavour is insanely good and I could tell my squad was genuinely bouncing back faster."</p>
         <div style="border-top:1px solid #e2e2e2;padding-top:14px;">
@@ -371,7 +416,7 @@ a { text-decoration: none; }
   <div style="max-width:1280px;margin:0 auto;">
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.08);" class="footer-cols">
       <div>
-        <div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">RaVeVibe</div>
+        <div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">Ravive</div>
         <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p>
       </div>
       <div>
@@ -394,17 +439,187 @@ a { text-decoration: none; }
       <div>
         <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Contact</div>
         <div style="display:flex;flex-direction:column;gap:11px;">
-          <a href="mailto:hello@ravevibe.co" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">hello@ravevibe.co</a>
+          <a href="mailto:hello@Ravive.co" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">hello@Ravive.co</a>
           <span style="font-size:14px;color:rgba(255,255,255,0.35);">London, UK</span>
         </div>
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-      <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 RaVeVibe Ltd. Doctor-led, Rave-native recovery.</div>
+      <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
       <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.18);letter-spacing:0.05em;">FORMULATED IN CAMBRIDGE · UK</div>
     </div>
   </div>
 </footer>
 
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<script>
+// ── Cursor glow tracker ──
+const glow = document.getElementById('cursor-glow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top  = e.clientY + 'px';
+});
+
+// ── Neural network canvas ──
+(function() {
+  const canvas = document.getElementById('neural-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes, pulses, raf;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = canvas.width  = rect.width;
+    H = canvas.height = rect.height;
+    buildNodes();
+  }
+
+  function buildNodes() {
+    nodes = [];
+    const count = Math.floor((W * H) / 6000);
+    for (let i = 0; i < Math.max(count, 14); i++) {
+      nodes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 2.5 + Math.random() * 2,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        alpha: 0.4 + Math.random() * 0.5,
+      });
+    }
+    pulses = [];
+  }
+
+  function firePulse() {
+    if (nodes.length < 2) return;
+    const a = nodes[Math.floor(Math.random() * nodes.length)];
+    const b = nodes[Math.floor(Math.random() * nodes.length)];
+    if (a === b) return;
+    pulses.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y, t: 0, dur: 60 + Math.random() * 40 });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Move nodes
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    // Draw edges between nearby nodes
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          const alpha = (1 - dist / 120) * 0.18;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(188,0,251,${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw pulses (travelling dots along edges)
+    pulses = pulses.filter(p => p.t <= p.dur);
+    pulses.forEach(p => {
+      const prog = p.t / p.dur;
+      const px = p.ax + (p.bx - p.ax) * prog;
+      const py = p.ay + (p.by - p.ay) * prog;
+      ctx.beginPath();
+      ctx.arc(px, py, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(188,0,251,${0.9 - prog * 0.5})`;
+      ctx.shadowColor = '#bc00fb';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      p.t++;
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(188,0,251,${n.alpha})`;
+      ctx.shadowColor = '#9600c9';
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+
+    if (Math.random() < 0.04) firePulse();
+    raf = requestAnimationFrame(draw);
+  }
+
+  // Canvas mouse interactivity — nudge nearby nodes
+  canvas.parentElement.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    nodes.forEach(n => {
+      const dx = n.x - mx, dy = n.y - my;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 80) {
+        n.vx += dx / d * 0.4;
+        n.vy += dy / d * 0.4;
+        // clamp speed
+        const spd = Math.sqrt(n.vx*n.vx + n.vy*n.vy);
+        if (spd > 2) { n.vx = n.vx/spd*2; n.vy = n.vy/spd*2; }
+      }
+    });
+    // fire a burst pulse toward cursor
+    if (Math.random() < 0.08) firePulse();
+  });
+
+  // Click — burst of pulses
+  canvas.parentElement.addEventListener('click', () => {
+    for (let i = 0; i < 6; i++) setTimeout(firePulse, i * 60);
+  });
+
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); draw(); });
+  resize();
+  draw();
+})();
+
+// ── Scroll reveal ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ── Count-up animation ──
+const countEls = document.querySelectorAll('.count-up');
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '';
+    const dur = 1400;
+    const start = performance.now();
+    function tick(now) {
+      const pct = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - pct, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if (pct < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    countObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+countEls.forEach(el => countObserver.observe(el));
+</script>
+
 </body>
 </html>
+
+
