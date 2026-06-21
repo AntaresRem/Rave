@@ -1,401 +1,308 @@
-﻿<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>The Science | RaVeVibe</title>
+<title>The Science — RaVeVibe</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: #c3f400;
-            box-shadow: 0 0 20px rgba(195, 244, 0, 0.1);
-        }
-        .neon-glow {
-            text-shadow: 0 0 10px rgba(195, 244, 0, 0.5);
-        }
-        .neon-border-glow {
-            box-shadow: 0 0 15px rgba(195, 244, 0, 0.3);
-        }
-        @keyframes pulse-glow {
-            0% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.4; }
-        }
-        .animate-pulse-glow {
-            animation: pulse-glow 3s infinite ease-in-out;
-        }
-        .glitch-hover:hover {
-            animation: glitch 0.2s linear infinite;
-        }
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-    </style>
-<!-- Shared Components JSON Logic Injection -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-tint": "#abd600",
-                    "primary-container": "#c3f400",
-                    "surface-bright": "#3a3939",
-                    "on-surface": "#e5e2e1",
-                    "surface-container-high": "#2a2a2a",
-                    "error-container": "#93000a",
-                    "on-error": "#690005",
-                    "surface-container": "#201f1f",
-                    "on-tertiary-fixed-variant": "#004f4f",
-                    "on-tertiary": "#003737",
-                    "primary-fixed": "#c3f400",
-                    "tertiary-fixed-dim": "#00dddd",
-                    "tertiary-fixed": "#00fbfb",
-                    "surface-dim": "#131313",
-                    "on-primary": "#283500",
-                    "on-primary-fixed-variant": "#3c4d00",
-                    "on-secondary-container": "#500050",
-                    "on-secondary-fixed": "#380038",
-                    "surface-container-lowest": "#0e0e0e",
-                    "tertiary-container": "#00fbfb",
-                    "outline": "#8e9379",
-                    "secondary": "#ffabf3",
-                    "on-primary-container": "#556d00",
-                    "surface-container-low": "#1c1b1b",
-                    "surface-variant": "#353534",
-                    "inverse-primary": "#506600",
-                    "secondary-fixed-dim": "#ffabf3",
-                    "on-tertiary-fixed": "#002020",
-                    "on-tertiary-container": "#007070",
-                    "on-error-container": "#ffdad6",
-                    "on-primary-fixed": "#161e00",
-                    "surface": "#131313",
-                    "secondary-container": "#fe00fe",
-                    "on-surface-variant": "#c4c9ac",
-                    "tertiary": "#ffffff",
-                    "on-background": "#e5e2e1",
-                    "secondary-fixed": "#ffd7f5",
-                    "outline-variant": "#444933",
-                    "on-secondary-fixed-variant": "#810081",
-                    "inverse-on-surface": "#313030",
-                    "primary-fixed-dim": "#abd600",
-                    "on-secondary": "#5b005b",
-                    "surface-container-highest": "#353534",
-                    "error": "#ffb4ab",
-                    "primary": "#ffffff",
-                    "inverse-surface": "#e5e2e1",
-                    "background": "#131313"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "margin-desktop": "80px",
-                    "stack-md": "32px",
-                    "margin-mobile": "20px",
-                    "base": "8px",
-                    "gutter": "24px",
-                    "stack-sm": "12px",
-                    "stack-lg": "64px"
-            },
-            "fontFamily": {
-                    "body-sm": ["Inter"],
-                    "display-lg": ["Sora"],
-                    "headline-lg": ["Sora"],
-                    "body-md": ["Inter"],
-                    "label-md": ["JetBrains Mono"],
-                    "headline-lg-mobile": ["Sora"]
-            },
-            "fontSize": {
-                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                    "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
-                    "headline-lg": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
-                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}]
-            }
-          },
-        },
-      }
-    </script>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hanken Grotesk', sans-serif; background: #f9f9f9; color: #1a1c1c; -webkit-font-smoothing: antialiased; }
+.mono { font-family: 'Geist Mono', monospace; }
+a { text-decoration: none; }
+.btn-primary { background:#000;color:#fff;font-size:13px;letter-spacing:0.08em;font-weight:600;padding:13px 28px;border-radius:9999px;border:none;cursor:pointer;transition:all 0.2s;display:inline-block; }
+.btn-primary:hover { background:#9600c9;box-shadow:0 0 20px rgba(150,0,201,0.35);transform:translateY(-1px); }
+.btn-ghost { background:transparent;color:#9600c9;font-size:13px;letter-spacing:0.06em;font-weight:600;padding:12px 28px;border-radius:9999px;border:1.5px solid #9600c9;cursor:pointer;transition:all 0.2s;display:inline-block; }
+.btn-ghost:hover { background:rgba(150,0,201,0.06);box-shadow:0 0 14px rgba(150,0,201,0.2);transform:translateY(-1px); }
+.card { background:#fff;border:1px solid #e2e2e2;border-radius:8px;transition:box-shadow 0.2s,transform 0.2s; }
+.card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.07);transform:translateY(-2px); }
+.card-featured { border-top:3px solid #9600c9; }
+.nav-link { font-size:14px;color:#444748;transition:color 0.15s; }
+.nav-link:hover { color:#9600c9; }
+.nav-link.active { color:#9600c9;font-weight:600;border-bottom:2px solid #9600c9;padding-bottom:2px; }
+#mobileMenu { display:none; }
+#mobileMenu.open { display:flex; }
+.glow-blob { position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(150,0,201,0.1) 0%,transparent 70%);filter:blur(40px); }
+@media (max-width:768px) {
+  .desktop-nav,.desktop-cta { display:none !important; }
+  .mobile-btn { display:flex !important; }
+  .two-col { grid-template-columns:1fr !important;gap:40px !important; }
+  .six-col { grid-template-columns:1fr 1fr !important; }
+  .section-pad { padding:64px 20px !important; }
+  .nav-wrap { padding:0 20px !important; }
+  .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
+  .hero-h1 { font-size:34px !important; }
+}
+</style>
 </head>
-<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary">
-<!-- Top Navigation -->
-<nav class="bg-surface/80 backdrop-blur-xl border-b border-white/10 shadow-[0_0_20px_rgba(195,244,0,0.15)] sticky top-0 z-50 w-full">
-<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
-<a href="index.html" class="font-display-lg text-headline-lg-mobile md:text-headline-lg tracking-tighter text-primary-container">RaVeVibe</a>
-<div class="hidden md:flex items-center gap-gutter">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="index.html">Home</a>
-<a class="font-label-md text-label-md text-primary-container border-b-2 border-primary-container pb-1" href="science.html">The Science</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="product.html">Shop</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="recovery.html">Recovery Guide</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="shop.html">Bundles</a>
-</div>
-<div class="flex items-center gap-4">
-<a href="product.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-6 py-2 rounded-full hover:scale-105 transition-all duration-300 active:scale-95">Order Now</a>
-<button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden p-2 text-on-surface-variant hover:text-primary-container">
-<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-</button>
-</div>
-</div>
-<div id="mobileMenu" class="hidden md:hidden border-t border-white/10 px-margin-mobile py-4 flex flex-col gap-4 bg-surface/95 backdrop-blur-xl">
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="index.html">Home</a>
-<a class="font-label-md text-label-md text-primary-container border-b-2 border-primary-container pb-1" href="science.html">The Science</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="product.html">Shop</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="recovery.html">Recovery Guide</a>
-<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary-container transition-colors" href="shop.html">Bundles</a>
-<a href="product.html" class="bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold px-6 py-3 rounded-full text-center mt-2">Order Now</a>
-</div>
+<body>
+
+<nav style="background:rgba(249,249,249,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #e2e2e2;position:sticky;top:0;z-index:50;">
+  <div class="nav-wrap" style="max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">RaVeVibe</a>
+    <div class="desktop-nav" style="display:flex;align-items:center;gap:36px;">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="science.html" class="nav-link active">The Science</a>
+      <a href="product.html" class="nav-link">Flavours</a>
+      <a href="shop.html" class="nav-link">Festival Bundle</a>
+      <a href="recovery.html" class="nav-link">Recovery Guide</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="product.html" class="btn-primary desktop-cta">SHOP NOW</a>
+      <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="display:none;background:none;border:none;cursor:pointer;padding:8px;" aria-label="Menu">
+        <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" style="flex-direction:column;border-top:1px solid #e2e2e2;background:#f9f9f9;padding:16px 20px;gap:2px;">
+    <a href="index.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Home</a>
+    <a href="science.html" style="padding:12px 0;font-size:15px;font-weight:600;color:#9600c9;border-bottom:1px solid #f0f0f0;display:block;">The Science</a>
+    <a href="product.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Flavours</a>
+    <a href="shop.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Festival Bundle</a>
+    <a href="recovery.html" style="padding:12px 0;font-size:15px;color:#444748;display:block;">Recovery Guide</a>
+    <a href="product.html" class="btn-primary" style="margin-top:16px;text-align:center;">SHOP NOW</a>
+  </div>
 </nav>
-<!-- Hero Section: The Medical Authority -->
-<header class="relative pt-stack-lg overflow-hidden min-h-[70vh] flex items-center">
-<div class="absolute inset-0 z-0">
-<div class="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-primary-container/10 blur-[150px] rounded-full animate-pulse-glow"></div>
-<div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-tertiary-fixed-dim/5 blur-[200px] rounded-full"></div>
-</div>
-<div class="container mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
-<div>
-<div class="inline-block px-3 py-1 bg-primary-container/10 border border-primary-container/30 rounded-full mb-base">
-<span class="font-label-md text-label-md text-primary-container tracking-widest">CERTIFIED NEURO-SCIENCE</span>
-</div>
-<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-on-surface mb-stack-md">
-                        Engineered by <span class="text-primary-container">Cambridge</span> Minds.
-                    </h1>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mb-stack-md">RaVeVibe isn't just a drink. It's a clinical protocol developed by two Cambridge PhDs and a leading Neurosurgeon to tackle neuro-inflammation and metabolic depletion caused by high-intensity environments.</p>
-<div class="flex flex-wrap gap-gutter">
-<div class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary-container">verified</span>
-<span class="font-label-md text-label-md">DOCTOR FORMULATED</span>
-</div>
-<div class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary-container">science</span>
-<span class="font-label-md text-label-md">LAB TESTED</span>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-gutter">
-<div class="glass-card p-6 rounded-xl relative overflow-hidden group">
-<img class="w-full h-48 object-cover rounded-lg mb-4 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A professional portrait of a medical doctor in a modern clinical setting with cool blue and neon lime ambient lighting. The doctor wears a white lab coat with scientific equipment subtly visible in the background, conveying a sense of high-level academic authority and cutting-edge research capability. The overall aesthetic is clean, medical, and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnvQKmMSPbTZbmPVyF53ycDPWfkNssZJxI9tXilc7akBuPFtcrKnYV92fvM-BiGhknJ-z7FsNfKR6VYnfsR9hzygwty1NYh1pPHDC50ni8Z2WVGq1pfHnEiPJA7ra4RnXjrElDy51bqtiy26-BpMxcGVA48OXARQHX3_taSQpBuHS30ipTkSZ3HW01zgIKBTuMQakt7qVXnm9Qp6YwJEZnTz-FKLX5n_jN4z-4XuLS2Yc-Erai0s8500Aum6UUYiORw0_kLPXUs5xD"/>
-<h3 class="font-headline-lg text-[20px] text-on-surface">Dr. Aris V.</h3>
-<p class="font-label-md text-[10px] text-primary-container mb-2">CAMBRIDGE PHD / GENETICS</p>
-</div>
-<div class="glass-card p-6 rounded-xl mt-8 relative overflow-hidden group">
-<img class="w-full h-48 object-cover rounded-lg mb-4 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="A focused portrait of a neurosurgeon in a high-tech medical laboratory, surrounded by translucent glass displays and holographic brain scans. The lighting is dark with vibrant neon cyan and lime highlights that reflect off the laboratory surfaces. The scene looks like a futuristic medical facility where high-energy performance is studied with clinical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtxm3iEuHHHrvd-UKn9-223ZVxpr2IEFg2oaEjT4VaqtJZL_6yKkLP5VuxCbNS_pwteLhzwu7MfGrpvCNcnjri57KPGOLLbSwkhpPqnXBPs1B4YyKSlF9yvbHfEDpFMrziEHmLo-NwqiUgkIhhEsPmOkiLtYuu7EYxCkGZG4sLLL29MdXMmxJIjulbEzPssBgS_ScUF6hmTdXLie59JRaR9yUhdqNMgtrC6W6d7y-W4xf9qVARCqOq6K6kWvfU1sN84WBD8WKLBXog"/>
-<h3 class="font-headline-lg text-[20px] text-on-surface">Dr. Julian K.</h3>
-<p class="font-label-md text-[10px] text-primary-container mb-2">NEUROSURGEON / RECOVERY</p>
-</div>
-</div>
-</div>
-</div>
-</header>
-<!-- The Formulation: Bento Grid -->
-<section class="py-stack-lg bg-surface-container-low relative">
-<div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="text-center mb-stack-lg">
-<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">The Formulation</h2>
-<div class="h-1 w-24 bg-primary-container mx-auto mt-4 neon-border-glow"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-<!-- Large Card -->
-<div class="md:col-span-2 glass-card p-8 rounded-2xl flex flex-col justify-between overflow-hidden relative">
-<div class="relative z-10">
-<span class="font-label-md text-primary-container">01 / NEURO-PROTECTION</span>
-<h3 class="font-display-lg text-headline-lg-mobile mt-base mb-stack-md">Synaptic Shield™ Technology</h3>
-<p class="text-on-surface-variant max-w-lg mb-stack-md font-body-md">
-                            Our proprietary blend uses lipid-encapsulated antioxidants that cross the blood-brain barrier, specifically targeting the oxidative stress triggered by loud frequencies and sensory overload.
-                        </p>
-<div class="flex gap-stack-md">
-<div>
-<div class="text-[32px] font-display-lg text-primary-container">98%</div>
-<div class="font-label-md text-on-surface-variant">Bio-Availability</div>
-</div>
-<div>
-<div class="text-[32px] font-display-lg text-primary-container">400mg</div>
-<div class="font-label-md text-on-surface-variant">L-Theanine</div>
-</div>
-</div>
-</div>
-<div class="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
-<img class="w-full h-full object-cover" data-alt="A detailed microscopic view of neural pathways and synapses glowing with electric blue and neon lime energy. The image captures the dynamic transfer of signals between neurons, presented in a sleek, high-end medical visualization style. The background is a deep, velvety black, emphasizing the luminous intensity of the scientific subject." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9OHd3SZrQBsk5QXvgkq8LnoQfRUQ3hg0TVBN0-M-zfVikPConwJFgJRT_KDS6aqUowykgb0I8j2Kg9BI6L8xNOtZoW6UnCq2jjcFYVUQrbFmZIklqBslnaBliM3q5wsOM4CPbaSzREOeb_XJEMmZonf6KsB31CM7y-6AfVmnVyYZwD4xvuI_4HHDIhK1kHs_skhQMtzfdxA_qu4m8A0RA8uQUTXjxT2jhzxjxdQMydEKrqC9y_r_Kf_eshg7YdnxMtTD7k2HA8Ch2"/>
-</div>
-</div>
-<!-- Vertical Card -->
-<div class="glass-card p-8 rounded-2xl border-primary-container/20">
-<span class="font-label-md text-primary-container">02 / KINETIC ENERGY</span>
-<h3 class="font-headline-lg text-[24px] mt-base mb-stack-md">Mitochondrial Support</h3>
-<p class="text-on-surface-variant font-body-sm mb-stack-md">
-                        B-Vitamin complexes are delivered in their methylated forms (5-MTHF) for immediate ATP production. No jitters, just raw cellular power.
-                    </p>
-<ul class="space-y-base">
-<li class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary-container text-sm">check_circle</span>
-<span class="font-label-md text-[10px]">Methylated B12</span>
-</li>
-<li class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary-container text-sm">check_circle</span>
-<span class="font-label-md text-[10px]">CoQ10 Infusion</span>
-</li>
-<li class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary-container text-sm">check_circle</span>
-<span class="font-label-md text-[10px]">Pure NADH</span>
-</li>
-</ul>
-</div>
-</div>
-</div>
+
+<!-- HERO -->
+<section class="section-pad" style="padding:96px 48px;background:#fff;position:relative;overflow:hidden;">
+  <div class="glow-blob" style="width:500px;height:500px;top:-100px;right:-60px;"></div>
+  <div style="max-width:1280px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+    <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:16px;">Doctor-Led Formulation</div>
+    <h1 class="hero-h1" style="font-size:48px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.1;">
+      Most recovery products are formulated by marketing teams.<br/><span style="color:#9600c9;">Ours was formulated in a lab.</span>
+    </h1>
+    <p style="font-size:17px;color:#444748;max-width:600px;margin:0 auto 48px;line-height:1.65;">We stripped away the neon branding, the proprietary blends, and the pseudo-science. What remains is a clinically precise, hyper-efficient hydration matrix designed specifically for the unique physiological demands of multi-day events.</p>
+    <a href="product.html" class="btn-primary" style="padding:15px 36px;font-size:14px;">DOWNLOAD FULL CLINICAL BRIEF</a>
+  </div>
 </section>
-<!-- Why Electrolytes Matter: Interactive Section -->
-<section class="py-stack-lg relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-b from-transparent via-primary-container/5 to-transparent"></div>
-<div class="container mx-auto px-margin-mobile md:px-margin-desktop relative z-10">
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg items-center">
-<div class="order-2 lg:order-1">
-<div class="relative w-full aspect-square max-w-md mx-auto">
-<!-- Abstract Infographic -->
-<div class="absolute inset-0 border-[2px] border-primary-container/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
-<div class="absolute inset-8 border-[1px] border-tertiary-fixed-dim/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-<div class="absolute inset-0 flex items-center justify-center">
-<div class="text-center">
-<span class="font-display-lg text-[64px] text-primary-container neon-glow">H₂O+</span>
-<p class="font-label-md text-on-surface-variant tracking-widest">IONIC BALANCE</p>
-</div>
-</div>
-<!-- Ion Markers -->
-<div class="absolute top-0 left-1/2 -translate-x-1/2 bg-surface p-3 glass-card rounded-xl">
-<span class="font-label-md text-primary-container">Mg²⁺</span>
-</div>
-<div class="absolute bottom-10 left-0 bg-surface p-3 glass-card rounded-xl">
-<span class="font-label-md text-tertiary-fixed">K⁺</span>
-</div>
-<div class="absolute top-1/2 right-0 bg-surface p-3 glass-card rounded-xl">
-<span class="font-label-md text-primary-container">Na⁺</span>
-</div>
-</div>
-</div>
-<div class="order-1 lg:order-2">
-<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-md">
-                        Why <span class="text-tertiary-fixed">Electrolytes</span> Matter.
-                    </h2>
-<p class="font-body-md text-on-surface-variant mb-stack-md">
-                        In a high-energy environment, you don't just lose water—you lose electrical conductivity. Without the precise ratio of Sodium, Potassium, and Magnesium, your neurons fire slower, leading to "brain fog" and physical exhaustion.
-                    </p>
-<div class="space-y-gutter">
-<div class="flex items-start gap-gutter">
-<div class="bg-primary-container/20 p-4 rounded-xl">
-<span class="material-symbols-outlined text-primary-container">bolt</span>
-</div>
-<div>
-<h4 class="font-headline-lg text-[18px] mb-1">Signal Transmission</h4>
-<p class="font-body-sm text-on-surface-variant">Electrolytes are the messengers. Our 3:1:1 ratio ensures peak cognitive processing speeds even after 6 hours of activity.</p>
-</div>
-</div>
-<div class="flex items-start gap-gutter">
-<div class="bg-primary-container/20 p-4 rounded-xl">
-<span class="material-symbols-outlined text-primary-container">opacity</span>
-</div>
-<div>
-<h4 class="font-headline-lg text-[18px] mb-1">Cellular Volumization</h4>
-<p class="font-body-sm text-on-surface-variant">Hyper-hydration pulls water into the cells, preventing the "shriveled cell" syndrome that causes hangovers.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+<hr style="border:none;border-top:1px solid #e2e2e2;"/>
+
+<!-- TEAM -->
+<section class="section-pad" style="padding:96px 48px;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col">
+    <div>
+      <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:20px;">The Minds Behind the Matrix</div>
+      <h2 style="font-size:34px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;line-height:1.15;">Developed by two practising physicians from Cambridge University.</h2>
+      <p style="font-size:16px;color:#444748;line-height:1.65;margin-bottom:36px;">They saw the devastating effects of severe dehydration in acute care and noticed how over-the-counter solutions were severely lacking in efficacy and bioavailability.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:16px;padding:18px;background:#f9f9f9;border:1px solid #e2e2e2;border-left:3px solid #9600c9;border-radius:4px;">
+          <div style="width:44px;height:44px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:#fff;font-size:20px;">person</span>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#000;">Dr. Sarah Jenkins</div>
+            <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.06em;margin-top:2px;">MBBS, PhD Cambridge</div>
+            <div style="font-size:13px;color:#747878;margin-top:4px;">Emergency Medicine &amp; Acute Care</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;padding:18px;background:#f9f9f9;border:1px solid #e2e2e2;border-left:3px solid #9600c9;border-radius:4px;">
+          <div style="width:44px;height:44px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span class="material-symbols-outlined" style="color:#fff;font-size:20px;">person</span>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:#000;">Dr. Marcus Thomas</div>
+            <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.06em;margin-top:2px;">MD, Biomedical Engineering</div>
+            <div style="font-size:13px;color:#747878;margin-top:4px;">Neurosurgeon &amp; Bioavailability Research</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(145deg,#f3e6ff 0%,#fff 60%);border:1px solid #e2e2e2;border-radius:16px;padding:48px;display:flex;flex-direction:column;gap:20px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;flex-shrink:0;margin-top:2px;">format_quote</span>
+        <p style="font-size:15px;color:#444748;line-height:1.65;font-style:italic;">"We designed RaVeVibe for the scenario we kept seeing in A&amp;E every Monday morning after festival weekends. Young people, severely dehydrated, electrolyte-depleted. There was nothing clinical-grade and accessible enough for them to have used the night before."</p>
+      </div>
+      <div style="border-top:1px solid #e2e2e2;padding-top:16px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#000;">Dr. Sarah Jenkins</div>
+          <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.05em;">Co-Founder</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Clinical Ingredients Grid -->
-<section class="py-stack-lg bg-surface-container-highest">
-<div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-surface text-center mb-stack-lg">Clinical Dosage. Zero Fillers.</h2>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<div class="glass-card p-6 rounded-xl hover:translate-y-[-4px]">
-<span class="font-label-md text-primary-container mb-base block">NOOTROPIC</span>
-<h4 class="font-headline-lg text-[20px] mb-base">L-Theanine</h4>
-<p class="font-body-sm text-on-surface-variant">Calms the nervous system without inducing drowsiness. The perfect sensory anchor.</p>
-</div>
-<div class="glass-card p-6 rounded-xl hover:translate-y-[-4px]">
-<span class="font-label-md text-primary-container mb-base block">DETOX</span>
-<h4 class="font-headline-lg text-[20px] mb-base">NAC</h4>
-<p class="font-body-sm text-on-surface-variant">N-Acetyl Cysteine replenishes glutathione, the body's master antioxidant for liver protection.</p>
-</div>
-<div class="glass-card p-6 rounded-xl hover:translate-y-[-4px]">
-<span class="font-label-md text-primary-container mb-base block">RECOVERY</span>
-<h4 class="font-headline-lg text-[20px] mb-base">D-Ribose</h4>
-<p class="font-body-sm text-on-surface-variant">The essential sugar molecule for ATP synthesis and muscle recovery.</p>
-</div>
-<div class="glass-card p-6 rounded-xl hover:translate-y-[-4px]">
-<span class="font-label-md text-primary-container mb-base block">HYDRATION</span>
-<h4 class="font-headline-lg text-[20px] mb-base">Pink Salt</h4>
-<p class="font-body-sm text-on-surface-variant">84+ trace minerals to support cellular communication and fluid balance.</p>
-</div>
-</div>
-</div>
+
+<hr style="border:none;border-top:1px solid #e2e2e2;"/>
+
+<!-- PRECISION COMPONENTS -->
+<section class="section-pad" style="padding:96px 48px;background:#fff;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:64px;">
+      <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">The Formula</div>
+      <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;">Precision Components.</h2>
+      <p style="font-size:16px;color:#444748;max-width:500px;margin:0 auto;">Every ingredient serves a physiological purpose. No fillers, no fairy dusting. Just active medical-grade recovery.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="six-col">
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">water_drop</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">500mg</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Sodium (NaCl)</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">Critical regulator of fluid absorption, pulling water across the cellular membrane instantly.</p>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">bolt</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">200mg</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Magnesium Glycinate</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">High bioavailability form to immediately reduce muscle cramping and ease nervous system tension.</p>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">electric_bolt</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">380mg</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Potassium (K+)</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">Works in tandem with sodium to restore the cellular electrical gradient essential for energy.</p>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">hub</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">Complex</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">B-Vitamin Complex</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">Critical cofactors for ATP production, clearing neurological fog and restoring metabolic baseline.</p>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">eco</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">Natural</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Coconut Water Powder</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">Provides a natural gentle matrix of trace minerals to support the primary electrolyte payload.</p>
+      </div>
+      <div class="card" style="padding:28px;">
+        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">health_and_safety</span>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">0g</div>
+        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Zero Artificials</h3>
+        <p style="font-size:13px;color:#444748;line-height:1.6;">Absolutely no sweeteners, aspartame, or synthetic dyes that disrupt the gut microbiome.</p>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Lab Reports CTA -->
-<section class="py-stack-lg relative">
-<div class="container mx-auto px-margin-mobile md:px-margin-desktop">
-<div class="bg-primary-container p-stack-lg rounded-[2rem] flex flex-col md:flex-row justify-between items-center gap-stack-md overflow-hidden relative">
-<div class="absolute inset-0 opacity-10 pointer-events-none">
-<div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-black via-transparent to-transparent"></div>
-</div>
-<div class="relative z-10">
-<h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-on-primary mb-base">Transparency is Science.</h2>
-<p class="font-body-md text-on-primary/80 max-w-xl">Download our full clinical whitepaper and batch-specific lab reports. We have nothing to hide.</p>
-</div>
-<div class="relative z-10 flex flex-col sm:flex-row gap-base">
-<button class="bg-on-primary text-primary-container font-label-md text-label-md px-8 py-4 rounded-full flex items-center gap-base hover:shadow-xl transition-all">
-<span class="material-symbols-outlined">download</span>
-                        VIEW LAB REPORTS
-                    </button>
-<button class="border-2 border-on-primary/20 text-on-primary font-label-md text-label-md px-8 py-4 rounded-full hover:bg-on-primary/5 transition-all">
-                        READ WHITEPAPER
-                    </button>
-</div>
-</div>
-</div>
+
+<hr style="border:none;border-top:1px solid #e2e2e2;"/>
+
+<!-- BIOAVAILABILITY / TRANSPARENCY -->
+<section class="section-pad" style="padding:96px 48px;background:#f9f9f9;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;" class="two-col">
+      <div>
+        <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:20px;">Transparency Is Science</div>
+        <h2 style="font-size:34px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;line-height:1.15;">No proprietary blends. Every milligram disclosed.</h2>
+        <p style="font-size:16px;color:#444748;line-height:1.65;margin-bottom:32px;">Proprietary blends are a marketing invention that lets companies hide the fact that active ingredients are present in sub-clinical "fairy dust" doses. We disclose every milligram. You can verify every claim.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:48px;height:48px;background:#000;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;font-weight:800;color:#fff;" class="mono">6</span>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:#000;">Active Ingredients</div>
+              <div style="font-size:13px;color:#747878;">All clinically dosed, all disclosed</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:48px;height:48px;background:#9600c9;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:18px;font-weight:800;color:#fff;" class="mono">0</span>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:#000;">Proprietary Blends</div>
+              <div style="font-size:13px;color:#747878;">Nothing hidden. Full transparency always.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:48px;height:48px;background:#000;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:14px;font-weight:800;color:#fff;" class="mono">15</span>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:#000;">Calories per sachet</div>
+              <div style="font-size:13px;color:#747878;">Effective, not caloric</div>
+            </div>
+          </div>
+        </div>
+        <a href="product.html" class="btn-primary">DOWNLOAD FULL CLINICAL BRIEF</a>
+      </div>
+      <div style="background:#000;border-radius:16px;padding:40px;color:#fff;">
+        <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:24px;">Nutritional Information (per sachet)</div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Calories</span>
+            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">15 kcal</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Sodium</span>
+            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">500 mg</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Potassium</span>
+            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">380 mg</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Magnesium</span>
+            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">200 mg</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Total Sugars</span>
+            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0 g</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;">
+            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Artificial Additives</span>
+            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-white/5 w-full py-stack-lg flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-base">
-<div class="font-display-lg text-headline-lg-mobile text-primary-container">RaVeVibe</div>
-<div class="flex flex-wrap justify-center gap-stack-md text-on-surface-variant font-body-sm text-body-sm">
-<a class="hover:text-tertiary-fixed transition-colors" href="#">Privacy Policy</a>
-<a class="hover:text-tertiary-fixed transition-colors" href="#">Terms of Service</a>
-<a class="text-primary-container font-bold hover:text-tertiary-fixed transition-colors" href="#">Lab Reports</a>
-<a class="hover:text-tertiary-fixed transition-colors" href="#">Contact</a>
-</div>
-<div class="text-on-surface-variant font-body-sm text-body-sm">© 2024 RaVeVibe LABS. FOR THE RAVE GENERATION.</div>
+
+<!-- CTA STRIP -->
+<section style="background:#9600c9;padding:64px 48px;text-align:center;">
+  <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:12px;">Ready to recover properly?</div>
+  <h2 style="font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:24px;">Start your first sachet tonight.</h2>
+  <a href="product.html" style="display:inline-block;background:#fff;color:#9600c9;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:14px 36px;border-radius:9999px;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">SHOP NOW</a>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#000;color:#fff;padding:64px 48px 32px;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.08);" class="footer-cols">
+      <div>
+        <div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">RaVeVibe</div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p>
+      </div>
+      <div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Shop</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="science.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">The Science</a>
+          <a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Flavours</a>
+          <a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Festival Bundle</a>
+          <a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Recovery Guide</a>
+        </div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Legal</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Privacy Policy</a>
+          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Terms of Service</a>
+          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Shipping &amp; Returns</a>
+        </div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Contact</div>
+        <a href="mailto:hello@ravevibe.co" style="font-size:14px;color:rgba(255,255,255,0.55);">hello@ravevibe.co</a>
+      </div>
+    </div>
+    <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 RaVeVibe Ltd. Doctor-led, Rave-native recovery.</div>
+  </div>
 </footer>
-<script>
-        // Micro-interactions for glass cards
-        document.querySelectorAll('.glass-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
-    </script>
-</body></html>
+</body>
+</html>
