@@ -27,13 +27,45 @@ a { text-decoration: none; }
 .flavour-chip:hover { border-color:#9600c9; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
 .badge-pulse { animation: pulse 2s ease-in-out infinite; }
+
 @media (max-width:768px) {
   .desktop-nav,.desktop-cta { display:none !important; }
   .mobile-btn { display:flex !important; }
+
+  /* Bundle grid → single column, no overflow */
   .three-col { grid-template-columns:1fr !important; }
-  .section-pad { padding:64px 20px !important; }
-  .nav-wrap { padding:0 20px !important; }
-  .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
+  .section-pad { padding:48px 16px !important; }
+  .nav-wrap { padding:0 16px !important; }
+
+  /* Footer: 2-col then single on very small */
+  .footer-cols { grid-template-columns:1fr 1fr !important; gap:24px !important; }
+  .trust-row { grid-template-columns:1fr 1fr !important; gap:20px !important; }
+
+  /* Header hero text scale */
+  h1 { font-size:30px !important; }
+
+  /* Bundle cards: reduce internal padding so content breathes */
+  .card { padding:20px !important; }
+
+  /* Selection bar: stack vertically */
+  #selectionBar { flex-direction:column !important; align-items:flex-start !important; }
+  #selectionBar button { width:100% !important; }
+
+  /* Flavour chips: allow wrapping, full touchable size */
+  .flavour-chip { font-size:12px !important; padding:10px 14px !important; }
+
+  /* Trust row icons */
+  .trust-row span { font-size:22px !important; }
+
+  /* "MOST POPULAR" badge doesn't clip */
+  .badge-pulse { font-size:9px !important; padding:4px 12px !important; }
+
+  /* Card image panels: smaller height on mobile */
+  .card-img-panel { min-height:120px !important; padding:20px !important; }
+}
+
+@media (max-width:400px) {
+  .footer-cols { grid-template-columns:1fr !important; }
   .trust-row { grid-template-columns:1fr 1fr !important; }
 }
 </style>
@@ -68,19 +100,19 @@ a { text-decoration: none; }
 </nav>
 
 <!-- HEADER -->
-<section class="section-pad" style="padding:80px 48px 64px;background:#fff;text-align:center;border-bottom:1px solid #e2e2e2;">
+<section style="padding:60px 48px 48px;background:#fff;text-align:center;border-bottom:1px solid #e2e2e2;" class="section-pad">
   <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">Build Your Loadout</div>
-  <h1 style="font-size:44px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;">Choose your level of <span style="color:#9600c9;">recovery</span>.</h1>
+  <h1 style="font-size:40px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;line-height:1.15;">Choose your level of <span style="color:#9600c9;">recovery</span>.</h1>
   <p style="font-size:16px;color:#444748;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime.</p>
 </section>
 
 <!-- BUNDLE CARDS -->
-<section class="section-pad" style="padding:72px 48px;">
+<section style="padding:56px 48px;" class="section-pad">
   <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="three-col">
 
     <!-- SOLO -->
     <div class="card" style="padding:32px;display:flex;flex-direction:column;">
-      <div style="background:linear-gradient(145deg,#1a0030 0%,#3d0066 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
+      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#3d0066 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(150,0,201,0.3) 0%,transparent 70%);"></div>
         <div style="text-align:center;z-index:1;">
           <div style="width:60px;height:100px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:30px;margin:0 auto;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 32px rgba(150,0,201,0.4);"></div>
@@ -103,7 +135,7 @@ a { text-decoration: none; }
     <!-- SEASON PASS — FEATURED -->
     <div style="background:#000;border-radius:8px;padding:32px;display:flex;flex-direction:column;position:relative;">
       <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#9600c9;color:#fff;font-size:10px;padding:5px 18px;border-radius:9999px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;" class="mono badge-pulse">MOST POPULAR</div>
-      <div style="background:linear-gradient(145deg,#1a0030 0%,#4d0080 50%,#9600c9 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;border:1px solid rgba(188,0,251,0.3);">
+      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#4d0080 50%,#9600c9 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;border:1px solid rgba(188,0,251,0.3);">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(188,0,251,0.4) 0%,transparent 70%);"></div>
         <div style="text-align:center;z-index:1;">
           <div style="width:70px;height:120px;background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(188,0,251,0.4) 100%);border-radius:35px;margin:0 auto;border:1px solid rgba(255,255,255,0.3);box-shadow:0 0 48px rgba(188,0,251,0.6);"></div>
@@ -129,7 +161,7 @@ a { text-decoration: none; }
 
     <!-- SQUAD PACK -->
     <div class="card" style="padding:32px;display:flex;flex-direction:column;">
-      <div style="background:linear-gradient(145deg,#1a0030 0%,#330055 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
+      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#330055 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(100,0,150,0.3) 0%,transparent 70%);"></div>
         <div style="text-align:center;z-index:1;display:flex;gap:12px;">
           <div style="width:44px;height:76px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 20px rgba(150,0,201,0.3);"></div>
@@ -193,7 +225,7 @@ a { text-decoration: none; }
 </section>
 
 <!-- TRUST ROW -->
-<section class="section-pad" style="padding:64px 48px;background:#f9f9f9;border-top:1px solid #e2e2e2;">
+<section style="padding:56px 48px;background:#f9f9f9;border-top:1px solid #e2e2e2;" class="section-pad">
   <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;" class="trust-row">
     <div>
       <span class="material-symbols-outlined" style="font-size:28px;color:#9600c9;margin-bottom:12px;display:block;">local_shipping</span>

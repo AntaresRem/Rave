@@ -28,7 +28,7 @@ a { text-decoration: none; }
 .flavour-tab { cursor:pointer;padding:10px 20px;border-radius:9999px;font-size:14px;font-weight:500;transition:all 0.2s;border:1.5px solid #e2e2e2;background:#fff;color:#444748; }
 .flavour-tab.active { background:#000;color:#fff;border-color:#000; }
 .flavour-panel { display:none; }
-.flavour-panel.active { display:grid; }
+.flavour-panel.active { display:grid; grid-template-columns:1fr 1fr; }
 
 /* Qty selector */
 .qty-btn { width:36px;height:36px;border-radius:4px;border:1px solid #e2e2e2;background:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:border-color 0.15s; }
@@ -41,11 +41,18 @@ a { text-decoration: none; }
   .desktop-nav,.desktop-cta { display:none !important; }
   .mobile-btn { display:flex !important; }
   .two-col { grid-template-columns:1fr !important;gap:40px !important; }
+  .flavour-panel.active { grid-template-columns:1fr !important; gap:32px !important; }
   .three-col { grid-template-columns:1fr !important; }
-  .section-pad { padding:64px 20px !important; }
+  .section-pad { padding:48px 20px !important; }
+  #tabs-bar { padding:12px 20px !important; }
   .nav-wrap { padding:0 20px !important; }
   .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
   .stats-row { grid-template-columns:1fr 1fr !important; }
+  h1 { font-size:30px !important; }
+  .qty-pack { min-width:unset !important; flex:1; }
+}
+@media (max-width:400px) {
+  .footer-cols { grid-template-columns:1fr !important; }
 }
 </style>
 </head>
@@ -91,7 +98,7 @@ a { text-decoration: none; }
 <div style="max-width:1280px;margin:0 auto;padding:64px 48px;" class="section-pad">
 
   <!-- CITRUS -->
-  <div id="panel-citrus" class="flavour-panel active" style="grid-template-columns:1fr 1fr;gap:64px;align-items:start;" class="two-col">
+  <div id="panel-citrus" class="flavour-panel active two-col" style="gap:64px;align-items:start;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
       <div style="width:100%;aspect-ratio:4/5;background:linear-gradient(145deg,#1a0020 0%,#3d006b 30%,#ff6600 70%,#ffcc00 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 64px rgba(150,0,201,0.2);position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 70%,rgba(255,140,0,0.4) 0%,transparent 60%);"></div>
@@ -159,7 +166,7 @@ a { text-decoration: none; }
   </div>
 
   <!-- BERRY -->
-  <div id="panel-berry" class="flavour-panel" style="grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
+  <div id="panel-berry" class="flavour-panel two-col" style="gap:64px;align-items:start;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
       <div style="width:100%;aspect-ratio:4/5;background:linear-gradient(145deg,#0d001a 0%,#2a004d 40%,#6600aa 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 64px rgba(100,0,160,0.25);position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 70%,rgba(102,0,170,0.5) 0%,transparent 60%);"></div>
@@ -198,7 +205,7 @@ a { text-decoration: none; }
   </div>
 
   <!-- MINT -->
-  <div id="panel-mint" class="flavour-panel" style="grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
+  <div id="panel-mint" class="flavour-panel two-col" style="gap:64px;align-items:start;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
       <div style="width:100%;aspect-ratio:4/5;background:linear-gradient(145deg,#001a0d 0%,#003322 40%,#00aa66 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 24px 64px rgba(0,140,80,0.2);position:relative;overflow:hidden;">
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 70%,rgba(0,140,80,0.4) 0%,transparent 60%);"></div>

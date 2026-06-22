@@ -30,10 +30,14 @@ a { text-decoration: none; }
   .mobile-btn { display:flex !important; }
   .two-col { grid-template-columns:1fr !important;gap:40px !important; }
   .six-col { grid-template-columns:1fr 1fr !important; }
-  .section-pad { padding:64px 20px !important; }
+  .section-pad { padding:56px 20px !important; }
   .nav-wrap { padding:0 20px !important; }
   .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
-  .hero-h1 { font-size:34px !important; }
+  .hero-h1 { font-size:32px !important; line-height:1.15 !important; }
+}
+@media (max-width:400px) {
+  .six-col { grid-template-columns:1fr !important; }
+  .footer-cols { grid-template-columns:1fr !important; }
 }
 </style>
 </head>

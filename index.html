@@ -100,9 +100,15 @@ a { text-decoration: none; }
   .four-col { grid-template-columns: 1fr 1fr !important; }
   .three-col { grid-template-columns: 1fr !important; }
   .hero-h1 { font-size: 38px !important; }
-  .section-pad { padding: 64px 20px !important; }
+  .section-pad { padding: 56px 20px !important; }
   .nav-wrap { padding: 0 20px !important; }
   .footer-cols { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+  #neural-canvas-wrap { height: 280px !important; max-width: 100% !important; }
+  .hero-stats { flex-direction: column !important; gap: 10px !important; }
+}
+@media (max-width: 400px) {
+  .four-col { grid-template-columns: 1fr !important; }
+  .footer-cols { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
@@ -155,7 +161,7 @@ a { text-decoration: none; }
         <a href="product.html" class="btn-primary">SHOP NOW</a>
         <a href="science.html" class="btn-ghost">The Science</a>
       </div>
-      <div style="margin-top:40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <div class="hero-stats" style="margin-top:40px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:7px;">
           <div style="width:7px;height:7px;border-radius:50%;background:#9600c9;flex-shrink:0;"></div>
           <span class="mono" style="font-size:11px;color:#747878;letter-spacing:0.06em;">CLINICALLY DOSED</span>
@@ -171,7 +177,7 @@ a { text-decoration: none; }
       </div>
     </div>
     <div style="display:flex;justify-content:center;align-items:center;" class="reveal reveal-delay-2">
-      <div style="width:100%;max-width:440px;height:480px;background:linear-gradient(145deg,#1c0033 0%,#3d006b 45%,#1a0030 100%);border-radius:24px;position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(150,0,201,0.22);">
+      <div id="neural-canvas-wrap" style="width:100%;max-width:440px;height:480px;background:linear-gradient(145deg,#1c0033 0%,#3d006b 45%,#1a0030 100%);border-radius:24px;position:relative;overflow:hidden;box-shadow:0 32px 80px rgba(150,0,201,0.22);">
         <!-- Live neural network canvas -->
         <canvas id="neural-canvas"></canvas>
         <!-- Floating product pill on top -->
