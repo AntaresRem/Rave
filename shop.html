@@ -8,10 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #050508; --surface: #0d0d14; --surface2: #12121c;
-  --border: rgba(255,255,255,0.07); --purple: #9600c9; --purple-bright: #bc00fb;
-  --purple-glow: rgba(150,0,201,0.4); --text: #f0f0f5;
-  --text-muted: rgba(240,240,245,0.45); --text-dim: rgba(240,240,245,0.22);
+  --bg: #f9f9f9; --surface: #ffffff; --surface2: #f3f3f5;
+  --border: rgba(0,0,0,0.08); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-glow: rgba(150,0,201,0.3); --text: #1a1c1c;
+  --text-muted: rgba(26,28,28,0.5); --text-dim: rgba(26,28,28,0.3);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -25,7 +25,7 @@ a { text-decoration: none; color: inherit; }
 .section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .section-label-line { width: 24px; height: 1px; background: var(--purple); }
 .section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
-.section-h2 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1.05; }
+.section-h2 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
 .section-h2 em { font-style: italic; color: var(--purple-bright); }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -34,11 +34,11 @@ a { text-decoration: none; color: inherit; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 /* Nav */
 .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
-.nav.scrolled { background: rgba(5,5,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+.nav.scrolled { background: rgba(249,249,249,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #1a1c1c; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
-.nav-link:hover { color: #fff; }
+.nav-link:hover { color: #1a1c1c; }
 .nav-link.active { color: var(--purple-bright); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
@@ -51,7 +51,7 @@ a { text-decoration: none; color: inherit; }
 /* Bundle cards */
 .bundle-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; display: flex; flex-direction: column; transition: all 0.3s; position: relative; overflow: hidden; }
 .bundle-card:hover { border-color: rgba(150,0,201,0.3); transform: translateY(-6px); box-shadow: 0 24px 80px rgba(150,0,201,0.12); }
-.bundle-card.featured { background: linear-gradient(145deg, #080014 0%, #120025 100%); border-color: rgba(150,0,201,0.45); }
+.bundle-card.featured { background: linear-gradient(145deg, #f5ebff 0%, #ede0ff 100%); border-color: rgba(150,0,201,0.4); }
 .bundle-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--purple); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 20px; border-radius: 9999px; white-space: nowrap; animation: badge-pulse 2s ease-in-out infinite; }
 .qty-pack { cursor: pointer; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-align: center; transition: all 0.25s; background: var(--surface2); }
 .qty-pack.active { border-color: var(--purple); background: rgba(150,0,201,0.1); }
@@ -95,12 +95,12 @@ a { text-decoration: none; color: inherit; }
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
-    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#fff;">
-      <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="white"/><rect y="8" width="22" height="2" rx="1" fill="white"/><rect y="16" width="22" height="2" rx="1" fill="white"/></svg>
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#1a1c1c;">
+      <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
     </button>
   </div>
 </nav>
-<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(5,5,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(249,249,249,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
@@ -116,7 +116,7 @@ a { text-decoration: none; color: inherit; }
       <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;"></span>
       <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);">BUILD YOUR LOADOUT</span>
     </div>
-    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-bright);">recovery.</em></h1>
+    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-bright);">recovery.</em></h1>
     <p class="reveal reveal-delay-2" style="font-size:17px;color:var(--text-muted);line-height:1.7;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime. No lock-in.</p>
   </div>
 </section>
@@ -134,7 +134,7 @@ a { text-decoration: none; color: inherit; }
       <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;">Solo Raviver</div>
       <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">3 SACHETS</div>
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
-        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£15</span>
+        <span style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">£15</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£18</span>
       </div>
       <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE £3</div>
@@ -183,7 +183,7 @@ a { text-decoration: none; color: inherit; }
       <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;">Squad Pack</div>
       <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">12 SACHETS</div>
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
-        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£34</span>
+        <span style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">£34</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£40</span>
       </div>
       <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE 15%</div>
@@ -202,7 +202,7 @@ a { text-decoration: none; color: inherit; }
       <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">shopping_bag</span>
       <div>
         <div class="mono" style="font-size:9px;letter-spacing:0.1em;color:var(--text-dim);text-transform:uppercase;">YOUR SELECTION</div>
-        <div id="selectionLabel" style="font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Season Pass — £40/mo</div>
+        <div id="selectionLabel" style="font-size:15px;font-weight:700;color:#1a1c1c;margin-top:2px;">Season Pass — £40/mo</div>
       </div>
     </div>
     <button class="btn-primary" style="padding:14px 36px;font-size:13px;">CHECKOUT →</button>
@@ -241,35 +241,35 @@ a { text-decoration: none; color: inherit; }
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
         <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">local_shipping</span>
       </div>
-      <div style="font-size:15px;font-weight:700;color:#fff;">Free Delivery</div>
+      <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Free Delivery</div>
       <div style="font-size:13px;color:var(--text-muted);">On all orders over £30</div>
     </div>
     <div class="trust-item reveal reveal-delay-2">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
         <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">verified</span>
       </div>
-      <div style="font-size:15px;font-weight:700;color:#fff;">30-Day Guarantee</div>
+      <div style="font-size:15px;font-weight:700;color:#1a1c1c;">30-Day Guarantee</div>
       <div style="font-size:13px;color:var(--text-muted);">No questions asked returns</div>
     </div>
     <div class="trust-item reveal reveal-delay-3">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
         <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">lock</span>
       </div>
-      <div style="font-size:15px;font-weight:700;color:#fff;">Secure Checkout</div>
+      <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Secure Checkout</div>
       <div style="font-size:13px;color:var(--text-muted);">256-bit SSL encryption</div>
     </div>
     <div class="trust-item reveal reveal-delay-1">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
         <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">cancel</span>
       </div>
-      <div style="font-size:15px;font-weight:700;color:#fff;">Cancel Anytime</div>
+      <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Cancel Anytime</div>
       <div style="font-size:13px;color:var(--text-muted);">Subscriptions are flexible</div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#000;padding:72px 48px 32px;border-top:1px solid var(--border);">
+<footer style="background:#1a1c1c;padding:72px 48px 32px;border-top:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;">
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--border);" class="footer-grid">
       <div>
