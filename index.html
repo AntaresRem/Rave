@@ -6,6 +6,9 @@
 <title>Ravive — Rave Hard. Recover Right.</title>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
 :root {
   --bg: #f8f8f8;
@@ -87,7 +90,42 @@ a { text-decoration: none; color: inherit; }
 .offer-strip a { color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; margin-left: 8px; }
 .offer-strip + .nav { top: 36px; }
 
-/* ── HERO ── */
+/* ── HERO (scroll-animated) ── */
+#hero-section {
+  position: relative;
+  height: 220vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(100,0,180,0.14) 0%, transparent 65%), var(--bg);
+}
+#hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+#hero-text-block {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 48px;
+  max-width: 1280px;
+  margin: 0 auto;
+  z-index: 1;
+  pointer-events: none;
+}
+#hero-text-inner { max-width: 520px; padding-top: 60px; pointer-events: all; }
+#hero-sachet-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+#hero-sub-block { margin-top: 28px; }
+/* old hero grid — kept for non-JS fallback, hidden when JS runs */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
   position: relative; overflow: hidden;
@@ -542,62 +580,39 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
 </div>
 
-<!-- HERO -->
-<section class="hero" style="position:relative;z-index:1;">
-  <div class="hero-grid">
-    <div>
-      <div class="hero-eyebrow reveal">
-        <span class="hero-eyebrow-dot"></span>
-        <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
-      </div>
-      <h1 class="hero-h1 reveal reveal-delay-1">
-        RAVE<br/>
-        HARD.<br/>
-        <span class="accent">RECOVER</span><br/>
-        <span class="outline">RIGHT.</span>
-      </h1>
-      <p class="hero-sub reveal reveal-delay-2">
-        The electrolyte recovery system engineered by medical professionals for the unique physiological demands of multi-day events. Not a sports drink. A recovery protocol.
-      </p>
-      <div class="hero-ctas reveal reveal-delay-3">
-        <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 36px;">GET STARTED — FROM £15</a>
-        <a href="science.html" class="btn-ghost">The Science →</a>
-      </div>
-      <div class="hero-proof reveal reveal-delay-4">
-        <div class="avatar-stack">
-          <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
+<!-- HERO (scroll-animated) -->
+<section id="hero-section" style="position:relative;z-index:1;">
+  <div id="hero-sticky">
+    <!-- Text block — fades/blurs out on scroll -->
+    <div id="hero-text-block">
+      <div id="hero-text-inner">
+        <div class="hero-eyebrow" id="hero-eyebrow" style="opacity:0;">
+          <span class="hero-eyebrow-dot"></span>
+          <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
         </div>
-        <div>
-          <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
-          <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
+        <h1 class="hero-h1" id="hero-line1" style="opacity:0;filter:blur(12px);">
+          RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
+        </h1>
+        <div id="hero-sub-block" style="opacity:0;">
+          <p class="hero-sub">The electrolyte recovery system engineered by medical professionals for multi-day events. Not a sports drink. A recovery protocol.</p>
+          <div class="hero-ctas">
+            <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 36px;">GET STARTED — FROM £15</a>
+            <a href="science.html" class="btn-ghost">The Science →</a>
+          </div>
+          <div class="hero-proof" style="margin-top:32px;">
+            <div class="avatar-stack">
+              <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
+              <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 3D PRODUCT -->
-    <div class="product-showcase reveal reveal-delay-2">
-      <div class="product-orb"></div>
-      <div class="product-ring product-ring-1"></div>
-      <div class="product-ring product-ring-2"></div>
-      <div class="product-can" onclick="for(let i=0;i<6;i++) setTimeout(firePulse,i*60)" title="Click me">
-        <div class="can-label">
-          <div class="can-brand">Ravive</div>
-          <div class="can-name">Recovery</div>
-        </div>
-      </div>
-      <!-- Floating data chips -->
-      <div class="data-chip data-chip-1">
-        <div class="chip-val">500mg</div>
-        <div class="chip-label mono">Sodium</div>
-      </div>
-      <div class="data-chip data-chip-2">
-        <div class="chip-val">380mg</div>
-        <div class="chip-label mono">Potassium</div>
-      </div>
-      <div class="data-chip data-chip-3">
-        <div class="chip-val">200mg</div>
-        <div class="chip-label mono">Magnesium</div>
-      </div>
-    </div>
+    <!-- Three.js sachet canvas -->
+    <canvas id="hero-sachet-canvas"></canvas>
   </div>
 </section>
 
@@ -1128,6 +1143,260 @@ window.addEventListener('scroll',()=>{ stickyCta.classList.toggle('show', window
 
 // ── Can click pulse (for the product 3D) ──
 function firePulse(){}
+
+// ══════════════════════════════════════════════════
+// HERO ANIMATION SYSTEM — Three.js sachet + GSAP
+// ══════════════════════════════════════════════════
+(function() {
+  if (typeof THREE === 'undefined' || typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const canvas = document.getElementById('hero-sachet-canvas');
+  if (!canvas) return;
+
+  // ── Renderer ──
+  const renderer = new THREE.WebGLRenderer({
+    canvas, alpha: true,
+    antialias: window.devicePixelRatio === 1
+  });
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // ── Scene & Camera ──
+  const scene  = new THREE.Scene();
+  const W = canvas.clientWidth, H = canvas.clientHeight;
+  const camera = new THREE.PerspectiveCamera(38, W / H, 0.1, 50);
+  camera.position.set(0, 0, 5.5);
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ── Sachet label texture ──
+  function makeSachetTexture() {
+    const tc = document.createElement('canvas');
+    tc.width = 512; tc.height = 768;
+    const c = tc.getContext('2d');
+
+    // Background — silver-purple gradient
+    const bg = c.createLinearGradient(0, 0, 512, 0);
+    bg.addColorStop(0,    '#8a7aa0');
+    bg.addColorStop(0.18, '#c4b8d8');
+    bg.addColorStop(0.38, '#e8e0f4');
+    bg.addColorStop(0.50, '#f5f0ff');
+    bg.addColorStop(0.62, '#dcd0f0');
+    bg.addColorStop(0.82, '#b8a8cc');
+    bg.addColorStop(1,    '#8a7aa0');
+    c.fillStyle = bg;
+    c.fillRect(0, 0, 512, 768);
+
+    // Purple tint band
+    const band = c.createLinearGradient(0, 220, 0, 540);
+    band.addColorStop(0,   'rgba(150,0,201,0)');
+    band.addColorStop(0.2, 'rgba(150,0,201,0.22)');
+    band.addColorStop(0.8, 'rgba(150,0,201,0.22)');
+    band.addColorStop(1,   'rgba(150,0,201,0)');
+    c.fillStyle = band;
+    c.fillRect(0, 220, 512, 320);
+
+    // Top accent line
+    c.fillStyle = 'rgba(150,0,201,0.35)';
+    c.fillRect(0, 180, 512, 10);
+    // Bottom accent line
+    c.fillRect(0, 568, 512, 10);
+
+    // Shine highlight
+    const shine = c.createLinearGradient(180, 0, 260, 0);
+    shine.addColorStop(0,   'rgba(255,255,255,0)');
+    shine.addColorStop(0.5, 'rgba(255,255,255,0.18)');
+    shine.addColorStop(1,   'rgba(255,255,255,0)');
+    c.fillStyle = shine;
+    c.fillRect(0, 0, 512, 768);
+
+    // Brand name
+    c.textAlign = 'center';
+    c.font = 'bold 52px Arial Black, Arial';
+    c.fillStyle = 'rgba(80,0,130,0.88)';
+    c.fillText('RAVIVE', 256, 360);
+
+    // Sub name
+    c.font = '22px Arial';
+    c.fillStyle = 'rgba(100,0,160,0.55)';
+    c.fillText('Recovery Electrolytes', 256, 400);
+
+    // Dose line
+    c.font = '15px Arial';
+    c.fillStyle = 'rgba(80,0,130,0.4)';
+    c.fillText('6g · Zero Sugar · 15 kcal', 256, 435);
+
+    // Eyebrow label
+    c.font = '600 13px Arial';
+    c.fillStyle = 'rgba(150,0,201,0.65)';
+    c.fillText('DOCTOR-FORMULATED', 256, 230);
+
+    // Tear notch hint at top
+    c.beginPath();
+    c.moveTo(220, 60); c.lineTo(256, 80); c.lineTo(292, 60);
+    c.strokeStyle = 'rgba(150,0,201,0.3)';
+    c.lineWidth = 2;
+    c.stroke();
+
+    // Small QR-style block
+    c.fillStyle = 'rgba(80,0,130,0.18)';
+    c.fillRect(196, 480, 120, 70);
+    for (let r = 0; r < 6; r++) for (let col = 0; col < 10; col++) {
+      if (Math.random() > 0.45) {
+        c.fillStyle = 'rgba(80,0,130,0.5)';
+        c.fillRect(200 + col * 11, 484 + r * 11, 9, 9);
+      }
+    }
+
+    return new THREE.CanvasTexture(tc);
+  }
+
+  // ── Sachet geometry (flat rounded rectangle shape) ──
+  const sachetGroup = new THREE.Group();
+
+  // Main body — thin box, wide and tall like a sachet
+  const bodyGeo = new THREE.BoxGeometry(1.8, 2.8, 0.12, 1, 1, 1);
+  const bodyMat = new THREE.MeshPhongMaterial({
+    map: makeSachetTexture(),
+    shininess: 120,
+    specular: new THREE.Color(0xffffff),
+  });
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  sachetGroup.add(body);
+
+  // Edge seal strips (top and bottom)
+  const sealGeo = new THREE.BoxGeometry(1.8, 0.14, 0.18);
+  const sealMat = new THREE.MeshPhongMaterial({ color: 0x6600aa, shininess: 60 });
+  const topSeal = new THREE.Mesh(sealGeo, sealMat);
+  topSeal.position.y = 1.47;
+  sachetGroup.add(topSeal);
+  const botSeal = new THREE.Mesh(sealGeo, sealMat);
+  botSeal.position.y = -1.47;
+  sachetGroup.add(botSeal);
+
+  // Side seals
+  const sideSealGeo = new THREE.BoxGeometry(0.12, 2.8, 0.18);
+  const sealL = new THREE.Mesh(sideSealGeo, sealMat);
+  sealL.position.x = -0.96;
+  sachetGroup.add(sealL);
+  const sealR = new THREE.Mesh(sideSealGeo, sealMat);
+  sealR.position.x = 0.96;
+  sachetGroup.add(sealR);
+
+  // Tear notch triangle at top
+  const notchGeo = new THREE.ConeGeometry(0.07, 0.18, 3);
+  const notchMat = new THREE.MeshPhongMaterial({ color: 0xbc00fb, shininess: 80 });
+  const notch = new THREE.Mesh(notchGeo, notchMat);
+  notch.position.set(0.4, 1.55, 0.05);
+  notch.rotation.z = Math.PI;
+  sachetGroup.add(notch);
+
+  scene.add(sachetGroup);
+
+  // ── Lighting ──
+  scene.add(new THREE.AmbientLight(0xd8d0f0, 1.1));
+
+  const key = new THREE.DirectionalLight(0xffffff, 2.6);
+  key.position.set(1, 4, 3);
+  scene.add(key);
+
+  const fill = new THREE.DirectionalLight(0xd0a0ff, 1.1);
+  fill.position.set(-3, 1, 2);
+  scene.add(fill);
+
+  const rim = new THREE.DirectionalLight(0xb000ff, 0.8);
+  rim.position.set(2, -1, -3);
+  scene.add(rim);
+
+  const bounce = new THREE.PointLight(0xe8c0ff, 0.5, 8);
+  bounce.position.set(0, -3, 1);
+  scene.add(bounce);
+
+  // ── Drag interaction ──
+  let isDragging = false, lastX = 0, velX = 0;
+  canvas.style.pointerEvents = 'auto';
+  canvas.addEventListener('mousedown', e => { isDragging = true; lastX = e.clientX; velX = 0; });
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    velX = (e.clientX - lastX) * 0.012;
+    sachetGroup.rotation.y += velX;
+    lastX = e.clientX;
+  });
+  window.addEventListener('mouseup', () => { isDragging = false; });
+  canvas.addEventListener('touchstart', e => { isDragging = true; lastX = e.touches[0].clientX; velX = 0; }, {passive:true});
+  window.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    velX = (e.touches[0].clientX - lastX) * 0.012;
+    sachetGroup.rotation.y += velX;
+    lastX = e.touches[0].clientX;
+  }, {passive:true});
+  window.addEventListener('touchend', () => { isDragging = false; });
+
+  // ── Scroll-driven tilt ──
+  let targetRotX = 0, targetPosY = 0;
+  function onScroll() {
+    const heroEl = document.getElementById('hero-section');
+    if (!heroEl) return;
+    const progress = Math.min(window.scrollY / heroEl.offsetHeight, 1);
+    targetRotX = progress * 1.2;
+    targetPosY = progress * -0.5;
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Render loop ──
+  let elapsed = 0;
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const dt = clock.getDelta();
+    elapsed += dt;
+
+    if (!isDragging) {
+      velX *= 0.92;
+      sachetGroup.rotation.y += velX + 0.004;
+    }
+    sachetGroup.rotation.x += (targetRotX - sachetGroup.rotation.x) * 0.07;
+    sachetGroup.position.y  += (targetPosY + Math.sin(elapsed * 0.9) * 0.08 - sachetGroup.position.y) * 0.07;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // ── GSAP scroll — fade/blur hero text out ──
+  const heroTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero-section',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.2,
+    }
+  });
+  heroTl
+    .to('#hero-line1',    { opacity: 0, filter: 'blur(10px)', y: -20, ease: 'none' }, 0.55)
+    .to('#hero-sub-block',{ opacity: 0, y: -12, ease: 'none' }, 0.45)
+    .to('#hero-eyebrow',  { opacity: 0, ease: 'none' }, 0.4);
+
+  // ── Page-load entrance animation ──
+  gsap.set(['#hero-line1','#hero-sub-block','#hero-eyebrow'], { opacity: 0 });
+  gsap.set('#hero-sachet-canvas', { opacity: 0, y: -60 });
+
+  const loadTl = gsap.timeline({ delay: 0.15 });
+  loadTl
+    .to('#hero-sachet-canvas', { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' })
+    .to('#hero-eyebrow',       { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.25)
+    .to('#hero-line1',         { opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power2.out' }, 0.35)
+    .to('#hero-sub-block',     { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0.6);
+
+  ScrollTrigger.refresh();
+})();
 </script>
 </body>
 </html>
