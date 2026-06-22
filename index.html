@@ -499,7 +499,38 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .mobile-btn { display: flex !important; }
   .hero { padding: 120px 20px 60px; }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  .hero-h1 { font-size: 44px; }
+
+  /* ── Hero animation: stack vertically on mobile ── */
+  #hero-section { height: 260vh; }
+  #hero-sticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+    padding: 0 24px;
+    padding-top: 100px;
+    gap: 0;
+    height: 100svh;
+    height: 100vh;
+  }
+  #hero-text-inner {
+    padding-top: 0;
+    order: 1;
+  }
+  #hero-sachet-wrap {
+    order: 2;
+    height: 42vh;
+    min-height: 220px;
+    max-height: 340px;
+    width: 100%;
+  }
+  .hero-h1 { font-size: 46px; margin-bottom: 18px; }
+  .hero-eyebrow { margin-bottom: 20px; }
+  #hero-sub-block { margin-top: 16px; }
+  .hero-sub { font-size: 14px; }
+  .hero-ctas { flex-direction: column; gap: 10px; }
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-secondary { width: 100%; text-align: center; }
+
   .product-showcase { height: 340px; order: -1; }
   .product-ring-1 { width: 280px; height: 280px; }
   .product-ring-2 { width: 340px; height: 340px; }
@@ -535,7 +566,8 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .pillars-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .hero-h1 { font-size: 36px; }
+  .hero-h1 { font-size: 38px; }
+  #hero-sachet-wrap { height: 36vh; min-height: 180px; }
 }
 </style>
 </head>
@@ -1161,9 +1193,15 @@ function firePulse(){}
   camera.position.set(0, 0.1, 6.5);
 
   function resize() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
+    const w = canvas.clientWidth || canvas.parentElement.clientWidth;
+    const h = canvas.clientHeight || canvas.parentElement.clientHeight;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    // On portrait/mobile the canvas is short — pull camera back proportionally
+    const isMobile = w < 600;
+    camera.fov = isMobile ? 32 : 26;
+    camera.position.z = isMobile ? 5.2 : 6.5;
     camera.updateProjectionMatrix();
   }
   resize();
