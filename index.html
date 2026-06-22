@@ -1157,8 +1157,8 @@ function firePulse(){}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  camera.position.set(0, 0, 5.2);
+  const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 50);
+  camera.position.set(0, 0.1, 6.5);
 
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -1169,200 +1169,211 @@ function firePulse(){}
   resize();
   window.addEventListener('resize', resize);
 
-  // ── Sachet front texture — painted to look like real sachet ──
+  // ── Sachet front texture (512×820 — tall narrow foil sachet) ──
   function makeFrontTex() {
     const tc = document.createElement('canvas');
-    tc.width = 512; tc.height = 720;
+    tc.width = 512; tc.height = 820;
     const cx = tc.getContext('2d');
-    const W = 512, H = 720;
+    const W = 512, H = 820;
 
-    // Base: dark purple background (like Propel's bold colour)
+    // Foil base — metallic dark purple with horizontal shimmer bands
     const bg = cx.createLinearGradient(0, 0, W, 0);
-    bg.addColorStop(0,    '#1a0030');
-    bg.addColorStop(0.15, '#2d0050');
-    bg.addColorStop(0.4,  '#3a0068');
-    bg.addColorStop(0.6,  '#3a0068');
-    bg.addColorStop(0.85, '#2d0050');
-    bg.addColorStop(1,    '#1a0030');
-    cx.fillStyle = bg;
-    cx.fillRect(0, 0, W, H);
+    bg.addColorStop(0,    '#0e001f');
+    bg.addColorStop(0.12, '#1e0038');
+    bg.addColorStop(0.30, '#2a0052');
+    bg.addColorStop(0.45, '#35006a');
+    bg.addColorStop(0.55, '#35006a');
+    bg.addColorStop(0.70, '#2a0052');
+    bg.addColorStop(0.88, '#1e0038');
+    bg.addColorStop(1,    '#0e001f');
+    cx.fillStyle = bg; cx.fillRect(0, 0, W, H);
 
-    // Specular shine strip left-centre
-    const shine = cx.createLinearGradient(110, 0, 180, 0);
-    shine.addColorStop(0,   'rgba(255,255,255,0)');
-    shine.addColorStop(0.5, 'rgba(255,255,255,0.09)');
-    shine.addColorStop(1,   'rgba(255,255,255,0)');
-    cx.fillStyle = shine;
-    cx.fillRect(0, 0, W, H);
+    // Foil specular — narrow vertical highlight strip (like real metallic sachet)
+    const fspec = cx.createLinearGradient(140, 0, 240, 0);
+    fspec.addColorStop(0,    'rgba(255,255,255,0)');
+    fspec.addColorStop(0.35, 'rgba(255,255,255,0.13)');
+    fspec.addColorStop(0.5,  'rgba(255,255,255,0.22)');
+    fspec.addColorStop(0.65, 'rgba(255,255,255,0.13)');
+    fspec.addColorStop(1,    'rgba(255,255,255,0)');
+    cx.fillStyle = fspec; cx.fillRect(0, 0, W, H);
 
-    // Top header band (lighter purple)
-    cx.fillStyle = 'rgba(188,0,251,0.18)';
-    cx.fillRect(0, 0, W, 110);
-
-    // Top seal line
+    // Top sealed zone (above logo area)
+    cx.fillStyle = 'rgba(0,0,0,0.45)';
+    cx.fillRect(0, 0, W, 90);
+    // Top seal ridge line
     cx.fillStyle = '#bc00fb';
-    cx.fillRect(0, 105, W, 6);
+    cx.fillRect(0, 86, W, 5);
 
-    // Small text top left: dose callout
-    cx.font = '700 20px Arial';
-    cx.fillStyle = 'rgba(255,255,255,0.55)';
-    cx.textAlign = 'left';
-    cx.fillText('6g SACHET', 28, 65);
-    cx.textAlign = 'right';
-    cx.fillText('15 KCAL', W - 28, 65);
+    // "TEAR HERE" notch area — right side top
+    cx.strokeStyle = 'rgba(255,255,255,0.28)';
+    cx.lineWidth = 1;
+    cx.setLineDash([5, 4]);
+    cx.beginPath(); cx.moveTo(W - 60, 8); cx.lineTo(W - 60, 82);
+    cx.stroke(); cx.setLineDash([]);
+    cx.font = '600 9px Arial'; cx.fillStyle = 'rgba(255,255,255,0.38)';
+    cx.textAlign = 'center'; cx.fillText('TEAR', W - 30, 32); cx.fillText('HERE', W - 30, 44);
+    // small arrow
+    cx.beginPath(); cx.moveTo(W-30,50); cx.lineTo(W-30,66);
+    cx.moveTo(W-35,61); cx.lineTo(W-30,68); cx.lineTo(W-25,61);
+    cx.strokeStyle='rgba(255,255,255,0.3)'; cx.lineWidth=1.2; cx.stroke();
 
-    // Tear notch indicator top right
-    cx.fillStyle = 'rgba(255,255,255,0.2)';
-    cx.strokeStyle = 'rgba(255,255,255,0.35)';
-    cx.lineWidth = 1.5;
-    cx.setLineDash([4, 3]);
-    cx.strokeRect(W - 82, 14, 58, 68);
-    cx.setLineDash([]);
-    cx.font = '700 9px Arial';
-    cx.fillStyle = 'rgba(255,255,255,0.5)';
-    cx.textAlign = 'center';
-    cx.fillText('TEAR', W - 53, 42);
-    cx.fillText('HERE', W - 53, 54);
-    // Arrow
-    cx.beginPath(); cx.moveTo(W-53,58); cx.lineTo(W-53,72);
-    cx.moveTo(W-58,67); cx.lineTo(W-53,74); cx.lineTo(W-48,67);
-    cx.strokeStyle='rgba(255,255,255,0.4)'; cx.lineWidth=1.5; cx.stroke();
+    // Dose/weight at top left
+    cx.font = '700 13px Arial'; cx.fillStyle = 'rgba(255,255,255,0.42)';
+    cx.textAlign = 'left'; cx.fillText('6g', 18, 38);
+    cx.font = '600 10px Arial'; cx.fillStyle = 'rgba(255,255,255,0.28)';
+    cx.fillText('NET WT', 18, 52);
 
-    // Brand name — big and bold, vertical-ish
-    cx.save();
-    cx.translate(52, 480);
-    cx.rotate(-Math.PI / 2);
-    cx.font = '900 58px Arial Black, Arial';
-    cx.fillStyle = 'rgba(255,255,255,0.08)';
-    cx.textAlign = 'center';
-    cx.fillText('RAVIVE', 0, 0);
-    cx.restore();
+    // ── LOGO AREA ──
+    // Purple circle behind R initial
+    cx.beginPath(); cx.arc(W/2, 200, 46, 0, Math.PI*2);
+    const circGrad = cx.createRadialGradient(W/2, 200, 8, W/2, 200, 46);
+    circGrad.addColorStop(0, 'rgba(188,0,251,0.85)');
+    circGrad.addColorStop(1, 'rgba(100,0,160,0.6)');
+    cx.fillStyle = circGrad; cx.fill();
+    // "R" letter
+    cx.font = '900 52px Arial Black'; cx.fillStyle = '#fff';
+    cx.textAlign = 'center'; cx.fillText('R', W/2+2, 218);
 
-    // Main brand name centred
-    cx.textAlign = 'center';
-    cx.font = '900 72px Arial Black, Arial';
+    // Brand name
+    cx.font = '900 54px Arial Black, sans-serif';
     cx.fillStyle = '#ffffff';
-    cx.shadowColor = 'rgba(188,0,251,0.6)';
-    cx.shadowBlur = 20;
-    cx.fillText('Ravive', W / 2, 280);
+    cx.shadowColor = 'rgba(188,0,251,0.7)'; cx.shadowBlur = 18;
+    cx.textAlign = 'center'; cx.fillText('RAVIVE', W/2, 306);
     cx.shadowBlur = 0;
 
     // Tagline
-    cx.font = '400 18px Arial';
-    cx.fillStyle = 'rgba(255,255,255,0.55)';
-    cx.fillText('Recovery Electrolytes', W / 2, 316);
+    cx.font = '400 15px Arial'; cx.fillStyle = 'rgba(255,255,255,0.46)';
+    cx.fillText('Recovery Electrolytes', W/2, 332);
 
-    // Flavour band (like Propel's green stripe)
-    cx.fillStyle = 'rgba(188,0,251,0.85)';
-    cx.fillRect(0, 348, W, 52);
-    cx.font = '800 20px Arial';
-    cx.fillStyle = '#ffffff';
-    cx.fillText('MIDNIGHT BERRY', W / 2, 380);
+    // Thin divider
+    cx.strokeStyle = 'rgba(188,0,251,0.38)'; cx.lineWidth = 1;
+    cx.beginPath(); cx.moveTo(60, 352); cx.lineTo(W-60, 352); cx.stroke();
 
-    // Ingredients list (like Propel's bullet list)
-    const items = ['500mg Sodium', '380mg Potassium', 'Magnesium Glycinate', 'B-Vitamin Complex', 'Zero Sugar'];
+    // Flavour colour band
+    cx.fillStyle = '#9600c9';
+    cx.fillRect(0, 368, W, 44);
+    cx.font = '800 16px Arial'; cx.fillStyle = '#fff';
+    cx.textAlign = 'center'; cx.fillText('MIDNIGHT BERRY', W/2, 396);
+
+    // Key benefits — compact list
+    const benefits = [
+      ['⬡', '500mg Sodium'],
+      ['⬡', '380mg Potassium'],
+      ['⬡', 'Magnesium Glycinate'],
+      ['⬡', 'Zero Sugar · 15 kcal'],
+    ];
     cx.textAlign = 'left';
-    items.forEach((item, i) => {
-      const y = 428 + i * 34;
-      // Bullet dot
-      cx.beginPath();
-      cx.arc(48, y - 6, 7, 0, Math.PI * 2);
-      cx.fillStyle = 'rgba(188,0,251,0.7)';
-      cx.fill();
-      cx.font = '600 17px Arial';
-      cx.fillStyle = 'rgba(255,255,255,0.75)';
-      cx.fillText(item, 66, y);
+    benefits.forEach(([dot, text], i) => {
+      const y = 452 + i * 38;
+      cx.font = '600 13px Arial'; cx.fillStyle = 'rgba(188,0,251,0.75)';
+      cx.fillText('•', 52, y);
+      cx.font = '500 14px Arial'; cx.fillStyle = 'rgba(255,255,255,0.65)';
+      cx.fillText(text, 70, y);
     });
 
-    // Bottom info bar
-    cx.fillStyle = 'rgba(0,0,0,0.35)';
-    cx.fillRect(0, H - 80, W, 80);
-    cx.font = '600 13px Arial';
-    cx.fillStyle = 'rgba(255,255,255,0.4)';
-    cx.textAlign = 'center';
-    cx.fillText('DOCTOR-FORMULATED · CAMBRIDGE', W / 2, H - 44);
-    cx.fillText('ELECTROLYTE RECOVERY SYSTEM', W / 2, H - 24);
+    // Horizontal rule
+    cx.strokeStyle = 'rgba(255,255,255,0.1)'; cx.lineWidth = 1;
+    cx.beginPath(); cx.moveTo(40, 614); cx.lineTo(W-40, 614); cx.stroke();
 
-    // Bottom seal
-    cx.fillStyle = '#bc00fb';
-    cx.fillRect(0, H - 8, W, 8);
+    // Bottom info
+    cx.font = '600 10px Arial'; cx.fillStyle = 'rgba(255,255,255,0.28)';
+    cx.textAlign = 'center';
+    cx.fillText('DOCTOR-FORMULATED  ·  CAMBRIDGE', W/2, 640);
+    cx.fillText('ravive.co  ·  hello@ravive.co', W/2, 658);
+
+    // Bottom sealed zone
+    cx.fillStyle = 'rgba(0,0,0,0.4)'; cx.fillRect(0, H - 80, W, 80);
+    cx.fillStyle = '#9600c9'; cx.fillRect(0, H - 76, W, 4);
 
     return new THREE.CanvasTexture(tc);
   }
 
-  // Back texture (simpler, silver-purple)
+  // Back texture — nutrition facts style
   function makeBackTex() {
     const tc = document.createElement('canvas');
-    tc.width = 512; tc.height = 720;
+    tc.width = 512; tc.height = 820;
     const cx = tc.getContext('2d');
-    cx.fillStyle = '#220040';
-    cx.fillRect(0, 0, 512, 720);
-    cx.fillStyle = 'rgba(188,0,251,0.12)';
-    cx.fillRect(0, 0, 512, 720);
-    cx.fillStyle = '#bc00fb';
-    cx.fillRect(0, 105, 512, 5);
-    cx.fillRect(0, 712, 512, 8);
-    cx.font = '600 14px Arial'; cx.fillStyle = 'rgba(255,255,255,0.25)';
-    cx.textAlign = 'center';
-    cx.fillText('RAVIVE RECOVERY ELECTROLYTES', 256, 380);
-    cx.font = '12px Arial'; cx.fillStyle = 'rgba(255,255,255,0.15)';
-    cx.fillText('hello@ravive.co · ravive.co', 256, 410);
+    cx.fillStyle = '#180030'; cx.fillRect(0, 0, 512, 820);
+    // subtle shimmer
+    const sh = cx.createLinearGradient(150, 0, 200, 0);
+    sh.addColorStop(0,'rgba(255,255,255,0)');
+    sh.addColorStop(0.5,'rgba(255,255,255,0.06)');
+    sh.addColorStop(1,'rgba(255,255,255,0)');
+    cx.fillStyle = sh; cx.fillRect(0,0,512,820);
+    cx.fillStyle = '#9600c9'; cx.fillRect(0, 86, 512, 4);
+    cx.fillRect(0, 816, 512, 4);
+    cx.font = '700 13px Arial'; cx.fillStyle = 'rgba(255,255,255,0.32)';
+    cx.textAlign = 'center'; cx.fillText('NUTRITION FACTS', 256, 180);
+    const nrows = [['Serving', '1 sachet (6g)'],['Calories','15'],['Sodium','500mg 22%DV'],['Potassium','380mg 8%DV'],['Magnesium','60mg 14%DV'],['Total Carbs','3g 1%DV'],['Sugars','0g'],['Protein','0g']];
+    nrows.forEach(([l,v],i) => {
+      const y = 220 + i * 38;
+      cx.strokeStyle='rgba(255,255,255,0.08)'; cx.lineWidth=1;
+      if(i>0){cx.beginPath(); cx.moveTo(40,y-14); cx.lineTo(472,y-14); cx.stroke();}
+      cx.font='500 13px Arial'; cx.fillStyle='rgba(255,255,255,0.42)'; cx.textAlign='left'; cx.fillText(l, 44, y);
+      cx.textAlign='right'; cx.fillText(v, 468, y);
+    });
+    cx.font='600 10px Arial'; cx.fillStyle='rgba(255,255,255,0.2)';
+    cx.textAlign='center'; cx.fillText('RAVIVE RECOVERY ELECTROLYTES  ·  ravive.co', 256, 540);
     return new THREE.CanvasTexture(tc);
   }
 
-  // ── Build sachet as a shaped group ──
-  // Stand-up pouch: wider at bottom, slight taper at top
+  // ── Sachet geometry — realistic flat foil sachet proportions ──
+  // Real single-serve sachet: ~80mm wide × 130mm tall × 5mm thick
+  // Three.js units: 1.15 W × 1.9 H × 0.055 D
   const sachetGroup = new THREE.Group();
 
-  // Main flat body — PlaneGeometry with front/back
-  const bodyGeo = new THREE.BoxGeometry(2.2, 3.4, 0.06);
-  const frontMat = new THREE.MeshPhongMaterial({ map: makeFrontTex(), shininess: 180, specular: new THREE.Color(0x8844bb) });
-  const backMat  = new THREE.MeshPhongMaterial({ map: makeBackTex(),  shininess: 80  });
-  const sideMat  = new THREE.MeshPhongMaterial({ color: 0x2a0048,     shininess: 40  });
-  const body = new THREE.Mesh(bodyGeo, [sideMat, sideMat, sideMat, sideMat, frontMat, backMat]);
+  const SW = 1.15, SH = 1.9, SD = 0.055;
+
+  const bodyGeo = new THREE.BoxGeometry(SW, SH, SD, 1, 1, 1);
+  const frontMat = new THREE.MeshPhongMaterial({ map: makeFrontTex(), shininess: 220, specular: new THREE.Color(0x9944cc) });
+  const backMat  = new THREE.MeshPhongMaterial({ map: makeBackTex(),  shininess: 120, specular: new THREE.Color(0x662299) });
+  const edgeMat  = new THREE.MeshPhongMaterial({ color: 0x1a0030, shininess: 60 });
+  // face order: +x, -x, +y, -y, +z(front), -z(back)
+  const body = new THREE.Mesh(bodyGeo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
   sachetGroup.add(body);
 
-  // Top heat seal — slightly thicker ridge
-  const topSealGeo = new THREE.BoxGeometry(2.2, 0.18, 0.1);
-  const sealMat    = new THREE.MeshPhongMaterial({ color: 0x8800cc, shininess: 120 });
-  const topSeal = new THREE.Mesh(topSealGeo, sealMat);
-  topSeal.position.y = 1.79;
+  const sealMat = new THREE.MeshPhongMaterial({ color: 0x6600aa, shininess: 160, specular: new THREE.Color(0xcc88ff) });
+
+  // Top heat seal — thin embossed ridge
+  const topSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.09, SD + 0.025), sealMat);
+  topSeal.position.y = SH / 2 - 0.02;
   sachetGroup.add(topSeal);
 
-  // Bottom seal (gusset fold look)
-  const botSealGeo = new THREE.BoxGeometry(2.2, 0.22, 0.14);
-  const botSeal = new THREE.Mesh(botSealGeo, sealMat);
-  botSeal.position.y = -1.81;
+  // Bottom seal
+  const botSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.09, SD + 0.025), sealMat);
+  botSeal.position.y = -(SH / 2 - 0.02);
   sachetGroup.add(botSeal);
 
   // Side seals
-  const sideSealGeo = new THREE.BoxGeometry(0.1, 3.4, 0.1);
-  [-1.15, 1.15].forEach(x => {
+  const sideSealGeo = new THREE.BoxGeometry(0.048, SH, SD + 0.022);
+  [-SW/2 + 0.012, SW/2 - 0.012].forEach(x => {
     const s = new THREE.Mesh(sideSealGeo, sealMat);
     s.position.x = x;
     sachetGroup.add(s);
   });
 
-  // Tear notch — small V indent at top right
-  const notchGeo = new THREE.ConeGeometry(0.06, 0.14, 3);
-  const notchMat = new THREE.MeshPhongMaterial({ color: 0xbc00fb });
-  const notch = new THREE.Mesh(notchGeo, notchMat);
+  // Tear notch — tiny triangle cutout stub on top right
+  const notch = new THREE.Mesh(new THREE.ConeGeometry(0.028, 0.06, 3), new THREE.MeshPhongMaterial({ color: 0xbc00fb }));
   notch.rotation.z = Math.PI;
-  notch.position.set(0.85, 1.86, 0.06);
+  notch.position.set(SW/2 - 0.18, SH/2 + 0.04, SD/2 + 0.01);
   sachetGroup.add(notch);
 
   scene.add(sachetGroup);
 
-  // ── Lighting ──
-  scene.add(new THREE.AmbientLight(0xddd0f8, 0.9));
-  const key = new THREE.DirectionalLight(0xffffff, 2.8);
-  key.position.set(1.5, 4, 3); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xcc88ff, 1.0);
-  fill.position.set(-3, 0, 2); scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xaa00ff, 0.7);
-  rim.position.set(2, -2, -3); scene.add(rim);
-  const bounce = new THREE.PointLight(0xdd88ff, 0.4, 8);
-  bounce.position.set(0, -4, 1); scene.add(bounce);
+  // ── Lighting — studio product shot feel ──
+  scene.add(new THREE.AmbientLight(0xccbbee, 0.55));
+  // Key: upper-right, white, sharp — main foil highlight
+  const key = new THREE.DirectionalLight(0xffffff, 3.2);
+  key.position.set(2, 5, 4); scene.add(key);
+  // Fill: left-side, cool purple
+  const fill = new THREE.DirectionalLight(0xbb77ff, 0.9);
+  fill.position.set(-4, 1, 2); scene.add(fill);
+  // Rim: back-right, violet — separates sachet from bg
+  const rim = new THREE.DirectionalLight(0x9900ff, 1.2);
+  rim.position.set(3, -1, -4); scene.add(rim);
+  // Under bounce — subtle warm purple
+  const bounce = new THREE.PointLight(0xcc44ff, 0.35, 6);
+  bounce.position.set(0, -3, 1.5); scene.add(bounce);
 
   // ── Drag to rotate ──
   let isDragging = false, lastX = 0, velX = 0;
@@ -1387,9 +1398,9 @@ function firePulse(){}
   function animate() {
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
-    if (!isDragging) { velX *= 0.92; sachetGroup.rotation.y += velX + 0.003; }
+    if (!isDragging) { velX *= 0.92; sachetGroup.rotation.y += velX + 0.0015; }
     sachetGroup.rotation.x += (targetRotX - sachetGroup.rotation.x) * 0.06;
-    sachetGroup.position.y = Math.sin(elapsed * 0.85) * 0.1;
+    sachetGroup.position.y = Math.sin(elapsed * 0.7) * 0.04;
     renderer.render(scene, camera);
   }
   animate();
