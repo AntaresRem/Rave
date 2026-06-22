@@ -1,314 +1,310 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>The Science — Ravive</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Hanken Grotesk', sans-serif; background: #f9f9f9; color: #1a1c1c; -webkit-font-smoothing: antialiased; }
-.mono { font-family: 'Geist Mono', monospace; }
-a { text-decoration: none; }
-.btn-primary { background:#000;color:#fff;font-size:13px;letter-spacing:0.08em;font-weight:600;padding:13px 28px;border-radius:9999px;border:none;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-primary:hover { background:#9600c9;box-shadow:0 0 20px rgba(150,0,201,0.35);transform:translateY(-1px); }
-.btn-ghost { background:transparent;color:#9600c9;font-size:13px;letter-spacing:0.06em;font-weight:600;padding:12px 28px;border-radius:9999px;border:1.5px solid #9600c9;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-ghost:hover { background:rgba(150,0,201,0.06);box-shadow:0 0 14px rgba(150,0,201,0.2);transform:translateY(-1px); }
-.card { background:#fff;border:1px solid #e2e2e2;border-radius:8px;transition:box-shadow 0.2s,transform 0.2s; }
-.card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.07);transform:translateY(-2px); }
-.card-featured { border-top:3px solid #9600c9; }
-.nav-link { font-size:14px;color:#444748;transition:color 0.15s; }
-.nav-link:hover { color:#9600c9; }
-.nav-link.active { color:#9600c9;font-weight:600;border-bottom:2px solid #9600c9;padding-bottom:2px; }
-#mobileMenu { display:none; }
-#mobileMenu.open { display:flex; }
-.glow-blob { position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(150,0,201,0.1) 0%,transparent 70%);filter:blur(40px); }
-@media (max-width:768px) {
-  .desktop-nav,.desktop-cta { display:none !important; }
-  .mobile-btn { display:flex !important; }
-  .two-col { grid-template-columns:1fr !important;gap:40px !important; }
-  .six-col { grid-template-columns:1fr 1fr !important; }
-  .section-pad { padding:56px 20px !important; }
-  .nav-wrap { padding:0 20px !important; }
-  .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
-  .hero-h1 { font-size:32px !important; line-height:1.15 !important; }
+:root {
+  --bg: #050508; --surface: #0d0d14; --surface2: #12121c;
+  --border: rgba(255,255,255,0.07); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-glow: rgba(150,0,201,0.4); --text: #f0f0f5;
+  --text-muted: rgba(240,240,245,0.45); --text-dim: rgba(240,240,245,0.22);
 }
-@media (max-width:400px) {
-  .six-col { grid-template-columns:1fr !important; }
-  .footer-cols { grid-template-columns:1fr !important; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.mono { font-family: 'Geist Mono', monospace; }
+a { text-decoration: none; color: inherit; }
+.btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
+.btn-primary:hover { background: var(--purple-bright); box-shadow: 0 0 40px var(--purple-glow); transform: translateY(-2px); }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+.section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.section-label-line { width: 24px; height: 1px; background: var(--purple); }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-h2 { font-size: 44px; font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1.05; }
+.section-h2 em { font-style: italic; color: var(--purple-bright); }
+/* Nav */
+.nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
+.nav.scrolled { background: rgba(5,5,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-link:hover { color: #fff; }
+.nav-link.active { color: var(--purple-bright); }
+.mobile-btn { display: none; }
+#mobileMenu { display: none; }
+#mobileMenu.open { display: flex; }
+/* Ingredient card */
+.ingr-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+.ingr-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--purple), transparent); transform: scaleX(0); transition: transform 0.4s; }
+.ingr-card:hover { border-color: rgba(150,0,201,0.35); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(150,0,201,0.12); }
+.ingr-card:hover::after { transform: scaleX(1); }
+.ingr-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(150,0,201,0.12); border: 1px solid rgba(150,0,201,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+/* Doctor card */
+.doc-card { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; border-left: 2px solid var(--purple); margin-bottom: 12px; transition: all 0.3s; }
+.doc-card:hover { border-left-color: var(--purple-bright); background: rgba(150,0,201,0.06); }
+/* Nutrition panel */
+.nut-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.nut-row:last-child { border-bottom: none; }
+/* Transparency stat */
+.trans-stat { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.trans-stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links, .nav-cta-d { display: none !important; }
+  .mobile-btn { display: flex !important; }
+  .hero-section { padding: 100px 20px 60px !important; }
+  .section-pad { padding: 60px 20px !important; }
+  .two-col { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .six-grid { grid-template-columns: 1fr 1fr !important; }
+  .section-h2 { font-size: 32px !important; }
+  .hero-h1 { font-size: 36px !important; line-height: 1.1 !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+}
+@media (max-width: 480px) {
+  .six-grid { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
 <body>
 
-<nav style="background:rgba(249,249,249,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #e2e2e2;position:sticky;top:0;z-index:50;">
-  <div class="nav-wrap" style="max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;">
-    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">Ravive</a>
-    <div class="desktop-nav" style="display:flex;align-items:center;gap:36px;">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="science.html" class="nav-link active">The Science</a>
-      <a href="product.html" class="nav-link">Flavours</a>
-      <a href="shop.html" class="nav-link">Festival Bundle</a>
-      <a href="recovery.html" class="nav-link">Recovery Guide</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <a href="product.html" class="btn-primary desktop-cta">SHOP NOW</a>
-      <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="display:none;background:none;border:none;cursor:pointer;padding:8px;" aria-label="Menu">
-        <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
-      </button>
-    </div>
+<!-- OFFER STRIP -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono">
+  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+  <a href="shop.html" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">Ravive</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="science.html" class="nav-link active">The Science</a>
+    <a href="product.html" class="nav-link">Flavours</a>
+    <a href="shop.html" class="nav-link">Festival Bundle</a>
+    <a href="recovery.html" class="nav-link">Recovery Guide</a>
   </div>
-  <div id="mobileMenu" style="flex-direction:column;border-top:1px solid #e2e2e2;background:#f9f9f9;padding:16px 20px;gap:2px;">
-    <a href="index.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Home</a>
-    <a href="science.html" style="padding:12px 0;font-size:15px;font-weight:600;color:#9600c9;border-bottom:1px solid #f0f0f0;display:block;">The Science</a>
-    <a href="product.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Flavours</a>
-    <a href="shop.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Festival Bundle</a>
-    <a href="recovery.html" style="padding:12px 0;font-size:15px;color:#444748;display:block;">Recovery Guide</a>
-    <a href="product.html" class="btn-primary" style="margin-top:16px;text-align:center;">SHOP NOW</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#fff;">
+      <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="white"/><rect y="8" width="22" height="2" rx="1" fill="white"/><rect y="16" width="22" height="2" rx="1" fill="white"/></svg>
+    </button>
   </div>
 </nav>
+<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(5,5,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+  <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
+  <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">The Science</a>
+  <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
+  <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Festival Bundle</a>
+  <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);display:block;">Recovery Guide</a>
+  <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
+</div>
 
 <!-- HERO -->
-<section class="section-pad" style="padding:96px 48px;background:#fff;position:relative;overflow:hidden;">
-  <div class="glow-blob" style="width:500px;height:500px;top:-100px;right:-60px;"></div>
-  <div style="max-width:1280px;margin:0 auto;text-align:center;position:relative;z-index:1;">
-    <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:16px;">Doctor-Led Formulation</div>
-    <h1 class="hero-h1" style="font-size:48px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;max-width:800px;margin-left:auto;margin-right:auto;line-height:1.1;">
-      Most recovery products are formulated by marketing teams.<br/><span style="color:#9600c9;">Ours was formulated in a lab.</span>
+<section class="hero-section" style="padding:140px 48px 80px;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(100,0,180,0.2) 0%,transparent 60%),var(--bg);">
+  <div style="max-width:900px;margin:0 auto;position:relative;z-index:1;">
+    <div class="reveal" style="display:inline-flex;align-items:center;gap:10px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.3);border-radius:9999px;padding:7px 18px;margin-bottom:28px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;animation:pulsedot 2s infinite;"></span>
+      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);">DOCTOR-LED FORMULATION</span>
+    </div>
+    <h1 class="hero-h1 reveal reveal-delay-1" style="font-size:60px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:0.95;margin-bottom:28px;">
+      Most recovery products are formulated by<br/><em style="font-style:italic;color:var(--purple-bright);">marketing teams.</em>
     </h1>
-    <p style="font-size:17px;color:#444748;max-width:600px;margin:0 auto 48px;line-height:1.65;">We stripped away the neon branding, the proprietary blends, and the pseudo-science. What remains is a clinically precise, hyper-efficient hydration matrix designed specifically for the unique physiological demands of multi-day events.</p>
-    <a href="product.html" class="btn-primary" style="padding:15px 36px;font-size:14px;">DOWNLOAD FULL CLINICAL BRIEF</a>
+    <p class="reveal reveal-delay-2" style="font-size:18px;color:var(--text-muted);max-width:640px;margin:0 auto 48px;line-height:1.7;">We stripped away the neon branding, proprietary blends, and pseudo-science. What remains is a clinically precise, hyper-efficient hydration matrix.</p>
+    <a href="product.html" class="btn-primary reveal reveal-delay-3" style="padding:16px 44px;font-size:14px;">DOWNLOAD CLINICAL BRIEF</a>
   </div>
 </section>
-
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
+<style>@keyframes pulsedot{0%,100%{box-shadow:0 0 0 0 rgba(188,0,251,0.5)}50%{box-shadow:0 0 0 6px rgba(188,0,251,0)}}</style>
 
 <!-- TEAM -->
-<section class="section-pad" style="padding:96px 48px;">
+<section class="section-pad" style="padding:120px 48px;background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col">
-    <div>
-      <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:20px;">The Minds Behind the Matrix</div>
-      <h2 style="font-size:34px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;line-height:1.15;">Developed by two practising physicians from Cambridge University.</h2>
-      <p style="font-size:16px;color:#444748;line-height:1.65;margin-bottom:36px;">They saw the devastating effects of severe dehydration in acute care and noticed how over-the-counter solutions were severely lacking in efficacy and bioavailability.</p>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;align-items:center;gap:16px;padding:18px;background:#f9f9f9;border:1px solid #e2e2e2;border-left:3px solid #9600c9;border-radius:4px;">
-          <div style="width:44px;height:44px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#fff;font-size:20px;">person</span>
-          </div>
-          <div>
-            <div style="font-size:15px;font-weight:700;color:#000;">Dr. Sarah Jenkins</div>
-            <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.06em;margin-top:2px;">MBBS, PhD Cambridge</div>
-            <div style="font-size:13px;color:#747878;margin-top:4px;">Emergency Medicine &amp; Acute Care</div>
-          </div>
+    <div class="reveal">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">The Minds Behind the Matrix</span>
+      </div>
+      <h2 class="section-h2" style="margin-bottom:20px;">Developed by two practising physicians from <em>Cambridge University.</em></h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;">They saw the devastating effects of severe dehydration in acute care and noticed how over-the-counter solutions were severely lacking in efficacy and bioavailability.</p>
+      <div class="doc-card">
+        <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-bright));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="material-symbols-outlined" style="color:#fff;font-size:22px;">school</span>
         </div>
-        <div style="display:flex;align-items:center;gap:16px;padding:18px;background:#f9f9f9;border:1px solid #e2e2e2;border-left:3px solid #9600c9;border-radius:4px;">
-          <div style="width:44px;height:44px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#fff;font-size:20px;">person</span>
-          </div>
-          <div>
-            <div style="font-size:15px;font-weight:700;color:#000;">Dr. Marcus Thomas</div>
-            <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.06em;margin-top:2px;">MD, Biomedical Engineering</div>
-            <div style="font-size:13px;color:#747878;margin-top:4px;">Neurosurgeon &amp; Bioavailability Research</div>
-          </div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#fff;">Dr. Sarah Jenkins</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MBBS, PhD — Cambridge University</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Emergency Medicine &amp; Acute Care</div>
+        </div>
+      </div>
+      <div class="doc-card">
+        <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-bright));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <span class="material-symbols-outlined" style="color:#fff;font-size:22px;">biotech</span>
+        </div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#fff;">Dr. Marcus Thomas</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MD, Neurosurgeon — Cambridge University</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Biomedical Engineering &amp; Bioavailability Research</div>
         </div>
       </div>
     </div>
-    <div style="background:linear-gradient(145deg,#f3e6ff 0%,#fff 60%);border:1px solid #e2e2e2;border-radius:16px;padding:48px;display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;gap:12px;align-items:flex-start;">
-        <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;flex-shrink:0;margin-top:2px;">format_quote</span>
-        <p style="font-size:15px;color:#444748;line-height:1.65;font-style:italic;">"We designed Ravive for the scenario we kept seeing in A&amp;E every Monday morning after festival weekends. Young people, severely dehydrated, electrolyte-depleted. There was nothing clinical-grade and accessible enough for them to have used the night before."</p>
-      </div>
-      <div style="border-top:1px solid #e2e2e2;padding-top:16px;display:flex;align-items:center;gap:12px;">
-        <div style="width:36px;height:36px;background:linear-gradient(135deg,#9600c9,#bc00fb);border-radius:50%;flex-shrink:0;"></div>
-        <div>
-          <div style="font-size:13px;font-weight:600;color:#000;">Dr. Sarah Jenkins</div>
-          <div class="mono" style="font-size:10px;color:#9600c9;letter-spacing:0.05em;">Co-Founder</div>
+    <div class="reveal reveal-delay-2">
+      <div style="background:linear-gradient(145deg,#080014 0%,#12001f 100%);border:1px solid rgba(150,0,201,0.3);border-radius:20px;padding:48px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(ellipse,rgba(150,0,201,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:28px;">
+          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;flex-shrink:0;margin-top:2px;">format_quote</span>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.75;font-style:italic;">"We designed Ravive for the scenario we kept seeing in A&amp;E every Monday morning after festival weekends. Young people, severely dehydrated, electrolyte-depleted. There was nothing clinical-grade and accessible enough for them to have used the night before."</p>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:20px;display:flex;align-items:center;gap:14px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-bright));flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#fff;">Dr. Sarah Jenkins</div>
+            <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">CO-FOUNDER</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
 
 <!-- PRECISION COMPONENTS -->
-<section class="section-pad" style="padding:96px 48px;background:#fff;">
+<section class="section-pad" style="padding:120px 48px;">
   <div style="max-width:1280px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:64px;">
-      <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">The Formula</div>
-      <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;">Precision Components.</h2>
-      <p style="font-size:16px;color:#444748;max-width:500px;margin:0 auto;">Every ingredient serves a physiological purpose. No fillers, no fairy dusting. Just active medical-grade recovery.</p>
+    <div style="text-align:center;margin-bottom:64px;" class="reveal">
+      <div class="section-label" style="justify-content:center;"><div class="section-label-line"></div><span class="section-label-text">The Formula</span><div class="section-label-line"></div></div>
+      <h2 class="section-h2">Precision <em>Components.</em></h2>
+      <p style="font-size:16px;color:var(--text-muted);max-width:500px;margin:16px auto 0;line-height:1.7;">Every ingredient serves a physiological purpose. No fillers, no fairy dusting.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="six-col">
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">water_drop</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">500mg</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Sodium (NaCl)</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">Critical regulator of fluid absorption, pulling water across the cellular membrane instantly.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="six-grid">
+      <div class="ingr-card reveal reveal-delay-1">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">water_drop</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">500mg ACTIVE DOSE</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Sodium (NaCl)</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Critical regulator of fluid absorption, pulling water across the cellular membrane instantly.</p>
       </div>
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">bolt</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">200mg</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Magnesium Glycinate</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">High bioavailability form to immediately reduce muscle cramping and ease nervous system tension.</p>
+      <div class="ingr-card reveal reveal-delay-2">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">bolt</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">200mg ACTIVE DOSE</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Magnesium Glycinate</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">High bioavailability form to immediately reduce muscle cramping and ease nervous system tension.</p>
       </div>
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">electric_bolt</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">380mg</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Potassium (K+)</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">Works in tandem with sodium to restore the cellular electrical gradient essential for energy.</p>
+      <div class="ingr-card reveal reveal-delay-3">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">electric_bolt</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">380mg ACTIVE DOSE</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Potassium (K+)</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Works in tandem with sodium to restore the cellular electrical gradient essential for energy.</p>
       </div>
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">hub</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">Complex</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">B-Vitamin Complex</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">Critical cofactors for ATP production, clearing neurological fog and restoring metabolic baseline.</p>
+      <div class="ingr-card reveal reveal-delay-1">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">hub</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">COMPLEX</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">B-Vitamin Complex</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Critical cofactors for ATP production, clearing neurological fog and restoring metabolic baseline.</p>
       </div>
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">eco</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">Natural</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Coconut Water Powder</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">Provides a natural gentle matrix of trace minerals to support the primary electrolyte payload.</p>
+      <div class="ingr-card reveal reveal-delay-2">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">eco</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">NATURAL</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Coconut Water Powder</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Provides a natural gentle matrix of trace minerals to support the primary electrolyte payload.</p>
       </div>
-      <div class="card" style="padding:28px;">
-        <div style="width:44px;height:44px;background:#f3e6ff;border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">health_and_safety</span>
-        </div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#9600c9;text-transform:uppercase;margin-bottom:6px;">0g</div>
-        <h3 style="font-size:16px;font-weight:700;color:#000;margin-bottom:8px;">Zero Artificials</h3>
-        <p style="font-size:13px;color:#444748;line-height:1.6;">Absolutely no sweeteners, aspartame, or synthetic dyes that disrupt the gut microbiome.</p>
+      <div class="ingr-card reveal reveal-delay-3">
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">health_and_safety</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">0g</div>
+        <h3 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Zero Artificials</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">No sweeteners, aspartame, or synthetic dyes that disrupt the gut microbiome.</p>
       </div>
     </div>
   </div>
 </section>
 
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
-
-<!-- BIOAVAILABILITY / TRANSPARENCY -->
-<section class="section-pad" style="padding:96px 48px;background:#f9f9f9;">
-  <div style="max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;" class="two-col">
+<!-- TRANSPARENCY + NUTRITION PANEL -->
+<section class="section-pad" style="padding:120px 48px;background:var(--surface);">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col">
+    <div class="reveal">
+      <div class="section-label"><div class="section-label-line"></div><span class="section-label-text">Transparency Is Science</span></div>
+      <h2 class="section-h2" style="margin-bottom:20px;">No proprietary blends.<br/>Every milligram <em>disclosed.</em></h2>
+      <p style="font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;">Proprietary blends let companies hide sub-clinical "fairy dust" doses. We disclose every milligram. You can verify every claim against published clinical literature.</p>
       <div>
-        <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:20px;">Transparency Is Science</div>
-        <h2 style="font-size:34px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:20px;line-height:1.15;">No proprietary blends. Every milligram disclosed.</h2>
-        <p style="font-size:16px;color:#444748;line-height:1.65;margin-bottom:32px;">Proprietary blends are a marketing invention that lets companies hide the fact that active ingredients are present in sub-clinical "fairy dust" doses. We disclose every milligram. You can verify every claim.</p>
-        <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
-          <div style="display:flex;align-items:center;gap:16px;">
-            <div style="width:48px;height:48px;background:#000;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-size:18px;font-weight:800;color:#fff;" class="mono">6</span>
-            </div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#000;">Active Ingredients</div>
-              <div style="font-size:13px;color:#747878;">All clinically dosed, all disclosed</div>
-            </div>
+        <div class="trans-stat">
+          <div class="trans-stat-icon" style="background:rgba(0,0,0,0.5);border:1px solid var(--border);">
+            <span class="mono" style="font-size:18px;font-weight:900;color:#fff;">6</span>
           </div>
-          <div style="display:flex;align-items:center;gap:16px;">
-            <div style="width:48px;height:48px;background:#9600c9;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-size:18px;font-weight:800;color:#fff;" class="mono">0</span>
-            </div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#000;">Proprietary Blends</div>
-              <div style="font-size:13px;color:#747878;">Nothing hidden. Full transparency always.</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:16px;">
-            <div style="width:48px;height:48px;background:#000;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <span style="font-size:14px;font-weight:800;color:#fff;" class="mono">15</span>
-            </div>
-            <div>
-              <div style="font-size:14px;font-weight:600;color:#000;">Calories per sachet</div>
-              <div style="font-size:13px;color:#747878;">Effective, not caloric</div>
-            </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;">Active Ingredients</div>
+            <div style="font-size:13px;color:var(--text-muted);">All clinically dosed, all disclosed</div>
           </div>
         </div>
-        <a href="product.html" class="btn-primary">DOWNLOAD FULL CLINICAL BRIEF</a>
+        <div class="trans-stat">
+          <div class="trans-stat-icon" style="background:rgba(150,0,201,0.15);border:1px solid rgba(150,0,201,0.3);">
+            <span class="mono" style="font-size:18px;font-weight:900;color:var(--purple-bright);">0</span>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;">Proprietary Blends</div>
+            <div style="font-size:13px;color:var(--text-muted);">Nothing hidden. Full transparency always.</div>
+          </div>
+        </div>
+        <div class="trans-stat" style="border-bottom:none;">
+          <div class="trans-stat-icon" style="background:rgba(0,0,0,0.5);border:1px solid var(--border);">
+            <span class="mono" style="font-size:14px;font-weight:900;color:#fff;">15</span>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:600;color:#fff;">Calories per sachet</div>
+            <div style="font-size:13px;color:var(--text-muted);">Effective, not caloric</div>
+          </div>
+        </div>
       </div>
-      <div style="background:#000;border-radius:16px;padding:40px;color:#fff;">
-        <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:24px;">Nutritional Information (per sachet)</div>
-        <div style="display:flex;flex-direction:column;gap:0;">
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Calories</span>
-            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">15 kcal</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Sodium</span>
-            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">500 mg</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Potassium</span>
-            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">380 mg</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Magnesium</span>
-            <span class="mono" style="font-size:14px;color:#bc00fb;font-weight:600;">200 mg</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Total Sugars</span>
-            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0 g</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;">
-            <span style="font-size:14px;color:rgba(255,255,255,0.7);">Artificial Additives</span>
-            <span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0</span>
-          </div>
-        </div>
+      <a href="product.html" class="btn-primary" style="margin-top:36px;display:inline-block;">SHOP NOW →</a>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div style="background:#000;border:1px solid var(--border);border-radius:20px;padding:40px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;right:0;width:160px;height:160px;background:radial-gradient(ellipse,rgba(150,0,201,0.1) 0%,transparent 70%);pointer-events:none;"></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--text-dim);text-transform:uppercase;margin-bottom:24px;">Nutritional Information (per sachet)</div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Calories</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">15 kcal</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Sodium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">500 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Potassium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">380 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Magnesium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">200 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Total Sugars</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0 g</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:var(--text-muted);">Artificial Additives</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CTA STRIP -->
-<section style="background:#9600c9;padding:64px 48px;text-align:center;">
-  <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:12px;">Ready to recover properly?</div>
-  <h2 style="font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:24px;">Start your first sachet tonight.</h2>
-  <a href="product.html" style="display:inline-block;background:#fff;color:#9600c9;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:14px 36px;border-radius:9999px;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">SHOP NOW</a>
+<section style="padding:100px 48px;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(100,0,180,0.3) 0%,transparent 60%),var(--bg);">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
+  <div class="reveal">
+    <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:12px;">Ready to recover properly?</div>
+    <h2 style="font-size:48px;font-weight:900;letter-spacing:-0.04em;color:#fff;margin-bottom:24px;">Start your first sachet <span style="color:var(--purple-bright);font-style:italic;">tonight.</span></h2>
+    <a href="product.html" class="btn-primary" style="padding:16px 44px;font-size:14px;">SHOP NOW</a>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#000;color:#fff;padding:64px 48px 32px;">
+<footer style="background:#000;padding:72px 48px 32px;border-top:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.08);" class="footer-cols">
-      <div>
-        <div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">Ravive</div>
-        <p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p>
-      </div>
-      <div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Shop</div>
-        <div style="display:flex;flex-direction:column;gap:11px;">
-          <a href="science.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">The Science</a>
-          <a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Flavours</a>
-          <a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Festival Bundle</a>
-          <a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.55);transition:color 0.2s;" onmouseover="this.style.color='#bc00fb'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">Recovery Guide</a>
-        </div>
-      </div>
-      <div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Legal</div>
-        <div style="display:flex;flex-direction:column;gap:11px;">
-          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Privacy Policy</a>
-          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Terms of Service</a>
-          <a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Shipping &amp; Returns</a>
-        </div>
-      </div>
-      <div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Contact</div>
-        <a href="mailto:hello@Ravive.co" style="font-size:14px;color:rgba(255,255,255,0.55);">hello@Ravive.co</a>
-      </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--border);" class="footer-grid">
+      <div><div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:16px;letter-spacing:-0.02em;">Ravive</div><p style="font-size:14px;color:var(--text-muted);line-height:1.7;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="science.html" style="font-size:14px;color:var(--text-muted);">The Science</a><a href="product.html" style="font-size:14px;color:var(--text-muted);">Flavours</a><a href="shop.html" style="font-size:14px;color:var(--text-muted);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:var(--text-muted);">Recovery Guide</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="#" style="font-size:14px;color:var(--text-muted);">Privacy Policy</a><a href="#" style="font-size:14px;color:var(--text-muted);">Terms of Service</a><a href="#" style="font-size:14px;color:var(--text-muted);">Shipping &amp; Returns</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@ravive.co" style="font-size:14px;color:var(--text-muted);">hello@ravive.co</a></div>
     </div>
-    <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div class="mono" style="font-size:11px;color:var(--text-dim);letter-spacing:0.04em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+      <div class="mono" style="font-size:11px;color:var(--text-dim);">FORMULATED IN CAMBRIDGE · UK</div>
+    </div>
   </div>
 </footer>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY > 40); },{passive:true});
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } }); },{threshold:0.1});
+revealEls.forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
-
-

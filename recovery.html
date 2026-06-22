@@ -1,198 +1,215 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Recovery Guide — Ravive</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Hanken Grotesk', sans-serif; background: #f9f9f9; color: #1a1c1c; -webkit-font-smoothing: antialiased; }
-.mono { font-family: 'Geist Mono', monospace; }
-a { text-decoration: none; }
-.btn-primary { background:#000;color:#fff;font-size:13px;letter-spacing:0.08em;font-weight:600;padding:13px 28px;border-radius:9999px;border:none;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-primary:hover { background:#9600c9;box-shadow:0 0 20px rgba(150,0,201,0.35);transform:translateY(-1px); }
-.btn-purple { background:#9600c9;color:#fff;font-size:13px;letter-spacing:0.08em;font-weight:600;padding:13px 28px;border-radius:9999px;border:none;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-purple:hover { background:#bc00fb;box-shadow:0 0 20px rgba(188,0,251,0.4);transform:translateY(-1px); }
-.card { background:#fff;border:1px solid #e2e2e2;border-radius:8px;transition:box-shadow 0.2s,transform 0.2s; }
-.card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.07);transform:translateY(-2px); }
-.nav-link { font-size:14px;color:#444748;transition:color 0.15s; }
-.nav-link:hover { color:#9600c9; }
-.nav-link.active { color:#9600c9;font-weight:600;border-bottom:2px solid #9600c9;padding-bottom:2px; }
-#mobileMenu { display:none; }
-#mobileMenu.open { display:flex; }
-.glow-blob { position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(150,0,201,0.1) 0%,transparent 70%);filter:blur(40px); }
-@media (max-width:768px) {
-  .desktop-nav,.desktop-cta { display:none !important; }
-  .mobile-btn { display:flex !important; }
-  .two-col { grid-template-columns:1fr !important;gap:40px !important; }
-  .four-col { grid-template-columns:1fr 1fr !important; }
-  .section-pad { padding:56px 20px !important; }
-  .nav-wrap { padding:0 20px !important; }
-  .footer-cols { grid-template-columns:1fr 1fr !important;gap:32px !important; }
-  .hero-h1 { font-size:34px !important; line-height:1.15 !important; }
-  .stats-row { grid-template-columns:1fr 1fr !important; }
+:root {
+  --bg: #050508; --surface: #0d0d14; --surface2: #12121c;
+  --border: rgba(255,255,255,0.07); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-glow: rgba(150,0,201,0.4); --text: #f0f0f5;
+  --text-muted: rgba(240,240,245,0.45); --text-dim: rgba(240,240,245,0.22);
 }
-@media (max-width:400px) {
-  .four-col { grid-template-columns:1fr !important; }
-  .footer-cols { grid-template-columns:1fr !important; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.mono { font-family: 'Geist Mono', monospace; }
+a { text-decoration: none; color: inherit; }
+.btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
+.btn-primary:hover { background: var(--purple-bright); box-shadow: 0 0 40px var(--purple-glow); transform: translateY(-2px); }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+.section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.section-label-line { width: 24px; height: 1px; background: var(--purple); }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-h2 { font-size: 44px; font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1.05; }
+.section-h2 em { font-style: italic; color: var(--purple-bright); }
+/* Nav */
+.nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
+.nav.scrolled { background: rgba(5,5,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-link:hover { color: #fff; }
+.nav-link.active { color: var(--purple-bright); }
+.mobile-btn { display: none; }
+#mobileMenu { display: none; }
+#mobileMenu.open { display: flex; }
+/* Timeline card */
+.tl-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; height: 100%; transition: all 0.3s; position: relative; overflow: hidden; }
+.tl-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--purple), transparent); transform: scaleX(0); transition: transform 0.4s; }
+.tl-card:hover { border-color: rgba(150,0,201,0.35); transform: translateY(-4px); }
+.tl-card:hover::before { transform: scaleX(1); }
+/* Bio section */
+.bio-item { display: flex; gap: 20px; align-items: flex-start; padding: 28px 0; border-bottom: 1px solid var(--border); }
+.bio-item:last-child { border-bottom: none; }
+.bio-icon { width: 52px; height: 52px; background: rgba(150,0,201,0.12); border: 1px solid rgba(150,0,201,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links, .nav-cta-d { display: none !important; }
+  .mobile-btn { display: flex !important; }
+  .hero-section { padding: 100px 20px 60px !important; }
+  .section-pad { padding: 60px 20px !important; }
+  .two-col { grid-template-columns: 1fr !important; gap: 48px !important; }
+  .four-grid { grid-template-columns: 1fr 1fr !important; }
+  .stats-row { grid-template-columns: 1fr 1fr !important; }
+  .section-h2 { font-size: 32px !important; }
+  .hero-h1 { font-size: 40px !important; line-height: 1.05 !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+}
+@media (max-width: 480px) {
+  .four-grid { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
 <body>
 
-<nav style="background:rgba(249,249,249,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #e2e2e2;position:sticky;top:0;z-index:50;">
-  <div class="nav-wrap" style="max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;">
-    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">Ravive</a>
-    <div class="desktop-nav" style="display:flex;align-items:center;gap:36px;">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="science.html" class="nav-link">The Science</a>
-      <a href="product.html" class="nav-link">Flavours</a>
-      <a href="shop.html" class="nav-link">Festival Bundle</a>
-      <a href="recovery.html" class="nav-link active">Recovery Guide</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <a href="product.html" class="btn-primary desktop-cta">SHOP NOW</a>
-      <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="display:none;background:none;border:none;cursor:pointer;padding:8px;" aria-label="Menu">
-        <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
-      </button>
-    </div>
+<!-- OFFER STRIP -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono">
+  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+  <a href="shop.html" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">Ravive</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="science.html" class="nav-link">The Science</a>
+    <a href="product.html" class="nav-link">Flavours</a>
+    <a href="shop.html" class="nav-link">Festival Bundle</a>
+    <a href="recovery.html" class="nav-link active">Recovery Guide</a>
   </div>
-  <div id="mobileMenu" style="flex-direction:column;border-top:1px solid #e2e2e2;background:#f9f9f9;padding:16px 20px;gap:2px;">
-    <a href="index.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Home</a>
-    <a href="science.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">The Science</a>
-    <a href="product.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Flavours</a>
-    <a href="shop.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Festival Bundle</a>
-    <a href="recovery.html" style="padding:12px 0;font-size:15px;font-weight:600;color:#9600c9;display:block;">Recovery Guide</a>
-    <a href="product.html" class="btn-primary" style="margin-top:16px;text-align:center;">SHOP NOW</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#fff;">
+      <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="white"/><rect y="8" width="22" height="2" rx="1" fill="white"/><rect y="16" width="22" height="2" rx="1" fill="white"/></svg>
+    </button>
   </div>
 </nav>
+<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(5,5,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+  <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
+  <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
+  <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
+  <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Festival Bundle</a>
+  <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);display:block;font-weight:600;">Recovery Guide</a>
+  <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
+</div>
 
 <!-- HERO -->
-<section class="section-pad" style="padding:88px 48px;background:#fff;position:relative;overflow:hidden;">
-  <div class="glow-blob" style="width:500px;height:500px;top:-80px;right:-60px;"></div>
-  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;" class="two-col">
+<section class="hero-section" style="padding:140px 48px 80px;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 30% 50%,rgba(100,0,180,0.2) 0%,transparent 60%),var(--bg);">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="two-col">
     <div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
-        <span class="material-symbols-outlined" style="color:#9600c9;font-size:16px;">favorite</span>
-        <div class="mono" style="font-size:11px;letter-spacing:0.12em;color:#9600c9;text-transform:uppercase;">Doctor-Led Care</div>
+      <div class="reveal" style="display:flex;align-items:center;gap:8px;margin-bottom:24px;">
+        <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:16px;">favorite</span>
+        <div class="mono" style="font-size:11px;letter-spacing:0.12em;color:var(--purple-bright);text-transform:uppercase;">Doctor-Led Care</div>
       </div>
-      <h1 class="hero-h1" style="font-size:48px;font-weight:800;letter-spacing:-0.02em;color:#9600c9;line-height:1.1;margin-bottom:20px;">Your 48-Hour<br/>Reset Protocol.</h1>
-      <p style="font-size:17px;line-height:1.65;color:#444748;max-width:460px;margin-bottom:36px;">Zero guilt, pure care. We've all been there. The lights fade, the music stops, and reality hits. This is your science-backed timeline to feeling human again, designed by medical professionals who understand the festival circuit.</p>
-      <a href="#download" class="btn-purple" style="padding:15px 36px;font-size:14px;">Get the PDF Guide</a>
+      <h1 class="hero-h1 reveal reveal-delay-1" style="font-size:60px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:0.95;margin-bottom:24px;">Your 48-Hour<br/><span style="color:var(--purple-bright);font-style:italic;">Reset Protocol.</span></h1>
+      <p class="reveal reveal-delay-2" style="font-size:17px;line-height:1.7;color:var(--text-muted);max-width:460px;margin-bottom:40px;">Zero guilt, pure care. We've all been there. The lights fade, the music stops, and reality hits. This is your science-backed timeline to feeling human again — designed by medical professionals.</p>
+      <a href="#download" class="btn-primary reveal reveal-delay-3" style="padding:16px 40px;font-size:14px;">GET THE PDF GUIDE</a>
     </div>
-    <div style="position:relative;">
-      <div style="aspect-ratio:4/3;background:linear-gradient(145deg,#1c0033 0%,#3d006b 50%,#6600aa 100%);border-radius:16px;overflow:hidden;position:relative;">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 60%,rgba(188,0,251,0.4) 0%,transparent 60%);"></div>
-        <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(0deg,rgba(0,0,0,0.5) 0%,transparent 100%);"></div>
-        <div style="position:absolute;bottom:24px;left:24px;">
-          <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:4px;">48-Hour Protocol</div>
-          <div style="font-size:16px;font-weight:700;color:#fff;">Festival Morning After</div>
+    <div class="reveal reveal-delay-2" style="position:relative;">
+      <div style="aspect-ratio:4/3;background:linear-gradient(145deg,#0a0015 0%,#250040 50%,#4d0085 100%);border-radius:24px;overflow:hidden;position:relative;border:1px solid rgba(150,0,201,0.2);">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 40% 60%,rgba(188,0,251,0.35) 0%,transparent 60%);"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:linear-gradient(0deg,rgba(0,0,0,0.6) 0%,transparent 100%);"></div>
+        <div style="position:absolute;bottom:28px;left:28px;">
+          <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:4px;">48-HOUR PROTOCOL</div>
+          <div style="font-size:18px;font-weight:700;color:#fff;">Festival Morning After</div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
-
-<!-- RECOVERY ARC TIMELINE -->
-<section class="section-pad" style="padding:96px 48px;">
-  <div style="max-width:1280px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:64px;">
-      <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">The Timeline</div>
-      <h2 style="font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#9600c9;margin-bottom:12px;">The Recovery Arc</h2>
-      <p style="font-size:16px;color:#444748;">What happens to your body, and exactly what to do about it.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="four-col">
-      <div class="card" style="padding:28px;display:flex;flex-direction:column;height:100%;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
-          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid #e2e2e2;border-radius:9999px;padding:4px 12px;color:#444748;">01 / During</span>
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">water_drop</span>
-        </div>
-        <h3 style="font-size:18px;font-weight:700;color:#9600c9;margin-bottom:10px;">Prevention</h3>
-        <p style="font-size:14px;color:#444748;line-height:1.6;flex:1;">Your body is actively depleting magnesium and potassium. Serotonin receptors are working overtime.</p>
-        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid #e2e2e2;display:flex;flex-direction:column;gap:8px;">
-          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#444748;"><span class="material-symbols-outlined" style="font-size:14px;color:#9600c9;margin-top:1px;flex-shrink:0;">check</span>Sip water consistently, don't chug.</li>
-        </ul>
-      </div>
-      <div class="card" style="padding:28px;display:flex;flex-direction:column;height:100%;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
-          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid #e2e2e2;border-radius:9999px;padding:4px 12px;color:#444748;">02 / Sleep</span>
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">bedtime</span>
-        </div>
-        <h3 style="font-size:18px;font-weight:700;color:#9600c9;margin-bottom:10px;">The Buffer</h3>
-        <p style="font-size:14px;color:#444748;line-height:1.6;flex:1;">Neurotoxicity risks peak here. Antioxidants are critical before your head hits the pillow to mitigate oxidative stress.</p>
-        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid #e2e2e2;display:flex;flex-direction:column;gap:8px;">
-          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#444748;"><span class="material-symbols-outlined" style="font-size:14px;color:#9600c9;margin-top:1px;flex-shrink:0;">check</span>Take your first Ravive sachet now.</li>
-        </ul>
-      </div>
-      <div class="card" style="padding:28px;display:flex;flex-direction:column;height:100%;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
-          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid #e2e2e2;border-radius:9999px;padding:4px 12px;color:#444748;">03 / Morning</span>
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">wb_sunny</span>
-        </div>
-        <h3 style="font-size:18px;font-weight:700;color:#9600c9;margin-bottom:10px;">Rehydration</h3>
-        <p style="font-size:14px;color:#444748;line-height:1.6;flex:1;">Cellular dehydration and electrolyte imbalance cause the physical 'hollow' feeling. Cortisol spikes to compensate.</p>
-        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid #e2e2e2;display:flex;flex-direction:column;gap:8px;">
-          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#444748;"><span class="material-symbols-outlined" style="font-size:14px;color:#9600c9;margin-top:1px;flex-shrink:0;">check</span>Electrolytes before coffee.</li>
-        </ul>
-      </div>
-      <div class="card" style="padding:28px;display:flex;flex-direction:column;height:100%;">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
-          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid #e2e2e2;border-radius:9999px;padding:4px 12px;color:#444748;">04 / Day Two</span>
-          <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">psychology</span>
-        </div>
-        <h3 style="font-size:18px;font-weight:700;color:#9600c9;margin-bottom:10px;">Neuro-Reset</h3>
-        <p style="font-size:14px;color:#444748;line-height:1.6;flex:1;">The emotional dip. 5-HTP and L-Tyrosine are needed to rebuild depleted serotonin and dopamine pathways.</p>
-        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid #e2e2e2;display:flex;flex-direction:column;gap:8px;">
-          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#444748;"><span class="material-symbols-outlined" style="font-size:14px;color:#9600c9;margin-top:1px;flex-shrink:0;">check</span>Gentle movement, amino acids.</li>
-        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
-
-<!-- ANATOMY DEEP DIVE -->
-<section class="section-pad" style="padding:96px 48px;background:#fff;">
+<!-- RECOVERY TIMELINE -->
+<section class="section-pad" style="padding:120px 48px;background:var(--surface);">
   <div style="max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:5fr 7fr;gap:64px;" class="two-col">
-      <div>
-        <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:16px;">The Biology</div>
-        <h2 style="font-size:30px;font-weight:800;letter-spacing:-0.02em;color:#9600c9;margin-bottom:16px;line-height:1.2;">The Anatomy of the Come-down</h2>
-        <p style="font-size:15px;color:#444748;line-height:1.65;">Understanding what's happening mechanically removes the anxiety. It's just chemistry, and chemistry can be balanced.</p>
+    <div style="text-align:center;margin-bottom:64px;" class="reveal">
+      <div class="section-label" style="justify-content:center;"><div class="section-label-line"></div><span class="section-label-text">The Timeline</span><div class="section-label-line"></div></div>
+      <h2 class="section-h2">The Recovery <em>Arc</em></h2>
+      <p style="font-size:16px;color:var(--text-muted);max-width:480px;margin:16px auto 0;">What happens to your body, and exactly what to do about it.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;" class="four-grid">
+      <div class="tl-card reveal reveal-delay-1">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid var(--border);border-radius:9999px;padding:4px 12px;color:var(--text-muted);">01 / During</span>
+          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:20px;">water_drop</span>
+        </div>
+        <h3 style="font-size:19px;font-weight:700;color:var(--purple-bright);margin-bottom:10px;">Prevention</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;flex:1;">Your body is actively depleting magnesium and potassium. Serotonin receptors are working overtime.</p>
+        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple-bright);margin-top:1px;flex-shrink:0;">check</span>Sip water consistently, don't chug.</li>
+        </ul>
       </div>
-      <div style="display:flex;flex-direction:column;gap:32px;">
-        <div style="display:flex;gap:20px;align-items:flex-start;">
-          <div style="width:48px;height:48px;background:#f3e6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#9600c9;font-size:22px;">battery_0_bar</span>
-          </div>
-          <div>
-            <h4 style="font-size:17px;font-weight:700;color:#9600c9;margin-bottom:8px;">Severe Electrolyte Depletion</h4>
-            <p style="font-size:14px;color:#444748;line-height:1.65;">Dancing for 6 hours can cause you to sweat out up to 2 litres of fluid, carrying essential sodium, potassium, and magnesium with it. This creates micro-cramping and profound fatigue.</p>
-          </div>
+      <div class="tl-card reveal reveal-delay-2">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid var(--border);border-radius:9999px;padding:4px 12px;color:var(--text-muted);">02 / Sleep</span>
+          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:20px;">bedtime</span>
         </div>
-        <div style="display:flex;gap:20px;align-items:flex-start;">
-          <div style="width:48px;height:48px;background:#f3e6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#9600c9;font-size:22px;">hub</span>
-          </div>
-          <div>
-            <h4 style="font-size:17px;font-weight:700;color:#9600c9;margin-bottom:8px;">Neurotransmitter Exhaustion</h4>
-            <p style="font-size:14px;color:#444748;line-height:1.65;">Your brain's reward centres have been flooded. The resulting 'empty' feeling isn't a moral failing; it's a literal lack of the chemical precursors needed to produce serotonin and dopamine.</p>
-          </div>
+        <h3 style="font-size:19px;font-weight:700;color:var(--purple-bright);margin-bottom:10px;">The Buffer</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;flex:1;">Neurotoxicity risks peak here. Antioxidants are critical before your head hits the pillow to mitigate oxidative stress.</p>
+        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple-bright);margin-top:1px;flex-shrink:0;">check</span>Take your first Ravive sachet now.</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-3">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid var(--border);border-radius:9999px;padding:4px 12px;color:var(--text-muted);">03 / Morning</span>
+          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:20px;">wb_sunny</span>
         </div>
-        <div style="display:flex;gap:20px;align-items:flex-start;">
-          <div style="width:48px;height:48px;background:#f3e6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span class="material-symbols-outlined" style="color:#9600c9;font-size:22px;">mood_bad</span>
-          </div>
-          <div>
-            <h4 style="font-size:17px;font-weight:700;color:#9600c9;margin-bottom:8px;">Cortisol Dysregulation</h4>
-            <p style="font-size:14px;color:#444748;line-height:1.65;">Sleep deprivation spikes cortisol, worsening the emotional come-down. Magnesium and ashwagandha help regulate the HPA axis and bring stress hormones back to baseline faster.</p>
-          </div>
+        <h3 style="font-size:19px;font-weight:700;color:var(--purple-bright);margin-bottom:10px;">Rehydration</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;flex:1;">Cellular dehydration and electrolyte imbalance cause the physical 'hollow' feeling. Cortisol spikes to compensate.</p>
+        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple-bright);margin-top:1px;flex-shrink:0;">check</span>Electrolytes before coffee.</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-1">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
+          <span class="mono" style="font-size:10px;letter-spacing:0.08em;border:1px solid var(--border);border-radius:9999px;padding:4px 12px;color:var(--text-muted);">04 / Day Two</span>
+          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:20px;">psychology</span>
+        </div>
+        <h3 style="font-size:19px;font-weight:700;color:var(--purple-bright);margin-bottom:10px;">Neuro-Reset</h3>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.65;flex:1;">The emotional dip. 5-HTP and L-Tyrosine are needed to rebuild depleted serotonin and dopamine pathways.</p>
+        <ul style="list-style:none;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple-bright);margin-top:1px;flex-shrink:0;">check</span>Gentle movement, amino acids.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIOLOGY -->
+<section class="section-pad" style="padding:120px 48px;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:80px;" class="two-col">
+    <div class="reveal">
+      <div class="section-label"><div class="section-label-line"></div><span class="section-label-text">The Biology</span></div>
+      <h2 class="section-h2" style="margin-bottom:16px;">The Anatomy of the <em>Come-down</em></h2>
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.7;">Understanding what's happening mechanically removes the anxiety. It's just chemistry, and chemistry can be balanced.</p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="bio-item">
+        <div class="bio-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">battery_0_bar</span></div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;">Severe Electrolyte Depletion</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Dancing for 6 hours can cause you to sweat out up to 2 litres of fluid, carrying essential sodium, potassium, and magnesium with it. This creates micro-cramping and profound fatigue.</p>
+        </div>
+      </div>
+      <div class="bio-item">
+        <div class="bio-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">hub</span></div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;">Neurotransmitter Exhaustion</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Your brain's reward centres have been flooded. The resulting 'empty' feeling isn't a moral failing; it's a literal lack of the chemical precursors needed to produce serotonin and dopamine.</p>
+        </div>
+      </div>
+      <div class="bio-item">
+        <div class="bio-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">mood_bad</span></div>
+        <div>
+          <h4 style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;">Cortisol Dysregulation</h4>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Sleep deprivation spikes cortisol, worsening the emotional come-down. Magnesium and ashwagandha help regulate the HPA axis and bring stress hormones back to baseline faster.</p>
         </div>
       </div>
     </div>
@@ -200,64 +217,79 @@ a { text-decoration: none; }
 </section>
 
 <!-- STATS STRIP -->
-<section style="background:#000;padding:64px 48px;" class="section-pad">
+<section style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 48px;" class="section-pad">
   <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;" class="stats-row">
-    <div>
-      <div style="font-size:52px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">98%</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:8px;">Report faster recovery</div>
+    <div class="reveal reveal-delay-1">
+      <div style="font-size:56px;font-weight:900;letter-spacing:-0.04em;color:var(--purple-bright);line-height:1;">98%</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-top:8px;">Report faster recovery</div>
     </div>
-    <div>
-      <div style="font-size:52px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">0</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:8px;">Artificial sweeteners</div>
+    <div class="reveal reveal-delay-2">
+      <div style="font-size:56px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:1;">0</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-top:8px;">Artificial sweeteners</div>
     </div>
-    <div>
-      <div style="font-size:52px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">24h</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:8px;">Optimal recovery window</div>
+    <div class="reveal reveal-delay-3">
+      <div style="font-size:56px;font-weight:900;letter-spacing:-0.04em;color:var(--purple-bright);line-height:1;">24h</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-top:8px;">Optimal recovery window</div>
     </div>
-    <div>
-      <div style="font-size:52px;font-weight:800;letter-spacing:-0.03em;color:#bc00fb;line-height:1;">12</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.55);margin-top:8px;">Page protocol PDF</div>
+    <div class="reveal reveal-delay-1">
+      <div style="font-size:56px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:1;">12</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-top:8px;">Page protocol PDF</div>
     </div>
   </div>
 </section>
 
 <!-- EMAIL CAPTURE -->
-<section class="section-pad" style="padding:96px 48px;background:#f9f9f9;" id="download">
-  <div style="max-width:640px;margin:0 auto;">
-    <div class="card" style="padding:56px 48px;text-align:center;">
-      <span class="material-symbols-outlined" style="font-size:36px;color:#9600c9;margin-bottom:16px;display:block;">description</span>
-      <div class="mono" style="font-size:11px;letter-spacing:0.12em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">Free Download</div>
-      <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#9600c9;margin-bottom:12px;">The Complete 12-Page Protocol</h2>
-      <p style="font-size:15px;color:#444748;line-height:1.65;margin-bottom:36px;">Get the full doctor-authored PDF guide. Includes exact supplement timing, grocery lists for recovery meals, and actionable sleep hygiene tips for the days following a festival.</p>
-      <form onsubmit="event.preventDefault();this.innerHTML='<div style=\'font-size:16px;font-weight:600;color:#9600c9;\'>Guide sent! Check your inbox.</div>'" style="display:flex;flex-direction:column;gap:16px;">
-        <input type="email" placeholder="Enter your email" required style="width:100%;background:transparent;border:none;border-bottom:1.5px solid #e2e2e2;padding:12px 4px;font-size:15px;color:#1a1c1c;outline:none;font-family:'Hanken Grotesk',sans-serif;transition:border-color 0.2s;" onfocus="this.style.borderBottomColor='#9600c9'" onblur="this.style.borderBottomColor='#e2e2e2'"/>
-        <button type="submit" class="btn-purple" style="width:100%;padding:15px;font-size:14px;">SEND ME THE GUIDE</button>
-        <p class="mono" style="font-size:10px;color:#747878;letter-spacing:0.05em;">By subscribing, you agree to our privacy policy. No spam, just science.</p>
+<section class="section-pad" style="padding:120px 48px;" id="download">
+  <div style="max-width:600px;margin:0 auto;">
+    <div class="reveal" style="background:linear-gradient(145deg,#080014 0%,#12002a 100%);border:1px solid rgba(150,0,201,0.3);border-radius:24px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:300px;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
+      <div style="width:64px;height:64px;background:rgba(150,0,201,0.15);border:1px solid rgba(150,0,201,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:var(--purple-bright);">description</span>
+      </div>
+      <div class="mono" style="font-size:11px;letter-spacing:0.12em;color:var(--purple-bright);text-transform:uppercase;margin-bottom:12px;">Free Download</div>
+      <h2 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;color:#fff;margin-bottom:12px;">The Complete 12-Page Protocol</h2>
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;">Get the full doctor-authored PDF guide. Includes exact supplement timing, grocery lists for recovery meals, and actionable sleep hygiene tips.</p>
+      <form onsubmit="event.preventDefault();this.innerHTML='<div style=\'padding:20px;font-size:16px;font-weight:700;color:var(--purple-bright);\'>✓ Guide sent! Check your inbox.</div>'" style="display:flex;flex-direction:column;gap:16px;">
+        <input type="email" placeholder="Enter your email address" required style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;padding:14px 20px;font-size:15px;color:#fff;outline:none;font-family:'Hanken Grotesk',sans-serif;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'"/>
+        <button type="submit" class="btn-primary" style="width:100%;padding:15px;font-size:14px;">SEND ME THE GUIDE</button>
+        <p class="mono" style="font-size:10px;color:var(--text-dim);letter-spacing:0.05em;">By subscribing, you agree to our privacy policy. No spam, just science.</p>
       </form>
     </div>
   </div>
 </section>
 
 <!-- CTA STRIP -->
-<section style="background:#9600c9;padding:64px 48px;text-align:center;" class="section-pad">
-  <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:12px;">Stock up before your next festival</div>
-  <h2 style="font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:24px;">Start your recovery tonight.</h2>
-  <a href="shop.html" style="display:inline-block;background:#fff;color:#9600c9;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:14px 36px;border-radius:9999px;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">SHOP NOW</a>
+<section style="padding:100px 48px;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(100,0,180,0.3) 0%,transparent 60%),var(--bg);">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
+  <div class="reveal">
+    <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:12px;">Stock up before your next festival</div>
+    <h2 style="font-size:48px;font-weight:900;letter-spacing:-0.04em;color:#fff;margin-bottom:24px;">Start your recovery <span style="color:var(--purple-bright);font-style:italic;">tonight.</span></h2>
+    <a href="shop.html" class="btn-primary" style="padding:16px 44px;font-size:14px;">SHOP NOW</a>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#000;color:#fff;padding:64px 48px 32px;">
+<footer style="background:#000;padding:72px 48px 32px;border-top:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.08);" class="footer-cols">
-      <div><div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">Ravive</div><p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:11px;"><a href="science.html" style="font-size:14px;color:rgba(255,255,255,0.55);">The Science</a><a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Flavours</a><a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Recovery Guide</a></div></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:11px;"><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Privacy Policy</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Terms of Service</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Shipping &amp; Returns</a></div></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@Ravive.co" style="font-size:14px;color:rgba(255,255,255,0.55);">hello@Ravive.co</a></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--border);" class="footer-grid">
+      <div><div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:16px;letter-spacing:-0.02em;">Ravive</div><p style="font-size:14px;color:var(--text-muted);line-height:1.7;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="science.html" style="font-size:14px;color:var(--text-muted);">The Science</a><a href="product.html" style="font-size:14px;color:var(--text-muted);">Flavours</a><a href="shop.html" style="font-size:14px;color:var(--text-muted);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:var(--text-muted);">Recovery Guide</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="#" style="font-size:14px;color:var(--text-muted);">Privacy Policy</a><a href="#" style="font-size:14px;color:var(--text-muted);">Terms of Service</a><a href="#" style="font-size:14px;color:var(--text-muted);">Shipping &amp; Returns</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@ravive.co" style="font-size:14px;color:var(--text-muted);">hello@ravive.co</a></div>
     </div>
-    <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div class="mono" style="font-size:11px;color:var(--text-dim);letter-spacing:0.04em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+      <div class="mono" style="font-size:11px;color:var(--text-dim);">FORMULATED IN CAMBRIDGE · UK</div>
+    </div>
   </div>
 </footer>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY > 40); },{passive:true});
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } }); },{threshold:0.1});
+revealEls.forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
-
-

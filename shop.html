@@ -1,279 +1,307 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Festival Bundle — Ravive</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Hanken Grotesk', sans-serif; background: #f9f9f9; color: #1a1c1c; -webkit-font-smoothing: antialiased; }
-.mono { font-family: 'Geist Mono', monospace; }
-a { text-decoration: none; }
-.btn-primary { background:#000;color:#fff;font-size:13px;letter-spacing:0.08em;font-weight:600;padding:13px 28px;border-radius:9999px;border:none;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-primary:hover { background:#9600c9;box-shadow:0 0 20px rgba(150,0,201,0.35);transform:translateY(-1px); }
-.btn-ghost { background:transparent;color:#9600c9;font-size:13px;letter-spacing:0.06em;font-weight:600;padding:12px 28px;border-radius:9999px;border:1.5px solid #9600c9;cursor:pointer;transition:all 0.2s;display:inline-block; }
-.btn-ghost:hover { background:rgba(150,0,201,0.06);transform:translateY(-1px); }
-.card { background:#fff;border:1px solid #e2e2e2;border-radius:8px; }
-.nav-link { font-size:14px;color:#444748;transition:color 0.15s; }
-.nav-link:hover { color:#9600c9; }
-.nav-link.active { color:#9600c9;font-weight:600;border-bottom:2px solid #9600c9;padding-bottom:2px; }
-#mobileMenu { display:none; }
-#mobileMenu.open { display:flex; }
-.flavour-chip { cursor:pointer;padding:8px 16px;border-radius:9999px;font-size:13px;border:1.5px solid #e2e2e2;background:#fff;color:#444748;transition:all 0.2s;display:flex;align-items:center;gap:8px; }
-.flavour-chip.active { border-color:#9600c9;background:#f9f3ff;color:#9600c9; }
-.flavour-chip:hover { border-color:#9600c9; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
-.badge-pulse { animation: pulse 2s ease-in-out infinite; }
-
-@media (max-width:768px) {
-  .desktop-nav,.desktop-cta { display:none !important; }
-  .mobile-btn { display:flex !important; }
-
-  /* Bundle grid → single column, no overflow */
-  .three-col { grid-template-columns:1fr !important; }
-  .section-pad { padding:48px 16px !important; }
-  .nav-wrap { padding:0 16px !important; }
-
-  /* Footer: 2-col then single on very small */
-  .footer-cols { grid-template-columns:1fr 1fr !important; gap:24px !important; }
-  .trust-row { grid-template-columns:1fr 1fr !important; gap:20px !important; }
-
-  /* Header hero text scale */
-  h1 { font-size:30px !important; }
-
-  /* Bundle cards: reduce internal padding so content breathes */
-  .card { padding:20px !important; }
-
-  /* Selection bar: stack vertically */
-  #selectionBar { flex-direction:column !important; align-items:flex-start !important; }
-  #selectionBar button { width:100% !important; }
-
-  /* Flavour chips: allow wrapping, full touchable size */
-  .flavour-chip { font-size:12px !important; padding:10px 14px !important; }
-
-  /* Trust row icons */
-  .trust-row span { font-size:22px !important; }
-
-  /* "MOST POPULAR" badge doesn't clip */
-  .badge-pulse { font-size:9px !important; padding:4px 12px !important; }
-
-  /* Card image panels: smaller height on mobile */
-  .card-img-panel { min-height:120px !important; padding:20px !important; }
+:root {
+  --bg: #050508; --surface: #0d0d14; --surface2: #12121c;
+  --border: rgba(255,255,255,0.07); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-glow: rgba(150,0,201,0.4); --text: #f0f0f5;
+  --text-muted: rgba(240,240,245,0.45); --text-dim: rgba(240,240,245,0.22);
 }
-
-@media (max-width:400px) {
-  .footer-cols { grid-template-columns:1fr !important; }
-  .trust-row { grid-template-columns:1fr 1fr !important; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+.mono { font-family: 'Geist Mono', monospace; }
+a { text-decoration: none; color: inherit; }
+.btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
+.btn-primary:hover { background: var(--purple-bright); box-shadow: 0 0 40px var(--purple-glow); transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--text); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; padding: 13px 32px; border-radius: 9999px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s; display: inline-block; }
+.btn-ghost:hover { border-color: var(--purple); color: var(--purple-bright); }
+.section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.section-label-line { width: 24px; height: 1px; background: var(--purple); }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-h2 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1.05; }
+.section-h2 em { font-style: italic; color: var(--purple-bright); }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+/* Nav */
+.nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
+.nav.scrolled { background: rgba(5,5,8,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+.nav-link:hover { color: #fff; }
+.nav-link.active { color: var(--purple-bright); }
+.mobile-btn { display: none; }
+#mobileMenu { display: none; }
+#mobileMenu.open { display: flex; }
+/* Flavour chip */
+.flavour-chip { cursor: pointer; padding: 10px 18px; border-radius: 9999px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); transition: all 0.25s; display: flex; align-items: center; gap: 10px; }
+.flavour-chip.active { border-color: var(--purple); background: rgba(150,0,201,0.12); color: var(--text); }
+.flavour-chip:hover { border-color: rgba(150,0,201,0.4); }
+@keyframes badge-pulse { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
+/* Bundle cards */
+.bundle-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px; display: flex; flex-direction: column; transition: all 0.3s; position: relative; overflow: hidden; }
+.bundle-card:hover { border-color: rgba(150,0,201,0.3); transform: translateY(-6px); box-shadow: 0 24px 80px rgba(150,0,201,0.12); }
+.bundle-card.featured { background: linear-gradient(145deg, #080014 0%, #120025 100%); border-color: rgba(150,0,201,0.45); }
+.bundle-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--purple); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 20px; border-radius: 9999px; white-space: nowrap; animation: badge-pulse 2s ease-in-out infinite; }
+.qty-pack { cursor: pointer; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; text-align: center; transition: all 0.25s; background: var(--surface2); }
+.qty-pack.active { border-color: var(--purple); background: rgba(150,0,201,0.1); }
+.qty-pack:hover { border-color: rgba(150,0,201,0.4); }
+/* Trust */
+.trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links, .nav-cta-d { display: none !important; }
+  .mobile-btn { display: flex !important; }
+  .hero-pad { padding: 100px 20px 60px !important; }
+  .bundles-grid { grid-template-columns: 1fr !important; }
+  .trust-grid { grid-template-columns: 1fr 1fr !important; }
+  .section-pad { padding: 60px 20px !important; }
+  .section-h2 { font-size: 32px !important; }
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+}
+@media (max-width: 480px) {
+  .trust-grid { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
 <body>
 
-<nav style="background:rgba(249,249,249,0.94);backdrop-filter:blur(12px);border-bottom:1px solid #e2e2e2;position:sticky;top:0;z-index:50;">
-  <div class="nav-wrap" style="max-width:1280px;margin:0 auto;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;">
-    <a href="index.html" style="font-size:20px;font-weight:800;color:#000;letter-spacing:-0.02em;">Ravive</a>
-    <div class="desktop-nav" style="display:flex;align-items:center;gap:36px;">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="science.html" class="nav-link">The Science</a>
-      <a href="product.html" class="nav-link">Flavours</a>
-      <a href="shop.html" class="nav-link active">Festival Bundle</a>
-      <a href="recovery.html" class="nav-link">Recovery Guide</a>
-    </div>
-    <div style="display:flex;align-items:center;gap:12px;">
-      <a href="product.html" class="btn-primary desktop-cta">SHOP NOW</a>
-      <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="display:none;background:none;border:none;cursor:pointer;padding:8px;" aria-label="Menu">
-        <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
-      </button>
-    </div>
+<!-- OFFER STRIP -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono">
+  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+  <a href="#" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a href="index.html" class="nav-logo">Ravive</a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="science.html" class="nav-link">The Science</a>
+    <a href="product.html" class="nav-link">Flavours</a>
+    <a href="shop.html" class="nav-link active">Festival Bundle</a>
+    <a href="recovery.html" class="nav-link">Recovery Guide</a>
   </div>
-  <div id="mobileMenu" style="flex-direction:column;border-top:1px solid #e2e2e2;background:#f9f9f9;padding:16px 20px;gap:2px;">
-    <a href="index.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Home</a>
-    <a href="science.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">The Science</a>
-    <a href="product.html" style="padding:12px 0;font-size:15px;color:#444748;border-bottom:1px solid #f0f0f0;display:block;">Flavours</a>
-    <a href="shop.html" style="padding:12px 0;font-size:15px;font-weight:600;color:#9600c9;border-bottom:1px solid #f0f0f0;display:block;">Festival Bundle</a>
-    <a href="recovery.html" style="padding:12px 0;font-size:15px;color:#444748;display:block;">Recovery Guide</a>
-    <a href="product.html" class="btn-primary" style="margin-top:16px;text-align:center;">SHOP NOW</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#fff;">
+      <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="white"/><rect y="8" width="22" height="2" rx="1" fill="white"/><rect y="16" width="22" height="2" rx="1" fill="white"/></svg>
+    </button>
   </div>
 </nav>
+<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(5,5,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+  <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
+  <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
+  <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
+  <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">Festival Bundle</a>
+  <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);display:block;">Recovery Guide</a>
+  <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
+</div>
 
-<!-- HEADER -->
-<section style="padding:60px 48px 48px;background:#fff;text-align:center;border-bottom:1px solid #e2e2e2;" class="section-pad">
-  <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">Build Your Loadout</div>
-  <h1 style="font-size:40px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:16px;line-height:1.15;">Choose your level of <span style="color:#9600c9;">recovery</span>.</h1>
-  <p style="font-size:16px;color:#444748;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime.</p>
+<!-- HERO -->
+<section class="hero-pad" style="padding:140px 48px 80px;text-align:center;position:relative;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(100,0,180,0.2) 0%,transparent 60%),var(--bg);">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="reveal" style="display:inline-flex;align-items:center;gap:10px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.3);border-radius:9999px;padding:7px 18px;margin-bottom:28px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;"></span>
+      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);">BUILD YOUR LOADOUT</span>
+    </div>
+    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#fff;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-bright);">recovery.</em></h1>
+    <p class="reveal reveal-delay-2" style="font-size:17px;color:var(--text-muted);line-height:1.7;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime. No lock-in.</p>
+  </div>
 </section>
 
 <!-- BUNDLE CARDS -->
-<section style="padding:56px 48px;" class="section-pad">
-  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" class="three-col">
+<section class="section-pad" style="padding:40px 48px 80px;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="bundles-grid">
 
     <!-- SOLO -->
-    <div class="card" style="padding:32px;display:flex;flex-direction:column;">
-      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#3d0066 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(150,0,201,0.3) 0%,transparent 70%);"></div>
-        <div style="text-align:center;z-index:1;">
-          <div style="width:60px;height:100px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:30px;margin:0 auto;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 32px rgba(150,0,201,0.4);"></div>
-        </div>
+    <div class="bundle-card reveal reveal-delay-1">
+      <div style="background:linear-gradient(145deg,#0d001a 0%,#2a004d 100%);border-radius:14px;padding:40px 32px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;min-height:180px;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(150,0,201,0.25) 0%,transparent 70%);"></div>
+        <div style="width:56px;height:100px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:28px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 0 32px rgba(150,0,201,0.5);position:relative;z-index:1;"></div>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#747878;text-transform:uppercase;margin-bottom:8px;">Solo Raviver</div>
-      <div style="font-size:13px;color:#747878;margin-bottom:8px;">3 SACHETS</div>
-      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
-        <span style="font-size:40px;font-weight:800;color:#000;letter-spacing:-0.03em;line-height:1;">£15</span>
-        <span style="font-size:16px;color:#9600c9;text-decoration:line-through;">£18</span>
+      <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;">Solo Raviver</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">3 SACHETS</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£15</span>
+        <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£18</span>
       </div>
-      <div style="flex:1;"></div>
-      <ul style="list-style:none;margin:20px 0 28px 0;display:flex;flex-direction:column;gap:10px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#444748;"><span class="material-symbols-outlined" style="font-size:15px;color:#9600c9;">check</span>Single weekend coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#444748;"><span class="material-symbols-outlined" style="font-size:15px;color:#9600c9;">check</span>Standard shipping</li>
+      <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE £3</div>
+      <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Single weekend coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Standard shipping</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix any 1 flavour</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('solo',this)">SELECT SOLO</button>
     </div>
 
-    <!-- SEASON PASS — FEATURED -->
-    <div style="background:#000;border-radius:8px;padding:32px;display:flex;flex-direction:column;position:relative;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#9600c9;color:#fff;font-size:10px;padding:5px 18px;border-radius:9999px;font-weight:700;letter-spacing:0.08em;white-space:nowrap;" class="mono badge-pulse">MOST POPULAR</div>
-      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#4d0080 50%,#9600c9 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;border:1px solid rgba(188,0,251,0.3);">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(188,0,251,0.4) 0%,transparent 70%);"></div>
-        <div style="text-align:center;z-index:1;">
-          <div style="width:70px;height:120px;background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(188,0,251,0.4) 100%);border-radius:35px;margin:0 auto;border:1px solid rgba(255,255,255,0.3);box-shadow:0 0 48px rgba(188,0,251,0.6);"></div>
-        </div>
+    <!-- SEASON PASS FEATURED -->
+    <div class="bundle-card featured reveal reveal-delay-2">
+      <div class="bundle-badge mono">MOST POPULAR</div>
+      <div style="background:linear-gradient(145deg,#1a0030 0%,#4d0080 50%,rgba(150,0,201,0.8) 100%);border-radius:14px;padding:40px 32px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;min-height:180px;position:relative;overflow:hidden;border:1px solid rgba(188,0,251,0.25);">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(188,0,251,0.35) 0%,transparent 65%);"></div>
+        <div style="width:64px;height:116px;background:linear-gradient(180deg,rgba(255,255,255,0.25) 0%,rgba(188,0,251,0.4) 100%);border-radius:32px;border:1px solid rgba(255,255,255,0.25);box-shadow:0 0 60px rgba(188,0,251,0.6),0 0 120px rgba(150,0,201,0.3);position:relative;z-index:1;"></div>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:8px;">Season Pass</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.35);margin-bottom:8px;">30 SACHETS</div>
-      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
-        <span style="font-size:40px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1;">£40</span>
-        <span style="font-size:15px;font-weight:400;color:rgba(255,255,255,0.4);">/mo</span>
-        <span style="font-size:16px;color:#bc00fb;text-decoration:line-through;">£50</span>
+      <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:6px;">Season Pass</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:16px;">30 SACHETS / MONTH</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£40</span>
+        <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.3);">/mo</span>
+        <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£50</span>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.08em;color:#bc00fb;margin-bottom:8px;">SAVE 20% + FREE SHIPPING</div>
-      <div style="flex:1;"></div>
-      <ul style="list-style:none;margin:20px 0 28px 0;display:flex;flex-direction:column;gap:10px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);"><span class="material-symbols-outlined" style="font-size:15px;color:#bc00fb;">check</span>Full month coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);"><span class="material-symbols-outlined" style="font-size:15px;color:#bc00fb;">check</span>Priority delivery</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);"><span class="material-symbols-outlined" style="font-size:15px;color:#bc00fb;">check</span>Mix up to 3 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);"><span class="material-symbols-outlined" style="font-size:15px;color:#bc00fb;">check</span>Cancel anytime</li>
+      <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.08em;margin-bottom:28px;">SAVE 20% + FREE SHIPPING</div>
+      <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Full month coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Priority delivery</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix up to 3 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Cancel anytime</li>
       </ul>
-      <button style="background:#9600c9;color:#fff;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:15px;border-radius:9999px;border:none;cursor:pointer;width:100%;transition:all 0.2s;" onclick="selectBundle('season',this)" onmouseover="this.style.background='#bc00fb';this.style.boxShadow='0 0 20px rgba(188,0,251,0.45)'" onmouseout="this.style.background='#9600c9';this.style.boxShadow='none'">SUBSCRIBE &amp; SAVE</button>
+      <button style="background:var(--purple);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:16px;border-radius:9999px;border:none;cursor:pointer;width:100%;transition:all 0.3s;" onmouseover="this.style.background='var(--purple-bright)';this.style.boxShadow='0 0 30px rgba(188,0,251,0.5)'" onmouseout="this.style.background='var(--purple)';this.style.boxShadow='none'" onclick="selectBundle('season',this)">SUBSCRIBE &amp; SAVE</button>
     </div>
 
     <!-- SQUAD PACK -->
-    <div class="card" style="padding:32px;display:flex;flex-direction:column;">
-      <div class="card-img-panel" style="background:linear-gradient(145deg,#1a0030 0%,#330055 100%);border-radius:12px;padding:32px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;min-height:180px;position:relative;overflow:hidden;">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(100,0,150,0.3) 0%,transparent 70%);"></div>
-        <div style="text-align:center;z-index:1;display:flex;gap:12px;">
-          <div style="width:44px;height:76px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 20px rgba(150,0,201,0.3);"></div>
-          <div style="width:44px;height:76px;background:linear-gradient(180deg,rgba(188,0,251,0.5) 0%,rgba(100,0,160,0.2) 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.15);margin-top:12px;"></div>
-          <div style="width:44px;height:76px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 0 20px rgba(150,0,201,0.3);"></div>
+    <div class="bundle-card reveal reveal-delay-3">
+      <div style="background:linear-gradient(145deg,#0d001a 0%,#250040 100%);border-radius:14px;padding:40px 32px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;min-height:180px;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(100,0,150,0.2) 0%,transparent 65%);"></div>
+        <div style="display:flex;gap:12px;position:relative;z-index:1;">
+          <div style="width:40px;height:72px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:20px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 0 20px rgba(150,0,201,0.4);"></div>
+          <div style="width:40px;height:72px;background:linear-gradient(180deg,rgba(188,0,251,0.5) 0%,rgba(100,0,160,0.2) 100%);border-radius:20px;border:1px solid rgba(255,255,255,0.1);margin-top:12px;"></div>
+          <div style="width:40px;height:72px;background:linear-gradient(180deg,rgba(188,0,251,0.7) 0%,rgba(100,0,160,0.3) 100%);border-radius:20px;border:1px solid rgba(255,255,255,0.15);box-shadow:0 0 20px rgba(150,0,201,0.4);"></div>
         </div>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.1em;color:#747878;text-transform:uppercase;margin-bottom:8px;">Squad Pack</div>
-      <div style="font-size:13px;color:#747878;margin-bottom:8px;">12 SACHETS</div>
-      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
-        <span style="font-size:40px;font-weight:800;color:#000;letter-spacing:-0.03em;line-height:1;">£34</span>
-        <span style="font-size:16px;color:#9600c9;text-decoration:line-through;">£40</span>
+      <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:6px;">Squad Pack</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">12 SACHETS</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
+        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£34</span>
+        <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£40</span>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.08em;color:#9600c9;margin-bottom:4px;">SAVE 15%</div>
-      <div style="flex:1;"></div>
-      <ul style="list-style:none;margin:20px 0 28px 0;display:flex;flex-direction:column;gap:10px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#444748;"><span class="material-symbols-outlined" style="font-size:15px;color:#9600c9;">check</span>Share with the crew</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#444748;"><span class="material-symbols-outlined" style="font-size:15px;color:#9600c9;">check</span>Mix 2 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:#444748;"><span class="material-symbols-outlined" style="font-size:15px;color:#9600c9;">check</span>Standard shipping</li>
+      <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE 15%</div>
+      <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Share with the crew</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix 2 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Free shipping included</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('squad',this)">SELECT SQUAD</button>
     </div>
   </div>
 
   <!-- SELECTION BAR -->
-  <div id="selectionBar" style="display:none;max-width:1100px;margin:24px auto 0;background:#f9f9f9;border:1px solid #e2e2e2;border-radius:8px;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-    <div style="display:flex;align-items:center;gap:12px;">
-      <span class="material-symbols-outlined" style="color:#9600c9;font-size:20px;">shopping_bag</span>
+  <div id="selectionBar" style="display:none;max-width:1100px;margin:24px auto 0;background:var(--surface);border:1px solid var(--purple);border-radius:16px;padding:20px 28px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">shopping_bag</span>
       <div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.08em;color:#747878;text-transform:uppercase;">YOUR SELECTION</div>
-        <div id="selectionLabel" style="font-size:15px;font-weight:600;color:#000;">Season Pass — £40/mo</div>
+        <div class="mono" style="font-size:9px;letter-spacing:0.1em;color:var(--text-dim);text-transform:uppercase;">YOUR SELECTION</div>
+        <div id="selectionLabel" style="font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Season Pass — £40/mo</div>
       </div>
     </div>
-    <button class="btn-primary" style="padding:13px 32px;">CHECKOUT →</button>
+    <button class="btn-primary" style="padding:14px 36px;font-size:13px;">CHECKOUT →</button>
   </div>
 </section>
 
-<hr style="border:none;border-top:1px solid #e2e2e2;"/>
-
-<!-- FLAVOUR CHOOSER -->
-<section class="section-pad" style="padding:64px 48px;background:#fff;text-align:center;">
-  <div style="max-width:1280px;margin:0 auto;">
-    <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:#9600c9;text-transform:uppercase;margin-bottom:12px;">Customise</div>
-    <h2 style="font-size:28px;font-weight:800;letter-spacing:-0.02em;color:#000;margin-bottom:8px;">Mix Your Flavour Loadout</h2>
-    <p style="font-size:15px;color:#444748;margin-bottom:32px;">Customise your pack after selection.</p>
-    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <button class="flavour-chip active" onclick="toggleFlavour(this)">
-        <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#2a004d,#6600aa);flex-shrink:0;"></div>
-        MIDNIGHT BERRY
-      </button>
-      <button class="flavour-chip" onclick="toggleFlavour(this)">
-        <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#ff6600,#ffcc00);flex-shrink:0;"></div>
-        SUNRISE CITRUS
-      </button>
-      <button class="flavour-chip" onclick="toggleFlavour(this)">
-        <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#002b1a,#00aa66);flex-shrink:0;"></div>
-        BOTANICAL MINT
-      </button>
+<!-- FLAVOUR MIX -->
+<section class="section-pad" style="padding:60px 48px;background:var(--surface);border-top:1px solid var(--border);">
+  <div style="max-width:1100px;margin:0 auto;text-align:center;">
+    <div class="reveal">
+      <div class="section-label" style="justify-content:center;"><div class="section-label-line"></div><span class="section-label-text">Customise</span><div class="section-label-line"></div></div>
+      <h2 class="section-h2" style="margin-bottom:8px;font-size:32px;">Mix Your Flavour <em>Loadout</em></h2>
+      <p style="font-size:15px;color:var(--text-muted);margin-bottom:32px;">Select your preferred flavours after checkout.</p>
+      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <button class="flavour-chip active" onclick="this.classList.toggle('active')">
+          <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#2a004d,#6600aa);flex-shrink:0;"></div>
+          MIDNIGHT BERRY
+        </button>
+        <button class="flavour-chip" onclick="this.classList.toggle('active')">
+          <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#ff6600,#ffcc00);flex-shrink:0;"></div>
+          SUNRISE CITRUS
+        </button>
+        <button class="flavour-chip" onclick="this.classList.toggle('active')">
+          <div style="width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#002b1a,#00aa66);flex-shrink:0;"></div>
+          BOTANICAL MINT
+        </button>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- TRUST ROW -->
-<section style="padding:56px 48px;background:#f9f9f9;border-top:1px solid #e2e2e2;" class="section-pad">
-  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;" class="trust-row">
-    <div>
-      <span class="material-symbols-outlined" style="font-size:28px;color:#9600c9;margin-bottom:12px;display:block;">local_shipping</span>
-      <div style="font-size:14px;font-weight:600;color:#000;margin-bottom:4px;">Free Delivery</div>
-      <div style="font-size:13px;color:#747878;">On all orders over £30</div>
+<section class="section-pad" style="padding:80px 48px;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;" class="trust-grid">
+    <div class="trust-item reveal reveal-delay-1">
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">local_shipping</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:#fff;">Free Delivery</div>
+      <div style="font-size:13px;color:var(--text-muted);">On all orders over £30</div>
     </div>
-    <div>
-      <span class="material-symbols-outlined" style="font-size:28px;color:#9600c9;margin-bottom:12px;display:block;">verified</span>
-      <div style="font-size:14px;font-weight:600;color:#000;margin-bottom:4px;">30-Day Guarantee</div>
-      <div style="font-size:13px;color:#747878;">No questions asked returns</div>
+    <div class="trust-item reveal reveal-delay-2">
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">verified</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:#fff;">30-Day Guarantee</div>
+      <div style="font-size:13px;color:var(--text-muted);">No questions asked returns</div>
     </div>
-    <div>
-      <span class="material-symbols-outlined" style="font-size:28px;color:#9600c9;margin-bottom:12px;display:block;">lock</span>
-      <div style="font-size:14px;font-weight:600;color:#000;margin-bottom:4px;">Secure Checkout</div>
-      <div style="font-size:13px;color:#747878;">256-bit SSL encryption</div>
+    <div class="trust-item reveal reveal-delay-3">
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">lock</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:#fff;">Secure Checkout</div>
+      <div style="font-size:13px;color:var(--text-muted);">256-bit SSL encryption</div>
     </div>
-    <div>
-      <span class="material-symbols-outlined" style="font-size:28px;color:#9600c9;margin-bottom:12px;display:block;">cancel</span>
-      <div style="font-size:14px;font-weight:600;color:#000;margin-bottom:4px;">Cancel Anytime</div>
-      <div style="font-size:13px;color:#747878;">Subscriptions are flexible</div>
+    <div class="trust-item reveal reveal-delay-1">
+      <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">cancel</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:#fff;">Cancel Anytime</div>
+      <div style="font-size:13px;color:var(--text-muted);">Subscriptions are flexible</div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#000;color:#fff;padding:64px 48px 32px;">
+<footer style="background:#000;padding:72px 48px 32px;border-top:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;">
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,0.08);" class="footer-cols">
-      <div><div style="font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;margin-bottom:14px;">Ravive</div><p style="font-size:14px;color:rgba(255,255,255,0.45);line-height:1.65;max-width:240px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:11px;"><a href="science.html" style="font-size:14px;color:rgba(255,255,255,0.55);">The Science</a><a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Flavours</a><a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.55);">Recovery Guide</a></div></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:11px;"><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Privacy Policy</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Terms of Service</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.55);">Shipping &amp; Returns</a></div></div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@Ravive.co" style="font-size:14px;color:rgba(255,255,255,0.55);">hello@Ravive.co</a></div>
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;padding-bottom:56px;border-bottom:1px solid var(--border);" class="footer-grid">
+      <div>
+        <div style="font-size:22px;font-weight:900;color:#fff;margin-bottom:16px;letter-spacing:-0.02em;">Ravive</div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.7;max-width:240px;margin-bottom:24px;">Doctor-led. Rave-native. Formulated for the demands of multi-day events.</p>
+        <div style="display:flex;gap:10px;">
+          <a href="#" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='var(--purple)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+      </div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="science.html" style="font-size:14px;color:var(--text-muted);transition:color 0.2s;" onmouseover="this.style.color='var(--purple-bright)'" onmouseout="this.style.color='var(--text-muted)'">The Science</a><a href="product.html" style="font-size:14px;color:var(--text-muted);">Flavours</a><a href="shop.html" style="font-size:14px;color:var(--text-muted);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:var(--text-muted);">Recovery Guide</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="#" style="font-size:14px;color:var(--text-muted);">Privacy Policy</a><a href="#" style="font-size:14px;color:var(--text-muted);">Terms of Service</a><a href="#" style="font-size:14px;color:var(--text-muted);">Shipping &amp; Returns</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-dim);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@ravive.co" style="font-size:14px;color:var(--text-muted);">hello@ravive.co</a><div style="font-size:13px;color:var(--text-dim);margin-top:8px;">London, UK</div></div>
     </div>
-    <div class="mono" style="font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.05em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <div class="mono" style="font-size:11px;color:var(--text-dim);letter-spacing:0.04em;">© 2025 Ravive Ltd. Doctor-led, Rave-native recovery.</div>
+      <div class="mono" style="font-size:11px;color:var(--text-dim);letter-spacing:0.04em;">FORMULATED IN CAMBRIDGE · UK</div>
+    </div>
   </div>
 </footer>
 
 <script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY > 40); },{passive:true});
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } }); },{threshold:0.1});
+revealEls.forEach(el=>obs.observe(el));
 const labels = { solo: 'Solo Raviver — £15', season: 'Season Pass — £40/mo', squad: 'Squad Pack — £34' };
 function selectBundle(id, btn) {
-  document.getElementById('selectionBar').style.display = 'flex';
+  const bar = document.getElementById('selectionBar');
+  bar.style.display = 'flex';
   document.getElementById('selectionLabel').textContent = labels[id];
-}
-function toggleFlavour(el) {
-  el.classList.toggle('active');
 }
 </script>
 </body>
 </html>
-
-
