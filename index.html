@@ -1653,32 +1653,49 @@ function firePulse(){}
   // The slot is pinned at CSS top:57% of the sticky stage with height clamp(...).
   // We derive its centre + height DETERMINISTICALLY (not from a live rect, which
   // is unreliable before the pin), so the maths is correct at any scroll point.
-  const SACHET_H  = 1.99;  // body 1.9 + top/bottom seals
-  const SLOT_TOP_FRAC    = 0.57;  // matches CSS #feature-slot top
+  const SLOT_TOP_FRAC = 0.57;  // matches CSS #feature-slot top (fallback only)
   let DOCK_SCALE = 0.9;
   let DOCK_Y = 0;
-  function slotHeightPx() {
-    const vh = window.innerHeight;
-    return Math.max(260, Math.min(0.40 * vh, 380)); // matches CSS clamp(260px,40vh,380px)
+
+  // Measure the sachet group's true geometric centre + height (accounts for the
+  // tear notch on top), so we align its VISUAL centre — not the origin — to the
+  // box. Computed once after the geometry is built.
+  let sachetCY = 0, sachetH = 1.99;
+  function measureSachet() {
+    const box = new THREE.Box3().setFromObject(sachetGroup);
+    sachetCY = (box.max.y + box.min.y) / 2;   // offset of visual centre from origin
+    sachetH  = box.max.y - box.min.y;          // full visual height in world units
   }
+
+  function slotMetrics() {
+    // Prefer the LIVE box rect (ground truth once it exists / is pinned).
+    const el = document.getElementById('feature-slot');
+    const vpH = window.innerHeight;
+    if (el) {
+      const r = el.getBoundingClientRect();
+      if (r.height > 0) return { centrePx: r.top + r.height / 2, heightPx: r.height };
+    }
+    const h = Math.max(260, Math.min(0.40 * vpH, 380)); // CSS clamp fallback
+    return { centrePx: SLOT_TOP_FRAC * vpH, heightPx: h };
+  }
+
   function computeDockTargets() {
     const vpH = window.innerHeight;
-    const fovRad = camera.fov * Math.PI / 180;
-    const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2);
-    const pxPerUnit = vpH / worldVisibleH;
-    const slotPx = slotHeightPx();
-    // Fill 78% of the slot's inner height (leaves room for the tag/foot labels).
-    DOCK_SCALE = (slotPx * 0.78) / (SACHET_H * pxPerUnit);
-    const slotCentrePx = SLOT_TOP_FRAC * vpH;                 // box centre from top
-    // Centre the sachet on the box; nudge down slightly so the up-pointing tear
-    // notch doesn't make it look top-heavy → optically centred in the frame.
-    DOCK_Y = ((vpH / 2) - slotCentrePx) / pxPerUnit - 0.04 * DOCK_SCALE;
+    const pxPerUnit = vpH / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
+    const { centrePx, heightPx } = slotMetrics();
+    // Scale so the sachet's visual height fills 80% of the box height.
+    DOCK_SCALE = (heightPx * 0.80) / (sachetH * pxPerUnit);
+    // World Y at the box centre, MINUS the scaled centre-offset so the sachet's
+    // visual middle (not its origin) lands exactly on the box's middle.
+    const boxCentreWorldY = ((vpH / 2) - centrePx) / pxPerUnit;
+    DOCK_Y = boxCentreWorldY - sachetCY * DOCK_SCALE;
   }
-  computeDockTargets();
   window.addEventListener('resize', () => {
     computeDockTargets();
     if (state.dock > 0.5) { state.scale = DOCK_SCALE; state.posY = DOCK_Y; }
   });
+  measureSachet();        // measure visual centre/height of the built geometry
+  computeDockTargets();   // initial dock targets
 
   // ════════════════════════════════════════════════════════════════
   // FEATURE CHOREOGRAPHY
@@ -1750,6 +1767,10 @@ function firePulse(){}
     onLeaveBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
     onUpdate: self => {
       const p = self.progress;
+
+      // While the box is at REST (before the exit glide), re-measure & align the
+      // sachet to its live rect each frame — guarantees dead-centre in the box.
+      if (p < EXIT_START) computeDockTargets();
 
       // Exit glide: 0 before EXIT_START, 0→1 after → everything rides up & out.
       const ex = smooth(mapp(p, EXIT_START, 1.0));
