@@ -182,8 +182,7 @@ a { text-decoration: none; color: inherit; }
   z-index: 1;
 }
 #feature-sticky {
-  position: sticky;
-  top: 0;
+  position: relative;   /* ScrollTrigger pins this; do NOT use CSS sticky too */
   height: 100vh;
   overflow: hidden;
 }
@@ -1573,7 +1572,7 @@ function firePulse(){}
   // dock: 0 = free hero pose, 1 = locked frontal in the slot box.
   const state = {
     heroRotX: 0, heroRotZ: 0,   // hero tilt (blended out as dock→1)
-    dock: 0,
+    dock: 0, dockSpin: 0,        // dock progress + controlled landing spin
     posX: HERO_X, posY: 0, posZ: 0,
     scale: 1, floatAmp: 0.04,
     opacity: 0, // canvas fade
@@ -1606,20 +1605,20 @@ function firePulse(){}
     elapsed += clock.getDelta();
 
     const d = state.dock;            // 0..1 dock progress
-    const free = d < 0.999;
+    const free = d <= 0;             // only truly free before docking starts
 
-    // Idle drift / drag momentum only while still in the free (hero) pose
+    // Idle drift / drag momentum ONLY before docking begins. Once docking
+    // starts the dock controller owns rotation entirely → no wobble.
     if (free && !isDragging) { velX *= 0.92; heroSpinY += velX + 0.0012; }
 
-    // Blend rotation: free hero pose → locked frontal, PLUS a clean 360° turn.
-    // dockTurn goes 0 → 2π across the dock; at d=1 it is 2π ≡ 0 (front face),
-    // so the sachet completes exactly one full spin and lands facing the user.
-    const dockTurn = d * Math.PI * 2;
+    // Rotation Y: free spin before dock, controlled dock spin during/after.
+    // dockSpin lands on a whole multiple of 2π → guaranteed front face.
+    sachetGroup.rotation.y = free ? heroSpinY : state.dockSpin;
+    // Tilt eases out as we dock; gone by d=1.
     sachetGroup.rotation.x = state.heroRotX * (1 - d);
-    sachetGroup.rotation.y = heroSpinY * (1 - d) + dockTurn;   // → 2π (=front) when docked
     sachetGroup.rotation.z = state.heroRotZ * (1 - d);
 
-    // Blend position: hero X → centred(0); float only in free pose
+    // Position: float only before docking; held exactly on target while docked.
     sachetGroup.position.x = state.posX;
     sachetGroup.position.y = state.posY + (free ? Math.sin(elapsed * 0.7) * state.floatAmp : 0);
     sachetGroup.position.z = state.posZ;
@@ -1651,22 +1650,26 @@ function firePulse(){}
   // ── Compute the EXACT scale that makes the sachet fill the slot box ──
   // Projected px per world-unit at the dock plane (z=0) under the live camera,
   // sizing the sachet silhouette to ~80% of the slot's inner height.
-  const SACHET_H = 1.99; // body 1.9 + top/bottom seals
+  // The slot is pinned at CSS top:57% of the sticky stage with height clamp(...).
+  // We derive its centre + height DETERMINISTICALLY (not from a live rect, which
+  // is unreliable before the pin), so the maths is correct at any scroll point.
+  const SACHET_H  = 1.99;  // body 1.9 + top/bottom seals
+  const SLOT_TOP_FRAC    = 0.57;  // matches CSS #feature-slot top
   let DOCK_SCALE = 0.9;
-  let DOCK_Y = 0;        // world-Y so the sachet centres on the slot box
+  let DOCK_Y = 0;
+  function slotHeightPx() {
+    const vh = window.innerHeight;
+    return Math.max(260, Math.min(0.40 * vh, 380)); // matches CSS clamp(260px,40vh,380px)
+  }
   function computeDockTargets() {
-    const slot = document.getElementById('feature-slot');
-    if (!slot) return;
-    const r = slot.getBoundingClientRect();
+    const vpH = window.innerHeight;
     const fovRad = camera.fov * Math.PI / 180;
     const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2);
-    const pxPerUnit = window.innerHeight / worldVisibleH;
-    const slotPx = r.height || (window.innerHeight * 0.44);
+    const pxPerUnit = vpH / worldVisibleH;
+    const slotPx = slotHeightPx();
     DOCK_SCALE = (slotPx * 0.80) / (SACHET_H * pxPerUnit);
-    // Slot's pixel centre → world Y (camera at origin looks down -z; +Y is up)
-    const slotCentrePx = r.top + r.height / 2;          // px from top of viewport
-    const offsetPxFromCentre = (window.innerHeight / 2) - slotCentrePx; // +ve = above centre
-    DOCK_Y = offsetPxFromCentre / pxPerUnit;
+    const slotCentrePx = SLOT_TOP_FRAC * vpH;                 // box centre from top
+    DOCK_Y = ((vpH / 2) - slotCentrePx) / pxPerUnit;          // +Y = up
   }
   computeDockTargets();
   window.addEventListener('resize', () => {
@@ -1674,54 +1677,87 @@ function firePulse(){}
     if (state.dock > 0.5) { state.scale = DOCK_SCALE; state.posY = DOCK_Y; }
   });
 
-  // ════════════════════════════════════════════
-  // ACT 2 — DOCK: glide right → centre, blend dock 0→1 (locks frontal pose).
-  // Because the render loop multiplies all hero rotation by (1-dock), at dock=1
-  // the sachet is guaranteed to face the user dead-on (front label / name).
-  // ════════════════════════════════════════════
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4,
-      onRefresh: () => computeDockTargets(),
-    }
-  })
-  .to(state, { dock: 1, posX: 0, posY: () => DOCK_Y, scale: () => DOCK_SCALE, ease: 'power2.inOut' }, 0)
-  .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.4);
-
-  // ════════════════════════════════════════════
-  // ACT 3 — BENEFITS FAN OUT, then HOLD — fully static, no spin, no fade.
-  // The product stays docked & facing the user for the rest of the section.
-  // ════════════════════════════════════════════
-  gsap.set(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'], { y: 24 });
-  gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: 'top top', end: '55% top', scrub: 1.2 }
-  })
-  .from('#feature-heading', { opacity: 0, y: -20, ease: 'power2.out' }, 0)
-  .to('#fc-1', { opacity: 1, y: 0, ease: 'power2.out' }, 0.10)
-  .to('#fc-2', { opacity: 1, y: 0, ease: 'power2.out' }, 0.28)
-  .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.46)
-  .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.64)
-  .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.82);
-  // No idle-spin — the product stays docked & frontal for the ENTIRE time the
-  // feature section is on screen. It does NOT fade away mid-section.
-
-  // Visibility is a clean binary toggle, NOT a scrub: the whole scene is shown
-  // while the feature section occupies the viewport and is hidden only once the
-  // section has fully scrolled past (its bottom crosses the top of the screen).
-  // Reversing the scroll back into the section shows it again → rewind effect.
-  function setCanvas(on) {
-    gsap.to(state, { opacity: on ? 1 : 0, duration: 0.35, ease: 'power1.out' });
-    canvas.style.visibility = on ? 'visible' : 'hidden';
-  }
-  // Hide the shared canvas ONLY once we've scrolled fully BELOW the feature
-  // section. Everywhere from the hero through the feature section it stays
-  // visible (hero = flying, feature = docked). Scrolling back up re-shows it,
-  // and the scrub timelines rewind the dock automatically.
-  ScrollTrigger.create({
-    trigger: '#feature-section', start: 'bottom bottom', end: 'bottom top',
-    onLeave:     () => setCanvas(false), // passed the section going down → hide
-    onEnterBack: () => setCanvas(true),  // scrolled back up into it → show
+  // ════════════════════════════════════════════════════════════════
+  // FEATURE CHOREOGRAPHY — ONE pinned ScrollTrigger, ONE progress value.
+  // The section is PINNED (fixed in place) for its whole scroll length, so the
+  // box, sachet and callouts all share the viewport coordinate space — no drift.
+  // Everything is derived from a single 0→1 progress `p`, so it is perfectly
+  // reliable and rewinds exactly on scroll-up.
+  //
+  //   p 0.00–0.42 : sachet flies right→centre, does a full 360° spin, docks,
+  //                 scaling down to fit the box. Box frame fades in.
+  //   p 0.42–0.72 : four benefit callouts fan in one by one. Sachet STATIC.
+  //   p 0.72–1.00 : everything HOLDS, dead-still, fully docked & frontal.
+  // The canvas only hides when we leave the pinned range (onLeave/onLeaveBack).
+  // ════════════════════════════════════════════════════════════════
+  // All feature overlay elements start hidden; setLayer() drives opacity+translateY
+  // directly via inline styles (no GSAP transform, to avoid conflicts).
+  const featLayers = ['#fc-1','#fc-2','#fc-3','#fc-4'];
+  ['#feature-heading','#feature-slot','#feature-cta', ...featLayers].forEach(sel => {
+    const el = document.querySelector(sel); if (el) el.style.opacity = '0';
   });
+
+  const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+  const smooth  = t => t * t * (3 - 2 * t);           // smoothstep ease
+  const lerp    = (a, b, t) => a + (b - a) * t;
+  const mapp    = (p, a, b) => clamp01((p - a) / (b - a));
+
+  // Capture the sachet's free-spin angle the instant docking begins, so the
+  // 360° turn starts from wherever it was and lands exactly on a front face.
+  let dockStartSpin = 0, dockStarted = false;
+
+  ScrollTrigger.create({
+    trigger: '#feature-section',
+    start: 'top top',
+    end:   'bottom bottom',
+    pin: '#feature-sticky',          // genuinely pin the stage — no fixed-canvas drift
+    pinSpacing: true,
+    scrub: true,
+    onEnter:     () => { canvas.style.visibility = 'visible'; },
+    onEnterBack: () => { canvas.style.visibility = 'visible'; },
+    onLeave:     () => { canvas.style.visibility = 'hidden'; },  // fully below → hide
+    onLeaveBack: () => { canvas.style.visibility = 'visible'; }, // back into hero
+    onRefresh:   () => computeDockTargets(),
+    onUpdate: self => {
+      const p = self.progress;
+
+      // ── Phase A: dock (0 → 0.42) ──
+      const dp = smooth(mapp(p, 0, 0.42));   // 0→1 eased dock progress
+      if (dp > 0 && !dockStarted) { dockStarted = true; dockStartSpin = heroSpinY; }
+      if (dp === 0) dockStarted = false;
+
+      state.dock  = dp;
+      state.posX  = lerp(HERO_X, 0, dp);
+      state.posY  = lerp(0, DOCK_Y, dp);
+      state.scale = lerp(1, DOCK_SCALE, dp);
+      // 360° turn: from captured spin → nearest full turn + one extra rotation,
+      // ending exactly front-facing (multiple of 2π).
+      const TAU = Math.PI * 2;
+      const landing = Math.round(dockStartSpin / TAU) * TAU + TAU; // one full extra turn, front face
+      state.dockSpin = lerp(dockStartSpin, landing, dp);
+
+      // ── Phase B: callouts fan in (0.42 → 0.72) ──
+      const headP = smooth(mapp(p, 0.40, 0.52));
+      setLayer('#feature-heading', headP, -18);
+      setLayer('#feature-slot', smooth(mapp(p, 0.30, 0.46)), 0, true);
+      const stops = [0.46, 0.54, 0.62, 0.70];
+      featLayers.forEach((sel, i) => setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.10)), 26));
+      setLayer('#feature-cta', smooth(mapp(p, 0.70, 0.80)), 20);
+
+      // ── Phase C (0.72 → 1.0): everything already at 1, holds. Nothing to do. ──
+    }
+  });
+
+  // Apply opacity + a small entrance translateY. The slot keeps its CSS
+  // centering transform untouched (opacityOnly), so it never jumps.
+  function setLayer(sel, t, fromY, opacityOnly) {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    el.style.opacity = t;
+    if (!opacityOnly) {
+      el.style.transform = `translateY(${fromY * (1 - t)}px)`;
+    }
+  }
 
   // ── Page-load entrance ──
   gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
