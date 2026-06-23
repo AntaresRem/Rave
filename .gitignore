@@ -3,3 +3,8 @@ LAnding/
 Recovery Guide/
 stitch_ravive_design_system/
 hydroflow-animation-spec.md
+
+# Playwright audit tooling (dev only)
+node_modules/
+package.json
+package-lock.json

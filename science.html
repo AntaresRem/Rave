@@ -10,6 +10,7 @@
 :root {
   --bg: #f8f8f8; --surface: #ffffff; --surface2: #f3f3f5;
   --border: rgba(0,0,0,0.08); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-text: #a800e0; --purple-on-dark: #c44dff;
   --purple-glow: rgba(150,0,201,0.3); --text: #1a1c1c;
   --text-muted: rgba(26,28,28,0.5); --text-dim: rgba(26,28,28,0.3);
 }
@@ -24,9 +25,9 @@ a { text-decoration: none; color: inherit; }
 .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
 .section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .section-label-line { width: 24px; height: 1px; background: var(--purple); }
-.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-text); text-transform: uppercase; }
 .section-h2 { font-size: 44px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
-.section-h2 em { font-style: italic; color: var(--purple-bright); }
+.section-h2 em { font-style: italic; color: var(--purple-text); }
 /* Nav */
 .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
 .nav.scrolled { background: rgba(248,248,248,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
@@ -34,7 +35,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
 .nav-link:hover { color: #1a1c1c; }
-.nav-link.active { color: var(--purple-bright); }
+.nav-link.active { color: var(--purple-text); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
 #mobileMenu.open { display: flex; }
@@ -46,7 +47,7 @@ a { text-decoration: none; color: inherit; }
 .ingr-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(150,0,201,0.12); border: 1px solid rgba(150,0,201,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
 /* Doctor card */
 .doc-card { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; border-left: 2px solid var(--purple); margin-bottom: 12px; transition: all 0.3s; }
-.doc-card:hover { border-left-color: var(--purple-bright); background: rgba(150,0,201,0.06); }
+.doc-card:hover { border-left-color: var(--purple-text); background: rgba(150,0,201,0.06); }
 /* Nutrition panel */
 .nut-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
 .nut-row:last-child { border-bottom: none; }
@@ -119,7 +120,7 @@ body::after {
 </nav>
 <div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
-  <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">The Science</a>
+  <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
   <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Festival Bundle</a>
   <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);display:block;">Recovery Guide</a>
@@ -131,10 +132,10 @@ body::after {
   <div style="max-width:900px;margin:0 auto;position:relative;z-index:1;">
     <div class="reveal" style="display:inline-flex;align-items:center;gap:10px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.3);border-radius:9999px;padding:7px 18px;margin-bottom:28px;">
       <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;animation:pulsedot 2s infinite;"></span>
-      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);">DOCTOR-LED FORMULATION</span>
+      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-text);">DOCTOR-LED FORMULATION</span>
     </div>
     <h1 class="hero-h1 reveal reveal-delay-1" style="font-size:60px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.95;margin-bottom:28px;">
-      Most recovery products are formulated by<br/><em style="font-style:italic;color:var(--purple-bright);">marketing teams.</em>
+      Most recovery products are formulated by<br/><em style="font-style:italic;color:var(--purple-text);">marketing teams.</em>
     </h1>
     <p class="reveal reveal-delay-2" style="font-size:18px;color:var(--text-muted);max-width:640px;margin:0 auto 48px;line-height:1.7;">We stripped away the neon branding, proprietary blends, and pseudo-science. What remains is a clinically precise, hyper-efficient hydration matrix.</p>
     <a href="product.html" class="btn-primary reveal reveal-delay-3" style="padding:16px 44px;font-size:14px;">DOWNLOAD CLINICAL BRIEF</a>
@@ -150,7 +151,7 @@ body::after {
         <div class="section-label-line"></div>
         <span class="section-label-text">The Minds Behind the Matrix</span>
       </div>
-      <h2 style="font-size:44px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;line-height:1.05;margin-bottom:20px;">Developed by two practising physicians from <em style="font-style:italic;color:var(--purple-bright);">Cambridge University.</em></h2>
+      <h2 style="font-size:44px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;line-height:1.05;margin-bottom:20px;">Developed by two practising physicians from <em style="font-style:italic;color:var(--purple-text);">Cambridge University.</em></h2>
       <p style="font-size:16px;color:var(--text-muted);line-height:1.7;margin-bottom:36px;">They saw the devastating effects of severe dehydration in acute care and noticed how over-the-counter solutions were severely lacking in efficacy and bioavailability.</p>
       <div class="doc-card">
         <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-bright));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -158,7 +159,7 @@ body::after {
         </div>
         <div>
           <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Dr. Sarah Jenkins</div>
-          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MBBS, PhD — Cambridge University</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.06em;margin-top:3px;">MBBS, PhD — Cambridge University</div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Emergency Medicine &amp; Acute Care</div>
         </div>
       </div>
@@ -168,7 +169,7 @@ body::after {
         </div>
         <div>
           <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Dr. Marcus Thomas</div>
-          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MD, Neurosurgeon — Cambridge University</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.06em;margin-top:3px;">MD, Neurosurgeon — Cambridge University</div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Biomedical Engineering &amp; Bioavailability Research</div>
         </div>
       </div>
@@ -177,14 +178,14 @@ body::after {
       <div style="background:linear-gradient(145deg,#f5ebff 0%,#ede0ff 100%);border:1px solid rgba(150,0,201,0.3);border-radius:20px;padding:48px;position:relative;overflow:hidden;">
         <div style="position:absolute;top:0;right:0;width:200px;height:200px;background:radial-gradient(ellipse,rgba(150,0,201,0.15) 0%,transparent 70%);pointer-events:none;"></div>
         <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:28px;">
-          <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;flex-shrink:0;margin-top:2px;">format_quote</span>
+          <span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;flex-shrink:0;margin-top:2px;">format_quote</span>
           <p style="font-size:15px;color:var(--text-muted);line-height:1.75;font-style:italic;">"We designed Ravive for the scenario we kept seeing in A&amp;E every Monday morning after festival weekends. Young people, severely dehydrated, electrolyte-depleted. There was nothing clinical-grade and accessible enough for them to have used the night before."</p>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:20px;display:flex;align-items:center;gap:14px;">
           <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-bright));flex-shrink:0;"></div>
           <div>
             <div style="font-size:14px;font-weight:700;color:#1a1c1c;">Dr. Sarah Jenkins</div>
-            <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">CO-FOUNDER</div>
+            <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.06em;margin-top:3px;">CO-FOUNDER</div>
           </div>
         </div>
       </div>
@@ -202,38 +203,38 @@ body::after {
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="six-grid">
       <div class="ingr-card reveal reveal-delay-1">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">water_drop</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">500mg ACTIVE DOSE</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">water_drop</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">500mg ACTIVE DOSE</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">Sodium (NaCl)</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Critical regulator of fluid absorption, pulling water across the cellular membrane instantly.</p>
       </div>
       <div class="ingr-card reveal reveal-delay-2">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">bolt</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">200mg ACTIVE DOSE</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">bolt</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">200mg ACTIVE DOSE</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">Magnesium Glycinate</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">High bioavailability form to immediately reduce muscle cramping and ease nervous system tension.</p>
       </div>
       <div class="ingr-card reveal reveal-delay-3">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">electric_bolt</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">380mg ACTIVE DOSE</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">electric_bolt</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">380mg ACTIVE DOSE</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">Potassium (K+)</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Works in tandem with sodium to restore the cellular electrical gradient essential for energy.</p>
       </div>
       <div class="ingr-card reveal reveal-delay-1">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">hub</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">COMPLEX</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">hub</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">COMPLEX</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">B-Vitamin Complex</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Critical cofactors for ATP production, clearing neurological fog and restoring metabolic baseline.</p>
       </div>
       <div class="ingr-card reveal reveal-delay-2">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">eco</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">NATURAL</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">eco</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">NATURAL</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">Coconut Water Powder</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">Provides a natural gentle matrix of trace minerals to support the primary electrolyte payload.</p>
       </div>
       <div class="ingr-card reveal reveal-delay-3">
-        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">health_and_safety</span></div>
-        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-bright);margin-bottom:8px;">0g</div>
+        <div class="ingr-icon"><span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">health_and_safety</span></div>
+        <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--purple-text);margin-bottom:8px;">0g</div>
         <h3 style="font-size:17px;font-weight:700;color:#1a1c1c;margin-bottom:10px;">Zero Artificials</h3>
         <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">No sweeteners, aspartame, or synthetic dyes that disrupt the gut microbiome.</p>
       </div>
@@ -260,7 +261,7 @@ body::after {
         </div>
         <div class="trans-stat">
           <div class="trans-stat-icon" style="background:rgba(150,0,201,0.15);border:1px solid rgba(150,0,201,0.3);">
-            <span class="mono" style="font-size:18px;font-weight:900;color:var(--purple-bright);">0</span>
+            <span class="mono" style="font-size:18px;font-weight:900;color:var(--purple-text);">0</span>
           </div>
           <div>
             <div style="font-size:14px;font-weight:600;color:#1a1c1c;">Proprietary Blends</div>
@@ -284,9 +285,9 @@ body::after {
         <div style="position:absolute;top:0;right:0;width:160px;height:160px;background:radial-gradient(ellipse,rgba(150,0,201,0.1) 0%,transparent 70%);pointer-events:none;"></div>
         <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:24px;">Nutritional Information (per sachet)</div>
         <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Calories</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">15 kcal</span></div>
-        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Sodium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">500 mg</span></div>
-        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Potassium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">380 mg</span></div>
-        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Magnesium</span><span class="mono" style="font-size:14px;color:var(--purple-bright);font-weight:600;">200 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Sodium</span><span class="mono" style="font-size:14px;color:var(--purple-on-dark);font-weight:600;">500 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Potassium</span><span class="mono" style="font-size:14px;color:var(--purple-on-dark);font-weight:600;">380 mg</span></div>
+        <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Magnesium</span><span class="mono" style="font-size:14px;color:var(--purple-on-dark);font-weight:600;">200 mg</span></div>
         <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Total Sugars</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0 g</span></div>
         <div class="nut-row"><span style="font-size:14px;color:rgba(255,255,255,0.45);">Artificial Additives</span><span class="mono" style="font-size:14px;color:#fff;font-weight:600;">0</span></div>
       </div>
@@ -299,7 +300,7 @@ body::after {
   <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
   <div class="reveal">
     <div class="mono" style="font-size:11px;letter-spacing:0.14em;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;">Ready to recover properly?</div>
-    <h2 style="font-size:48px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;margin-bottom:24px;">Start your first sachet <span style="color:var(--purple-bright);font-style:italic;">tonight.</span></h2>
+    <h2 style="font-size:48px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;margin-bottom:24px;">Start your first sachet <span style="color:var(--purple-text);font-style:italic;">tonight.</span></h2>
     <a href="product.html" class="btn-primary" style="padding:16px 44px;font-size:14px;">SHOP NOW</a>
   </div>
 </section>

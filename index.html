@@ -17,6 +17,8 @@
   --border: rgba(0,0,0,0.08);
   --purple: #9600c9;
   --purple-bright: #bc00fb;
+  --purple-text: #a800e0;     /* AA-safe purple for small text on LIGHT bg (5.3:1) */
+  --purple-on-dark: #c44dff;  /* AA-safe purple for small text on DARK bg (4.8:1) */
   --purple-glow: rgba(150,0,201,0.3);
   --text: #1a1c1c;
   --text-muted: rgba(26,28,28,0.5);
@@ -80,7 +82,7 @@ body::after {
   border: 1px solid var(--border); cursor: pointer;
   transition: all 0.3s; display: inline-block; backdrop-filter: blur(8px);
 }
-.btn-ghost:hover { border-color: var(--purple); color: var(--purple-bright); box-shadow: 0 0 20px rgba(150,0,201,0.15); transform: translateY(-2px); }
+.btn-ghost:hover { border-color: var(--purple); color: var(--purple-text); box-shadow: 0 0 20px rgba(150,0,201,0.15); transform: translateY(-2px); }
 
 /* ── NAV ── */
 .nav {
@@ -105,7 +107,7 @@ body::after {
 }
 .nav-link:hover { color: #1a1c1c; }
 .nav-link:hover::after { transform: scaleX(1); }
-.nav-link.active { color: var(--purple-bright); }
+.nav-link.active { color: var(--purple-text); }
 .nav-link.active::after { transform: scaleX(1); }
 #mobileMenu { display: none; }
 #mobileMenu.open { display: flex; }
@@ -166,7 +168,7 @@ body::after {
   margin-bottom: 28px;
   user-select: none;
 }
-.hero-h1 .accent { color: var(--purple-bright); }
+.hero-h1 .accent { color: var(--purple-text); }
 .hero-h1 .outline {
   -webkit-text-stroke: 2px rgba(26,28,28,0.18);
   color: transparent;
@@ -230,7 +232,7 @@ body::after {
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
   color: #1a1c1c; margin-top: 10px;
 }
-#feature-heading .feat-h2 em { font-style: normal; color: var(--purple-bright); }
+#feature-heading .feat-h2 em { font-style: normal; color: var(--purple-text); }
 
 /* The "slot" — a product display frame the sachet docks into.
    Height drives everything; width is locked to the sachet's silhouette ratio.
@@ -263,7 +265,7 @@ body::after {
 #feature-slot .slot-tag {
   position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
   font-family: var(--mono, monospace); font-size: 10px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--purple-bright); white-space: nowrap;
+  text-transform: uppercase; color: var(--purple-text); white-space: nowrap;
 }
 #feature-slot .slot-foot {
   position: absolute; bottom: 14px; left: 0; right: 0; text-align: center;
@@ -281,14 +283,14 @@ body::after {
 }
 .feat-call .fc-num {
   font-family: var(--mono, monospace);
-  font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright);
+  font-size: 11px; letter-spacing: 0.16em; color: var(--purple-text);
   text-transform: uppercase; margin-bottom: 6px; display: block;
 }
 .feat-call .fc-title { font-size: 18px; font-weight: 800; color: #1a1c1c; margin-bottom: 6px; }
 .feat-call .fc-body { font-size: 13px; line-height: 1.55; color: var(--text-muted); }
 .feat-call .fc-dose {
   display: inline-block; margin-top: 8px; font-family: var(--mono, monospace);
-  font-size: 10px; letter-spacing: 0.06em; color: var(--purple-bright);
+  font-size: 10px; letter-spacing: 0.06em; color: var(--purple-text);
   background: rgba(150,0,201,0.1); border: 1px solid rgba(150,0,201,0.25);
   border-radius: 6px; padding: 4px 10px;
 }
@@ -388,7 +390,7 @@ body::after {
 .data-chip-2 { bottom: 100px; left: 10px; animation-delay: -2s; }
 .data-chip-3 { top: 200px; left: 0; animation-delay: -4s; }
 @keyframes chip-float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
-.chip-val { font-size: 18px; font-weight: 800; color: var(--purple-bright); line-height: 1; }
+.chip-val { font-size: 18px; font-weight: 800; color: var(--purple-text); line-height: 1; }
 .chip-label { font-size: 9px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
 
 /* ── MARQUEE ── */
@@ -415,7 +417,7 @@ body::after {
 }
 .stat-cell:hover { background: var(--surface2); }
 .stat-val { font-size: 52px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; color: #1a1c1c; }
-.stat-val.purple { color: var(--purple-bright); }
+.stat-val.purple { color: var(--purple-text); }
 .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
 
 /* ── SECTION LABEL ── */
@@ -424,7 +426,7 @@ body::after {
   margin-bottom: 20px;
 }
 .section-label-line { width: 24px; height: 1px; background: var(--purple); }
-.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-text); text-transform: uppercase; }
 
 /* ── MECHANISM SECTION ── */
 .mechanism { padding: 120px 48px; position: relative; }
@@ -436,7 +438,7 @@ body::after {
 .mechanism-inner { max-width: 1280px; margin: 0 auto; }
 .mechanism-header { text-align: center; margin-bottom: 80px; }
 .section-h2 { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
-.section-h2 em { font-style: italic; color: var(--purple-bright); }
+.section-h2 em { font-style: italic; color: var(--purple-text); }
 .section-sub { font-size: 16px; color: var(--text-muted); max-width: 480px; margin: 16px auto 0; line-height: 1.7; }
 .pillars-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; }
 .pillar {
@@ -458,7 +460,7 @@ body::after {
   transition: all 0.3s;
 }
 .pillar:hover .pillar-icon { background: rgba(150,0,201,0.2); box-shadow: 0 0 20px rgba(150,0,201,0.3); }
-.pillar-icon span { color: var(--purple-bright); font-size: 22px; }
+.pillar-icon span { color: var(--purple-text); font-size: 22px; }
 .pillar-tag { font-size: 10px; letter-spacing: 0.12em; color: var(--purple); text-transform: uppercase; margin-bottom: 10px; }
 .pillar-title { font-size: 18px; font-weight: 700; color: #1a1c1c; margin-bottom: 12px; }
 .pillar-body { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
@@ -474,7 +476,7 @@ table.cmp th { padding: 22px 24px; font-size: 13px; font-weight: 700; text-align
 /* Ravive column elevated as the clear winner — gradient header + accent rule */
 table.cmp th.col-rv {
   background: linear-gradient(180deg, rgba(150,0,201,0.16), rgba(150,0,201,0.08));
-  color: var(--purple-bright); position: relative;
+  color: var(--purple-text); position: relative;
 }
 table.cmp th.col-rv::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
@@ -484,9 +486,9 @@ table.cmp td { padding: 16px 24px; font-size: 14px; border-top: 1px solid var(--
 table.cmp td.col-rv { background: rgba(150,0,201,0.06); color: var(--text); font-weight: 500; box-shadow: inset 1px 0 0 rgba(150,0,201,0.14), inset -1px 0 0 rgba(150,0,201,0.14); }
 table.cmp tr:hover td { background: rgba(0,0,0,0.02); }
 table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
-.cmp-yes { color: var(--purple-bright); font-size: 18px; vertical-align: middle; }
+.cmp-yes { color: var(--purple-text); font-size: 18px; vertical-align: middle; }
 .cmp-no { color: rgba(0,0,0,0.18); font-size: 18px; vertical-align: middle; }
-.cmp-part { color: #f59e0b; font-size: 18px; vertical-align: middle; }
+.cmp-part { color: #b45309; font-size: 18px; vertical-align: middle; }
 
 /* ── SCIENCE ── */
 .science-section { padding: 120px 48px; }
@@ -496,7 +498,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
   background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
   border-left: 2px solid var(--purple); margin-bottom: 12px; transition: all 0.3s;
 }
-.doctor-card:hover { border-left-color: var(--purple-bright); background: rgba(150,0,201,0.06); }
+.doctor-card:hover { border-left-color: var(--purple-text); background: rgba(150,0,201,0.06); }
 .doctor-avatar {
   width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
   background: linear-gradient(135deg, var(--purple), var(--purple-bright));
@@ -512,7 +514,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .quad.dark { background: #1a1c1c; }
 .quad.light { background: var(--surface2); }
 .quad-val { font-size: 44px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
-.quad-val.purple { color: var(--purple-bright); }
+.quad-val.purple { color: var(--purple-text); }
 .quad-val.white { color: #1a1c1c; }
 .quad-label { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
 .quad.dark .quad-label { color: rgba(255,255,255,0.45); }
@@ -543,7 +545,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .flavour-badge { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); background: var(--purple); color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 14px; border-radius: 9999px; white-space: nowrap; animation: pulse-badge 2s ease-in-out infinite; }
 @keyframes pulse-badge { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
 .flavour-name { font-size: 16px; font-weight: 700; color: #1a1c1c; margin-bottom: 6px; }
-.flavour-notes { font-size: 11px; letter-spacing: 0.08em; color: var(--purple-bright); margin-bottom: 12px; text-transform: uppercase; }
+.flavour-notes { font-size: 11px; letter-spacing: 0.08em; color: var(--purple-text); margin-bottom: 12px; text-transform: uppercase; }
 .flavour-price { font-size: 13px; color: var(--text-muted); }
 
 /* ── TESTIMONIALS ── */
@@ -551,7 +553,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .testi-inner { max-width: 1280px; margin: 0 auto; }
 .testi-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 20px; }
 .testi-rating-big { font-size: 64px; font-weight: 900; color: #1a1c1c; letter-spacing: -0.04em; line-height: 1; }
-.testi-stars { color: var(--purple-bright); font-size: 20px; letter-spacing: 4px; margin-top: 4px; }
+.testi-stars { color: var(--purple-text); font-size: 20px; letter-spacing: 4px; margin-top: 4px; }
 .testi-count { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 .testi-card {
@@ -561,13 +563,13 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 }
 .testi-card:hover { border-color: rgba(150,0,201,0.3); box-shadow: 0 12px 40px rgba(150,0,201,0.1); transform: translateY(-4px); }
 .testi-card.featured { border-top: 2px solid var(--purple); }
-.testi-stars-sm { color: var(--purple-bright); font-size: 13px; letter-spacing: 2px; }
+.testi-stars-sm { color: var(--purple-text); font-size: 13px; letter-spacing: 2px; }
 .testi-quote { font-size: 15px; color: var(--text); line-height: 1.7; flex: 1; }
 .testi-person { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border); }
 .testi-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
 .testi-name { font-size: 13px; font-weight: 600; color: #1a1c1c; }
-.testi-venue { font-size: 10px; color: var(--purple-bright); letter-spacing: 0.08em; margin-top: 2px; }
-.verified-pill { margin-left: auto; background: rgba(150,0,201,0.15); border: 1px solid rgba(150,0,201,0.3); color: var(--purple-bright); font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 9999px; white-space: nowrap; }
+.testi-venue { font-size: 10px; color: var(--purple-text); letter-spacing: 0.08em; margin-top: 2px; }
+.verified-pill { margin-left: auto; background: rgba(150,0,201,0.15); border: 1px solid rgba(150,0,201,0.3); color: var(--purple-text); font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 9999px; white-space: nowrap; }
 
 /* ── BUNDLES ── */
 .bundles-section { padding: 120px 48px; background: var(--surface); }
@@ -586,18 +588,18 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .bundle-price-main { font-size: 48px; font-weight: 900; letter-spacing: -0.04em; color: #1a1c1c; line-height: 1; }
 .bundle-price-sub { font-size: 16px; color: var(--text-muted); }
 .bundle-price-was { font-size: 16px; color: var(--purple); text-decoration: line-through; }
-.bundle-save { font-size: 11px; letter-spacing: 0.08em; color: #4ade80; margin-bottom: 28px; }
-.bundle-save.purple { color: var(--purple-bright); }
+.bundle-save { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #fff; background: #15803d; padding: 4px 12px; border-radius: 9999px; margin-bottom: 24px; }
+.bundle-save.purple { background: var(--purple); color: #fff; }
 .bundle-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; flex: 1; }
 .bundle-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); }
-.bundle-feature span.material-symbols-outlined { font-size: 15px; color: var(--purple-bright); flex-shrink: 0; }
+.bundle-feature span.material-symbols-outlined { font-size: 15px; color: var(--purple-text); flex-shrink: 0; }
 .bundle-cta {
   width: 100%; text-align: center; padding: 15px; border-radius: 9999px;
   font-size: 13px; font-weight: 700; letter-spacing: 0.08em; cursor: pointer;
   border: none; transition: all 0.3s; display: block;
 }
 .bundle-cta.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-.bundle-cta.ghost:hover { border-color: var(--purple); color: var(--purple-bright); }
+.bundle-cta.ghost:hover { border-color: var(--purple); color: var(--purple-text); }
 .bundle-cta.filled { background: var(--purple); color: #fff; }
 .bundle-cta.filled:hover { background: var(--purple-bright); box-shadow: 0 0 30px var(--purple-glow); }
 
@@ -606,12 +608,12 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .faq-inner { max-width: 800px; margin: 0 auto; }
 .faq-item { border-bottom: 1px solid var(--border); }
 .faq-q { width: 100%; background: none; border: none; text-align: left; cursor: pointer; padding: 22px 0; display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 600; color: var(--text); font-family: 'Hanken Grotesk', sans-serif; transition: color 0.2s; }
-.faq-q:hover { color: var(--purple-bright); }
-.faq-icon { transition: transform 0.3s; font-size: 20px; color: var(--purple-bright); flex-shrink: 0; }
+.faq-q:hover { color: var(--purple-text); }
+.faq-icon { transition: transform 0.3s; font-size: 20px; color: var(--purple-text); flex-shrink: 0; }
 .faq-q.open .faq-icon { transform: rotate(45deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
 .faq-a-inner { padding: 0 0 22px; font-size: 15px; color: var(--text-muted); line-height: 1.75; }
-.faq-a-inner a { color: var(--purple-bright); }
+.faq-a-inner a { color: var(--purple-text); }
 
 /* ── FINAL CTA ── */
 .final-cta {
@@ -627,7 +629,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
 .final-cta-sub { font-size: 17px; color: var(--text-muted); max-width: 500px; margin: 0 auto 48px; line-height: 1.7; }
 .trust-icons { display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 48px; flex-wrap: wrap; }
 .trust-icon { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
-.trust-icon span.material-symbols-outlined { font-size: 16px; color: var(--purple-bright); }
+.trust-icon span.material-symbols-outlined { font-size: 16px; color: var(--purple-text); }
 
 /* ── FOOTER ── */
 footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgba(255,255,255,0.1); }
@@ -759,7 +761,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 
 <!-- MOBILE MENU -->
 <div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
-  <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">Home</a>
+  <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
   <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Festival Bundle</a>
@@ -775,7 +777,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
     <div id="hero-left">
       <div class="hero-eyebrow" id="hero-eyebrow" style="opacity:0;">
         <span class="hero-eyebrow-dot"></span>
-        <span class="mono" style="font-size:11px;letter-spacing:0.09em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
+        <span class="mono" style="font-size:11px;letter-spacing:0.09em;color:var(--purple-text);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
       </div>
       <h1 class="hero-h1" id="hero-h1" style="opacity:0;filter:blur(8px);">
         RAVE<br/>HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
@@ -791,7 +793,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
         </div>
         <div>
           <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
-          <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
+          <div style="font-size:12px;color:var(--purple-text);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
         </div>
       </div>
     </div>
@@ -903,7 +905,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
     </div>
     <div class="stat-cell reveal reveal-delay-4">
       <div class="stat-val">4.9</div>
-      <div class="stat-label" style="color:var(--purple-bright);">★★★★★ avg rating</div>
+      <div class="stat-label" style="color:var(--purple-text);">★★★★★ avg rating</div>
     </div>
   </div>
 </div>
@@ -1003,7 +1005,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
         <div class="doctor-avatar"><span class="material-symbols-outlined">school</span></div>
         <div>
           <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Dr. Sarah Jenkins</div>
-          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MBBS, PhD — Cambridge University</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.06em;margin-top:3px;">MBBS, PhD — Cambridge University</div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Emergency Medicine &amp; Acute Care</div>
         </div>
       </div>
@@ -1011,7 +1013,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
         <div class="doctor-avatar"><span class="material-symbols-outlined">biotech</span></div>
         <div>
           <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Dr. Marcus Thomas</div>
-          <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.06em;margin-top:3px;">MD, Neurosurgeon — Cambridge University</div>
+          <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.06em;margin-top:3px;">MD, Neurosurgeon — Cambridge University</div>
           <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Biomedical Engineering &amp; Bioavailability</div>
         </div>
       </div>
@@ -1220,7 +1222,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 <section class="final-cta" style="position:relative;z-index:1;">
   <div class="reveal">
     <div class="section-label" style="justify-content:center;margin-bottom:24px;"><div class="section-label-line"></div><span class="section-label-text">Start recovering properly</span><div class="section-label-line"></div></div>
-    <h2 class="final-cta-h">Your next festival<br/>is <span style="color:var(--purple-bright);">coming.</span></h2>
+    <h2 class="final-cta-h">Your next festival<br/>is <span style="color:var(--purple-text);">coming.</span></h2>
     <p class="final-cta-sub">Don't go in unprepared. Get doctor-formulated recovery sachets delivered before your next event.</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
       <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 44px;">SHOP NOW</a>

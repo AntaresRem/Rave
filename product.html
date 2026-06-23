@@ -10,6 +10,7 @@
 :root {
   --bg: #f8f8f8; --surface: #ffffff; --surface2: #f3f3f5;
   --border: rgba(0,0,0,0.08); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-text: #a800e0; --purple-on-dark: #c44dff;
   --purple-glow: rgba(150,0,201,0.3); --text: #1a1c1c;
   --text-muted: rgba(26,28,28,0.5); --text-dim: rgba(26,28,28,0.3);
 }
@@ -20,7 +21,7 @@ a { text-decoration: none; color: inherit; }
 .btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
 .btn-primary:hover { background: var(--purple-bright); box-shadow: 0 0 40px var(--purple-glow); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--text); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; padding: 13px 32px; border-radius: 9999px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s; display: inline-block; }
-.btn-ghost:hover { border-color: var(--purple); color: var(--purple-bright); }
+.btn-ghost:hover { border-color: var(--purple); color: var(--purple-text); }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 /* Nav */
@@ -30,7 +31,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
 .nav-link:hover { color: #1a1c1c; }
-.nav-link.active { color: var(--purple-bright); }
+.nav-link.active { color: var(--purple-text); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
 #mobileMenu.open { display: flex; }
@@ -48,7 +49,7 @@ a { text-decoration: none; color: inherit; }
 .stat-mini { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; }
 /* Swatch */
 .swatch { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
-.swatch.active { border-color: var(--purple-bright); box-shadow: 0 0 8px rgba(188,0,251,0.6); transform: scale(1.15); }
+.swatch.active { border-color: var(--purple-text); box-shadow: 0 0 8px rgba(188,0,251,0.6); transform: scale(1.15); }
 @media (max-width: 768px) {
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-d { display: none !important; }
@@ -115,7 +116,7 @@ body::after {
 <div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
-  <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">Flavours</a>
+  <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">Flavours</a>
   <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Festival Bundle</a>
   <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);display:block;">Recovery Guide</a>
   <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
@@ -150,14 +151,14 @@ body::after {
       </div>
     </div>
     <div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--purple-bright);text-transform:uppercase;margin-bottom:10px;">MOST POPULAR</div>
+      <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--purple-text);text-transform:uppercase;margin-bottom:10px;">MOST POPULAR</div>
       <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Passionfruit &amp; Mango</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A tropical, restorative blend designed to replenish essential salts and minerals lost during peak physical exertion. Smooth, sophisticated, and perfectly balanced.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
       </div>
       <div class="mono" style="font-size:11px;color:var(--text-muted);margin-bottom:24px;display:flex;align-items:center;gap:8px;">
         <span class="material-symbols-outlined" style="font-size:14px;color:var(--purple);">water_drop</span>
@@ -169,25 +170,25 @@ body::after {
           <div class="qty-pack" id="qty-1" onclick="selectQty(event)">
             <div style="font-size:14px;font-weight:700;color:#1a1c1c;">1</div>
             <div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Sachet</div>
-            <div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£5.99</div>
+            <div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£5.99</div>
           </div>
           <div class="qty-pack active" id="qty-12" onclick="selectQty(event)" style="position:relative;">
             <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;padding:3px 10px;border-radius:9999px;white-space:nowrap;" class="mono">POPULAR</div>
             <div style="font-size:14px;font-weight:700;color:#1a1c1c;">12</div>
             <div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div>
-            <div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£34.99</div>
+            <div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£34.99</div>
           </div>
           <div class="qty-pack" id="qty-30" onclick="selectQty(event)">
             <div style="font-size:14px;font-weight:700;color:#1a1c1c;">30</div>
             <div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div>
-            <div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£69.99</div>
+            <div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£69.99</div>
           </div>
         </div>
       </div>
       <button class="btn-primary" style="width:100%;text-align:center;font-size:14px;padding:18px;" onclick="this.textContent='Added ✓';this.style.background='#22c55e';setTimeout(()=>{this.textContent='ADD TO CART →';this.style.background='';},2000)">ADD TO CART →</button>
       <div style="display:flex;align-items:center;gap:24px;margin-top:20px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:7px;"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">local_shipping</span><span style="font-size:13px;color:var(--text-muted);">Free shipping over £30</span></div>
-        <div style="display:flex;align-items:center;gap:7px;"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">verified</span><span style="font-size:13px;color:var(--text-muted);">30-day guarantee</span></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">local_shipping</span><span style="font-size:13px;color:var(--text-muted);">Free shipping over £30</span></div>
+        <div style="display:flex;align-items:center;gap:7px;"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">verified</span><span style="font-size:13px;color:var(--text-muted);">30-day guarantee</span></div>
       </div>
     </div>
   </div>
@@ -213,18 +214,18 @@ body::after {
       <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Blackberry &amp; Açaí</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A deep, antioxidant-rich blend. Dark berry notes with a smooth finish. Rich in polyphenols to combat oxidative stress from long nights.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
       </div>
       <div class="mono" style="font-size:11px;color:var(--text-muted);margin-bottom:24px;display:flex;align-items:center;gap:8px;"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple);">water_drop</span>Mix one sachet into 500ml of water</div>
       <div style="margin-bottom:28px;">
         <div style="font-size:12px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">SELECT QUANTITY</div>
         <div style="display:flex;gap:10px;">
-          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">1</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Sachet</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£5.99</div></div>
-          <div class="qty-pack active" onclick="selectQty(event)" style="position:relative;"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;padding:3px 10px;border-radius:9999px;white-space:nowrap;" class="mono">POPULAR</div><div style="font-size:14px;font-weight:700;color:#1a1c1c;">12</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£34.99</div></div>
-          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">30</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£69.99</div></div>
+          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">1</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Sachet</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£5.99</div></div>
+          <div class="qty-pack active" onclick="selectQty(event)" style="position:relative;"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;padding:3px 10px;border-radius:9999px;white-space:nowrap;" class="mono">POPULAR</div><div style="font-size:14px;font-weight:700;color:#1a1c1c;">12</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£34.99</div></div>
+          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">30</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£69.99</div></div>
         </div>
       </div>
       <button class="btn-primary" style="width:100%;text-align:center;font-size:14px;padding:18px;" onclick="this.textContent='Added ✓';this.style.background='#22c55e';setTimeout(()=>{this.textContent='ADD TO CART →';this.style.background='';},2000)">ADD TO CART →</button>
@@ -252,18 +253,18 @@ body::after {
       <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Lemon &amp; Elderflower</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A crisp, botanical blend with a gentle effervescence. Light on the palate and easy to drink even when you're feeling rough. The gentle option.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
-        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-bright);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">500<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SODIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">380<span style="font-size:12px;">mg</span></div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">POTASSIUM</div></div>
+        <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">0g</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">SUGAR</div></div>
       </div>
       <div class="mono" style="font-size:11px;color:var(--text-muted);margin-bottom:24px;display:flex;align-items:center;gap:8px;"><span class="material-symbols-outlined" style="font-size:14px;color:var(--purple);">water_drop</span>Mix one sachet into 500ml of water</div>
       <div style="margin-bottom:28px;">
         <div style="font-size:12px;font-weight:600;color:var(--text-dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;">SELECT QUANTITY</div>
         <div style="display:flex;gap:10px;">
-          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">1</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Sachet</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£5.99</div></div>
-          <div class="qty-pack active" onclick="selectQty(event)" style="position:relative;"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;padding:3px 10px;border-radius:9999px;white-space:nowrap;" class="mono">POPULAR</div><div style="font-size:14px;font-weight:700;color:#1a1c1c;">12</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£34.99</div></div>
-          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">30</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-bright);margin-top:8px;">£69.99</div></div>
+          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">1</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Sachet</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£5.99</div></div>
+          <div class="qty-pack active" onclick="selectQty(event)" style="position:relative;"><div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;padding:3px 10px;border-radius:9999px;white-space:nowrap;" class="mono">POPULAR</div><div style="font-size:14px;font-weight:700;color:#1a1c1c;">12</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£34.99</div></div>
+          <div class="qty-pack" onclick="selectQty(event)"><div style="font-size:14px;font-weight:700;color:#1a1c1c;">30</div><div class="mono" style="font-size:10px;color:var(--text-muted);margin-top:3px;">Pack</div><div style="font-size:13px;font-weight:600;color:var(--purple-text);margin-top:8px;">£69.99</div></div>
         </div>
       </div>
       <button class="btn-primary" style="width:100%;text-align:center;font-size:14px;padding:18px;" onclick="this.textContent='Added ✓';this.style.background='#22c55e';setTimeout(()=>{this.textContent='ADD TO CART →';this.style.background='';},2000)">ADD TO CART →</button>
@@ -274,13 +275,13 @@ body::after {
 <!-- FORMULA STATS -->
 <section style="padding:80px 48px;background:var(--surface);border-top:1px solid var(--border);">
   <div style="max-width:1280px;margin:0 auto;text-align:center;margin-bottom:56px;">
-    <h2 style="font-size:36px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;">Same formula. Every <span style="color:var(--purple-bright);font-style:italic;">flavour.</span></h2>
+    <h2 style="font-size:36px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;">Same formula. Every <span style="color:var(--purple-text);font-style:italic;">flavour.</span></h2>
     <p style="font-size:15px;color:var(--text-muted);margin-top:10px;">The science doesn't change. Only the taste does.</p>
   </div>
   <div style="max-width:900px;margin:0 auto;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;">
-    <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:var(--purple-bright);letter-spacing:-0.04em;line-height:1;">15</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">kcal per sachet</div></div>
+    <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:var(--purple-text);letter-spacing:-0.04em;line-height:1;">15</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">kcal per sachet</div></div>
     <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">0g</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">added sugar</div></div>
-    <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:var(--purple-bright);letter-spacing:-0.04em;line-height:1;">6</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">active ingredients</div></div>
+    <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:var(--purple-text);letter-spacing:-0.04em;line-height:1;">6</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">active ingredients</div></div>
     <div style="text-align:center;"><div style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">500ml</div><div style="font-size:13px;color:var(--text-muted);margin-top:6px;">per serving</div></div>
   </div>
 </section>

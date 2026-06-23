@@ -10,6 +10,7 @@
 :root {
   --bg: #f8f8f8; --surface: #ffffff; --surface2: #f3f3f5;
   --border: rgba(0,0,0,0.08); --purple: #9600c9; --purple-bright: #bc00fb;
+  --purple-text: #a800e0; --purple-on-dark: #c44dff;
   --purple-glow: rgba(150,0,201,0.3); --text: #1a1c1c;
   --text-muted: rgba(26,28,28,0.5); --text-dim: rgba(26,28,28,0.3);
 }
@@ -21,12 +22,12 @@ a { text-decoration: none; color: inherit; }
 .btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
 .btn-primary:hover { background: var(--purple-bright); box-shadow: 0 0 40px var(--purple-glow); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--text); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; padding: 13px 32px; border-radius: 9999px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s; display: inline-block; }
-.btn-ghost:hover { border-color: var(--purple); color: var(--purple-bright); }
+.btn-ghost:hover { border-color: var(--purple); color: var(--purple-text); }
 .section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .section-label-line { width: 24px; height: 1px; background: var(--purple); }
-.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright); text-transform: uppercase; }
+.section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-text); text-transform: uppercase; }
 .section-h2 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
-.section-h2 em { font-style: italic; color: var(--purple-bright); }
+.section-h2 em { font-style: italic; color: var(--purple-text); }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
@@ -39,7 +40,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
 .nav-link:hover { color: #1a1c1c; }
-.nav-link.active { color: var(--purple-bright); }
+.nav-link.active { color: var(--purple-text); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
 #mobileMenu.open { display: flex; }
@@ -125,7 +126,7 @@ body::after {
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
-  <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--purple-bright);border-bottom:1px solid var(--border);display:block;font-weight:600;">Festival Bundle</a>
+  <a href="shop.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">Festival Bundle</a>
   <a href="recovery.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);display:block;">Recovery Guide</a>
   <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
 </div>
@@ -135,9 +136,9 @@ body::after {
   <div style="max-width:700px;margin:0 auto;">
     <div class="reveal" style="display:inline-flex;align-items:center;gap:10px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.3);border-radius:9999px;padding:7px 18px;margin-bottom:28px;">
       <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;"></span>
-      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);">BUILD YOUR LOADOUT</span>
+      <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-text);">BUILD YOUR LOADOUT</span>
     </div>
-    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-bright);">recovery.</em></h1>
+    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-text);">recovery.</em></h1>
     <p class="reveal reveal-delay-2" style="font-size:17px;color:var(--text-muted);line-height:1.7;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime. No lock-in.</p>
   </div>
 </section>
@@ -158,11 +159,11 @@ body::after {
         <span style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">£15</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£18</span>
       </div>
-      <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE £3</div>
+      <div class="mono" style="display:inline-block;font-size:10px;font-weight:700;color:#fff;background:#15803d;letter-spacing:0.06em;padding:4px 12px;border-radius:9999px;margin-bottom:24px;">SAVE £3</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Single weekend coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Standard shipping</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix any 1 flavour</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Single weekend coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Standard shipping</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix any 1 flavour</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('solo',this)">SELECT SOLO</button>
     </div>
@@ -181,12 +182,12 @@ body::after {
         <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.3);">/mo</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£50</span>
       </div>
-      <div class="mono" style="font-size:10px;color:var(--purple-bright);letter-spacing:0.08em;margin-bottom:28px;">SAVE 20% + FREE SHIPPING</div>
+      <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.08em;margin-bottom:28px;">SAVE 20% + FREE SHIPPING</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Full month coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Priority delivery</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix up to 3 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Cancel anytime</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Full month coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Priority delivery</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix up to 3 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Cancel anytime</li>
       </ul>
       <button style="background:var(--purple);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:16px;border-radius:9999px;border:none;cursor:pointer;width:100%;transition:all 0.3s;" onmouseover="this.style.background='var(--purple-bright)';this.style.boxShadow='0 0 30px rgba(188,0,251,0.5)'" onmouseout="this.style.background='var(--purple)';this.style.boxShadow='none'" onclick="selectBundle('season',this)">SUBSCRIBE &amp; SAVE</button>
     </div>
@@ -207,11 +208,11 @@ body::after {
         <span style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">£34</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£40</span>
       </div>
-      <div class="mono" style="font-size:10px;color:#4ade80;letter-spacing:0.08em;margin-bottom:28px;">SAVE 15%</div>
+      <div class="mono" style="display:inline-block;font-size:10px;font-weight:700;color:#fff;background:#15803d;letter-spacing:0.06em;padding:4px 12px;border-radius:9999px;margin-bottom:24px;">SAVE 15%</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Share with the crew</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Mix 2 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-bright);">check</span>Free shipping included</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Share with the crew</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix 2 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Free shipping included</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('squad',this)">SELECT SQUAD</button>
     </div>
@@ -220,7 +221,7 @@ body::after {
   <!-- SELECTION BAR -->
   <div id="selectionBar" style="display:none;max-width:1100px;margin:24px auto 0;background:var(--surface);border:1px solid var(--purple);border-radius:16px;padding:20px 28px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
     <div style="display:flex;align-items:center;gap:14px;">
-      <span class="material-symbols-outlined" style="color:var(--purple-bright);font-size:22px;">shopping_bag</span>
+      <span class="material-symbols-outlined" style="color:var(--purple-text);font-size:22px;">shopping_bag</span>
       <div>
         <div class="mono" style="font-size:9px;letter-spacing:0.1em;color:var(--text-dim);text-transform:uppercase;">YOUR SELECTION</div>
         <div id="selectionLabel" style="font-size:15px;font-weight:700;color:#1a1c1c;margin-top:2px;">Season Pass — £40/mo</div>
@@ -260,28 +261,28 @@ body::after {
   <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center;" class="trust-grid">
     <div class="trust-item reveal reveal-delay-1">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
-        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">local_shipping</span>
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-text);">local_shipping</span>
       </div>
       <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Free Delivery</div>
       <div style="font-size:13px;color:var(--text-muted);">On all orders over £30</div>
     </div>
     <div class="trust-item reveal reveal-delay-2">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
-        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">verified</span>
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-text);">verified</span>
       </div>
       <div style="font-size:15px;font-weight:700;color:#1a1c1c;">30-Day Guarantee</div>
       <div style="font-size:13px;color:var(--text-muted);">No questions asked returns</div>
     </div>
     <div class="trust-item reveal reveal-delay-3">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
-        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">lock</span>
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-text);">lock</span>
       </div>
       <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Secure Checkout</div>
       <div style="font-size:13px;color:var(--text-muted);">256-bit SSL encryption</div>
     </div>
     <div class="trust-item reveal reveal-delay-1">
       <div style="width:52px;height:52px;border-radius:14px;background:rgba(150,0,201,0.12);border:1px solid rgba(150,0,201,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto;">
-        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-bright);">cancel</span>
+        <span class="material-symbols-outlined" style="font-size:24px;color:var(--purple-text);">cancel</span>
       </div>
       <div style="font-size:15px;font-weight:700;color:#1a1c1c;">Cancel Anytime</div>
       <div style="font-size:13px;color:var(--text-muted);">Subscriptions are flexible</div>
@@ -300,7 +301,7 @@ body::after {
           <a href="#" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all 0.3s;" onmouseover="this.style.background='var(--purple)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,255,255,0.6)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
         </div>
       </div>
-      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="science.html" style="font-size:14px;color:var(--text-muted);transition:color 0.2s;" onmouseover="this.style.color='var(--purple-bright)'" onmouseout="this.style.color='var(--text-muted)'">The Science</a><a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.45);">Flavours</a><a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.45);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.45);">Recovery Guide</a></div></div>
+      <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:18px;">Shop</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="science.html" style="font-size:14px;color:rgba(255,255,255,0.6);transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">The Science</a><a href="product.html" style="font-size:14px;color:rgba(255,255,255,0.6);">Flavours</a><a href="shop.html" style="font-size:14px;color:rgba(255,255,255,0.6);">Festival Bundle</a><a href="recovery.html" style="font-size:14px;color:rgba(255,255,255,0.6);">Recovery Guide</a></div></div>
       <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:18px;">Legal</div><div style="display:flex;flex-direction:column;gap:12px;"><a href="#" style="font-size:14px;color:rgba(255,255,255,0.45);">Privacy Policy</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.45);">Terms of Service</a><a href="#" style="font-size:14px;color:rgba(255,255,255,0.45);">Shipping &amp; Returns</a></div></div>
       <div><div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:18px;">Contact</div><a href="mailto:hello@ravive.co" style="font-size:14px;color:rgba(255,255,255,0.45);">hello@ravive.co</a><div style="font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px;">London, UK</div></div>
     </div>
