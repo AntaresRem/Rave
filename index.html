@@ -177,7 +177,7 @@ a { text-decoration: none; color: inherit; }
 /* ── FEATURE SECTION — sachet flies to centre, benefits fan out ── */
 #feature-section {
   position: relative;
-  height: 230vh;
+  height: 280vh;
   background: var(--bg);
   z-index: 1;
 }
@@ -201,6 +201,43 @@ a { text-decoration: none; color: inherit; }
   color: #1a1c1c; margin-top: 14px;
 }
 #feature-heading .feat-h2 em { font-style: normal; color: var(--purple-bright); }
+
+/* The "slot" — a product display frame the sachet docks into */
+#feature-slot {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -48%);
+  width: clamp(220px, 22vw, 300px);
+  height: clamp(300px, 42vh, 420px);
+  z-index: 1;          /* behind the sachet canvas (z:2) */
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(188,0,251,0.14) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.9), rgba(243,243,245,0.7));
+  border: 1px solid rgba(150,0,201,0.22);
+  box-shadow: 0 30px 80px -30px rgba(120,0,200,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+/* glow pedestal under the sachet */
+#feature-slot::after {
+  content: '';
+  position: absolute;
+  bottom: 26px; left: 50%; transform: translateX(-50%);
+  width: 70%; height: 14px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(120,0,200,0.3) 0%, transparent 70%);
+  filter: blur(3px);
+}
+#feature-slot .slot-tag {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono, monospace); font-size: 10px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--purple-bright); white-space: nowrap;
+}
+#feature-slot .slot-foot {
+  position: absolute; bottom: 14px; left: 0; right: 0; text-align: center;
+  font-family: var(--mono, monospace); font-size: 10px; letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
 
 /* Four benefit callouts positioned around the centred sachet */
 .feat-call {
@@ -560,17 +597,6 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
 
-/* ── STICKY CTA ── */
-#sticky-cta {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
-  background: rgba(249,249,249,0.96); backdrop-filter: blur(20px);
-  padding: 14px 48px; display: none; align-items: center; justify-content: space-between;
-  border-top: 1px solid var(--border);
-}
-#sticky-cta.show { display: flex; }
-.sticky-info { display: flex; flex-direction: column; gap: 2px; }
-.sticky-name { font-size: 14px; font-weight: 700; color: #1a1c1c; }
-.sticky-detail { font-size: 12px; color: var(--text-muted); }
 
 /* ── REVEAL ── */
 .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
@@ -644,7 +670,6 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .trust-icons { gap: 20px; }
   footer { padding: 60px 20px 24px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  #sticky-cta { padding: 12px 20px; }
   .offer-strip + .nav { top: 36px; }
 }
 @media (max-width: 480px) {
@@ -735,6 +760,13 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 <!-- FEATURE SECTION — sachet flies to centre, benefits fan out around it -->
 <section id="feature-section">
   <div id="feature-sticky">
+
+    <!-- Display slot the sachet docks into -->
+    <div id="feature-slot">
+      <span class="slot-tag">Ravive · 6g Sachet</span>
+      <span class="slot-foot">ZERO SUGAR · 15 KCAL</span>
+    </div>
+
     <div id="feature-heading">
       <div class="section-label" style="justify-content:center;">
         <div class="section-label-line"></div>
@@ -1198,18 +1230,6 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   </div>
 </footer>
 
-<!-- STICKY CTA -->
-<div id="sticky-cta">
-  <div class="sticky-info">
-    <div class="sticky-name">Ravive Recovery Formula</div>
-    <div class="sticky-detail">From £15 · Free delivery over £30</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:16px;">
-    <div class="mono" style="color:var(--purple-bright);font-size:12px;">★★★★★ 4.9</div>
-    <a href="product.html" class="btn-primary" style="padding:12px 28px;font-size:13px;">GET STARTED →</a>
-  </div>
-</div>
-
 <script>
 // ── Background particle canvas ──
 (function(){
@@ -1300,10 +1320,6 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-q.open').forEach(q=>{ q.classList.remove('open'); q.nextElementSibling.style.maxHeight=null; });
   if(!isOpen){ btn.classList.add('open'); answer.style.maxHeight=answer.scrollHeight+'px'; }
 }
-
-// ── Sticky CTA ──
-const stickyCta=document.getElementById('sticky-cta');
-window.addEventListener('scroll',()=>{ stickyCta.classList.toggle('show', window.scrollY>700); },{passive:true});
 
 // ── Can click pulse (for the product 3D) ──
 function firePulse(){}
@@ -1613,36 +1629,47 @@ function firePulse(){}
   });
 
   // ════════════════════════════════════════════
-  // ACT 2 — FLY TO CENTRE as feature section pins
-  // The sachet glides from right → dead centre, rights itself, scales up.
+  // ACT 2 — DOCK INTO THE SLOT as feature section pins
+  // Sachet glides from right → centre, rights itself, settles SMALL into the box.
+  // The slot frame fades in beneath it.
   // ════════════════════════════════════════════
+  const DOCK_SCALE = 0.82; // small enough to sit inside the slot box
   gsap.timeline({
     scrollTrigger: { trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4 }
   })
-  .to(state, { posX: 0, posY: 0.1, rotX: 0, rotZ: 0, scale: 1.25, floatAmp: 0.02, ease: 'power2.inOut' }, 0)
-  .to(state, { rotY: '+=3.2', ease: 'none' }, 0); // continue spinning into place
+  .to(state, { posX: 0, posY: 0, rotX: 0, rotZ: 0, scale: DOCK_SCALE, floatAmp: 0.015, ease: 'power2.inOut' }, 0)
+  .to(state, { rotY: '+=3.0', ease: 'none' }, 0)            // spin into place
+  .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.45); // slot frame appears
 
   // ════════════════════════════════════════════
-  // ACT 3 — BENEFITS FAN OUT around the centred sachet
+  // ACT 3 — BENEFITS FAN OUT, then HOLD (no fade-out)
   // ════════════════════════════════════════════
+  gsap.set(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'], { y: 24 });
   gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: 'top top', end: '70% top', scrub: 1.2 }
+    scrollTrigger: { trigger: '#feature-section', start: 'top top', end: '55% top', scrub: 1.2 }
   })
   .from('#feature-heading', { opacity: 0, y: -20, ease: 'power2.out' }, 0)
-  .to('#fc-1', { opacity: 1, y: 0, ease: 'power2.out' }, 0.15)
-  .to('#fc-2', { opacity: 1, y: 0, ease: 'power2.out' }, 0.30)
-  .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.45)
-  .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.60)
-  .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.78);
-  gsap.set(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'], { y: 24 });
+  .to('#fc-1', { opacity: 1, y: 0, ease: 'power2.out' }, 0.10)
+  .to('#fc-2', { opacity: 1, y: 0, ease: 'power2.out' }, 0.28)
+  .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.46)
+  .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.64)
+  .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.82);
 
-  // Slow idle spin while parked in the feature section, then fade canvas out
+  // After fully revealed it HOLDS — sachet stays docked in the slot through the
+  // pinned section, with a gentle continuous spin to keep it alive.
   gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: '70% top', end: 'bottom top', scrub: 1.4 }
+    scrollTrigger: { trigger: '#feature-section', start: '55% top', end: '90% top', scrub: 1.6 }
   })
-  .to(state, { rotY: '+=1.4', ease: 'none' }, 0)
-  .to(state, { opacity: 0, scale: 0.9, ease: 'power2.in' }, 0.55) // fade out before marquee
-  .to(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta','#feature-heading'], { opacity: 0, ease: 'power2.in' }, 0.55);
+  .to(state, { rotY: '+=0.8', ease: 'none' }, 0);
+
+  // Only at the very END of the pinned section does the whole scene fade away,
+  // so the next section (marquee) can take over cleanly. Reverses on scroll-up.
+  gsap.timeline({
+    scrollTrigger: { trigger: '#feature-section', start: '90% top', end: 'bottom top', scrub: 1 }
+  })
+  .to(state, { opacity: 0, ease: 'power1.in' }, 0)
+  .to(['#feature-slot','#feature-heading','#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'],
+     { opacity: 0, ease: 'power1.in' }, 0);
 
   // ── Page-load entrance ──
   gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
