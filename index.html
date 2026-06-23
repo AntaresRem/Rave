@@ -90,47 +90,111 @@ a { text-decoration: none; color: inherit; }
 .offer-strip a { color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; margin-left: 8px; }
 .offer-strip + .nav { top: 36px; }
 
-/* ── HERO (scroll-animated) ── */
+/* ── HERO (scroll-animated, HydroFlow-style) ── */
 #hero-section {
   position: relative;
-  height: 220vh;
-  background: radial-gradient(ellipse 70% 70% at 75% 50%, rgba(120,0,200,0.13) 0%, transparent 65%), var(--bg);
+  height: 320vh;
+  background: var(--bg);
 }
 #hero-sticky {
   position: sticky;
   top: 0;
   height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  padding: 0 48px;
-  max-width: 1280px;
-  margin: 0 auto;
-  gap: 0;
+  overflow: hidden;
 }
-#hero-text-inner {
-  padding-top: 60px;
-  z-index: 2;
-  position: relative;
-}
-#hero-sachet-wrap {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+/* Full-viewport sachet canvas — sits behind top text, above bottom text */
 #hero-sachet-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
   cursor: grab;
+  z-index: 2;
+  pointer-events: auto;
 }
 #hero-sachet-canvas:active { cursor: grabbing; }
-#hero-sub-block { margin-top: 28px; }
-.hero {
-  display: none; /* hidden — replaced by animated hero */
+
+/* Top text layer — IN FRONT of sachet (z 3) */
+#hero-top-text {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 5vw;
+  padding-top: calc(50vh - 0.52em * 3.5 * var(--h1-size, 1));
 }
+
+/* Bottom text layer — BEHIND sachet (z 1) */
+#hero-bot-text {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 5vw;
+  padding-top: calc(50vh - 0.52em * 3.5 * var(--h1-size, 1));
+}
+
+/* Shared big headline style */
+.hero-wordmark {
+  font-size: clamp(72px, 11vw, 148px);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: #1a1c1c;
+  white-space: nowrap;
+  user-select: none;
+}
+.hero-wordmark .accent { color: var(--purple-bright); }
+.hero-wordmark .outline {
+  -webkit-text-stroke: 2px rgba(26,28,28,0.22);
+  color: transparent;
+}
+
+/* Top text shows only first 2 lines — clip the rest */
+#hero-top-text .hero-wordmark {
+  clip-path: inset(0 0 33.5% 0); /* shows top 2 of 3 lines */
+}
+/* Bottom text shows only last line — clip the top */
+#hero-bot-text .hero-wordmark {
+  clip-path: inset(66.5% 0 0 0); /* shows bottom 1 of 3 lines */
+}
+
+/* Sub-block: eyebrow + body + CTAs — fades in after sachet drops */
+#hero-sub-block {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 4;
+  padding: 0 5vw 7vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+#hero-sub-block > * { pointer-events: auto; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(150,0,201,0.12); border: 1px solid rgba(150,0,201,0.3);
+  border-radius: 9999px; padding: 7px 18px; margin-bottom: 20px;
+}
+.hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple-bright); animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(188,0,251,0.4);} 50%{opacity:0.8;box-shadow:0 0 0 6px rgba(188,0,251,0);} }
+
+.hero-sub { font-size: 16px; line-height: 1.65; color: var(--text-muted); max-width: 520px; margin: 0 auto 28px; }
+.hero-ctas { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.hero-proof { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+.avatar-stack { display: flex; }
+.av { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--bg); background: linear-gradient(135deg,#9600c9,#bc00fb); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; margin-left: -8px; flex-shrink: 0; }
+.av:first-child { margin-left: 0; }
+
+.hero { display: none; }
 .hero-grid { display: none; }
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
@@ -500,36 +564,16 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero { padding: 120px 20px 60px; }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
 
-  /* ── Hero animation: stack vertically on mobile ── */
-  #hero-section { height: 260vh; }
-  #hero-sticky {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    align-items: start;
-    padding: 0 24px;
-    padding-top: 100px;
-    gap: 0;
-    height: 100svh;
-    height: 100vh;
-  }
-  #hero-text-inner {
-    padding-top: 0;
-    order: 1;
-  }
-  #hero-sachet-wrap {
-    order: 2;
-    height: 42vh;
-    min-height: 220px;
-    max-height: 340px;
-    width: 100%;
-  }
-  .hero-h1 { font-size: 46px; margin-bottom: 18px; }
-  .hero-eyebrow { margin-bottom: 20px; }
-  #hero-sub-block { margin-top: 16px; }
+  /* ── Hero animation: scale headline for mobile ── */
+  #hero-section { height: 320vh; }
+  .hero-wordmark { white-space: normal; line-height: 0.95; }
+  #hero-top-text, #hero-bot-text { padding: 0 6vw; padding-top: calc(50vh - 2.9em); }
+  #hero-top-text .hero-wordmark { clip-path: inset(0 0 34% 0); }
+  #hero-bot-text .hero-wordmark  { clip-path: inset(66% 0 0 0); }
+  #hero-sub-block { padding: 0 6vw 5vh; }
   .hero-sub { font-size: 14px; }
   .hero-ctas { flex-direction: column; gap: 10px; }
-  .hero-ctas .btn-primary,
-  .hero-ctas .btn-secondary { width: 100%; text-align: center; }
+  .hero-ctas .btn-primary { width: 100%; text-align: center; }
 
   .product-showcase { height: 340px; order: -1; }
   .product-ring-1 { width: 280px; height: 280px; }
@@ -566,8 +610,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .pillars-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .hero-h1 { font-size: 38px; }
-  #hero-sachet-wrap { height: 36vh; min-height: 180px; }
+  .hero-wordmark { font-size: clamp(52px, 14vw, 72px); }
 }
 </style>
 </head>
@@ -609,39 +652,49 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
 </div>
 
-<!-- HERO (scroll-animated) -->
-<section id="hero-section" style="z-index:1;">
+<!-- HERO (scroll-animated, HydroFlow-style) -->
+<section id="hero-section">
   <div id="hero-sticky">
-    <!-- LEFT: text -->
-    <div id="hero-text-inner">
-      <div class="hero-eyebrow" id="hero-eyebrow" style="opacity:0;">
+
+    <!-- LAYER 1 (behind sachet): bottom line of headline -->
+    <div id="hero-bot-text" aria-hidden="true">
+      <div class="hero-wordmark">
+        RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
+      </div>
+    </div>
+
+    <!-- LAYER 2: Three.js sachet canvas (full viewport) -->
+    <canvas id="hero-sachet-canvas"></canvas>
+
+    <!-- LAYER 3 (in front of sachet): top two lines of headline -->
+    <div id="hero-top-text" aria-hidden="true">
+      <div class="hero-wordmark">
+        RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
+      </div>
+    </div>
+
+    <!-- LAYER 4: sub-block fades in after sachet drops -->
+    <div id="hero-sub-block" style="opacity:0;">
+      <div class="hero-eyebrow" id="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
         <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
       </div>
-      <h1 class="hero-h1" id="hero-line1" style="opacity:0;filter:blur(12px);">
-        RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
-      </h1>
-      <div id="hero-sub-block" style="opacity:0;">
-        <p class="hero-sub">The electrolyte recovery system engineered by medical professionals for multi-day events. Not a sports drink. A recovery protocol.</p>
-        <div class="hero-ctas">
-          <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 36px;">GET STARTED — FROM £15</a>
-          <a href="science.html" class="btn-ghost">The Science →</a>
+      <p class="hero-sub">The electrolyte recovery system engineered by medical professionals for multi-day events. Not a sports drink. A recovery protocol.</p>
+      <div class="hero-ctas">
+        <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 36px;">GET STARTED — FROM £15</a>
+        <a href="science.html" class="btn-ghost">The Science →</a>
+      </div>
+      <div class="hero-proof">
+        <div class="avatar-stack">
+          <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
         </div>
-        <div class="hero-proof" style="margin-top:32px;">
-          <div class="avatar-stack">
-            <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
-          </div>
-          <div>
-            <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
-            <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
-          </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
+          <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
         </div>
       </div>
     </div>
-    <!-- RIGHT: Three.js sachet -->
-    <div id="hero-sachet-wrap">
-      <canvas id="hero-sachet-canvas"></canvas>
-    </div>
+
   </div>
 </section>
 
@@ -1174,7 +1227,7 @@ window.addEventListener('scroll',()=>{ stickyCta.classList.toggle('show', window
 function firePulse(){}
 
 // ══════════════════════════════════════════════════
-// HERO ANIMATION — Three.js sachet (right column)
+// HERO ANIMATION — HydroFlow-style sachet through text
 // ══════════════════════════════════════════════════
 (function() {
   if (typeof THREE === 'undefined' || typeof gsap === 'undefined') return;
@@ -1189,8 +1242,8 @@ function firePulse(){}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const scene  = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 50);
-  camera.position.set(0, 0.1, 6.5);
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
+  camera.position.set(0, 0, 6.5);
 
   function resize() {
     const w = canvas.clientWidth || canvas.parentElement.clientWidth;
@@ -1198,10 +1251,8 @@ function firePulse(){}
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    // On portrait/mobile the canvas is short — pull camera back proportionally
-    const isMobile = w < 600;
-    camera.fov = isMobile ? 32 : 26;
-    camera.position.z = isMobile ? 5.2 : 6.5;
+    camera.fov = w < 600 ? 34 : 28;
+    camera.position.z = w < 600 ? 5.5 : 6.5;
     camera.updateProjectionMatrix();
   }
   resize();
@@ -1413,22 +1464,18 @@ function firePulse(){}
   const bounce = new THREE.PointLight(0xcc44ff, 0.35, 6);
   bounce.position.set(0, -3, 1.5); scene.add(bounce);
 
-  // ── Drag to rotate ──
+  // ── Drag to rotate (only during phase 1 idle) ──
   let isDragging = false, lastX = 0, velX = 0;
-  canvas.addEventListener('mousedown',  e => { isDragging = true;  lastX = e.clientX; velX = 0; });
-  canvas.addEventListener('touchstart', e => { isDragging = true;  lastX = e.touches[0].clientX; velX = 0; }, { passive:true });
+  let scrollLocked = false; // disable drag during scroll phases
+  canvas.addEventListener('mousedown',  e => { if (scrollLocked) return; isDragging = true; lastX = e.clientX; velX = 0; });
+  canvas.addEventListener('touchstart', e => { if (scrollLocked) return; isDragging = true; lastX = e.touches[0].clientX; velX = 0; }, { passive:true });
   window.addEventListener('mousemove',  e => { if (!isDragging) return; velX = (e.clientX - lastX) * 0.012; sachetGroup.rotation.y += velX; lastX = e.clientX; });
   window.addEventListener('touchmove',  e => { if (!isDragging) return; velX = (e.touches[0].clientX - lastX) * 0.012; sachetGroup.rotation.y += velX; lastX = e.touches[0].clientX; }, { passive:true });
   window.addEventListener('mouseup',  () => { isDragging = false; });
   window.addEventListener('touchend', () => { isDragging = false; });
 
-  // ── Scroll tilt ──
-  let targetRotX = 0;
-  window.addEventListener('scroll', () => {
-    const el = document.getElementById('hero-section');
-    if (!el) return;
-    targetRotX = Math.min(window.scrollY / el.offsetHeight, 1) * 0.9;
-  }, { passive: true });
+  // ── Internal animated targets (driven by GSAP + RAF) ──
+  const state = { rotX: 0, rotY: 0, rotZ: 0, posY: 0, posZ: 0, scale: 1, floatAmp: 0.04 };
 
   // ── Render loop ──
   const clock = new THREE.Clock();
@@ -1436,29 +1483,74 @@ function firePulse(){}
   function animate() {
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
-    if (!isDragging) { velX *= 0.92; sachetGroup.rotation.y += velX + 0.0015; }
-    sachetGroup.rotation.x += (targetRotX - sachetGroup.rotation.x) * 0.06;
-    sachetGroup.position.y = Math.sin(elapsed * 0.7) * 0.04;
+
+    if (!isDragging && !scrollLocked) {
+      velX *= 0.92;
+      state.rotY += velX + 0.0012;
+    }
+
+    sachetGroup.rotation.x = state.rotX;
+    sachetGroup.rotation.y = state.rotY;
+    sachetGroup.rotation.z = state.rotZ;
+    sachetGroup.position.y = state.posY + Math.sin(elapsed * 0.7) * state.floatAmp;
+    sachetGroup.position.z = state.posZ;
+    sachetGroup.scale.setScalar(state.scale);
+
     renderer.render(scene, camera);
   }
   animate();
 
-  // ── GSAP: text fades out as user scrolls ──
+  // ══════════════════════════════════════
+  // GSAP SCROLL SEQUENCE — 3 phases
+  // Phase 1 (0–33%):  sachet idles, text visible
+  // Phase 2 (33–66%): sachet tilts & spins dramatically
+  // Phase 3 (66–100%): sachet "falls" into slot, text fades, sub-copy reveals
+  // ══════════════════════════════════════
+
+  const heroSection = document.getElementById('hero-section');
+
+  // Phase 2 — tilt & spin
   gsap.timeline({
-    scrollTrigger: { trigger: '#hero-section', start: 'top top', end: 'bottom bottom', scrub: 1.2 }
+    scrollTrigger: {
+      trigger: '#hero-section',
+      start: 'top top',
+      end: '40% bottom',
+      scrub: 1.4,
+    }
   })
-  .to('#hero-line1',     { opacity: 0, filter: 'blur(10px)', y: -20, ease: 'none' }, 0.52)
-  .to('#hero-sub-block', { opacity: 0, y: -10, ease: 'none' }, 0.42)
-  .to('#hero-eyebrow',   { opacity: 0, ease: 'none' }, 0.38);
+  .to(state, { rotX: -0.55, rotZ: 0.18, duration: 1, ease: 'none' }, 0)
+  .to(state, { rotY: '+=3.8', duration: 1, ease: 'none' }, 0); // spin ~220°
+
+  // Phase 3 — drop + reveal
+  const dropTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#hero-section',
+      start: '40% bottom',
+      end: '75% bottom',
+      scrub: 1.2,
+      onEnter()  { scrollLocked = true;  },
+      onLeave()  { scrollLocked = false; },
+      onEnterBack()  { scrollLocked = true;  },
+      onLeaveBack()  { scrollLocked = false; },
+    }
+  });
+  dropTl
+    // sachet rights itself and drops down
+    .to(state, { rotX: 0, rotZ: 0, posY: -1.6, scale: 0.72, floatAmp: 0, duration: 1, ease: 'power2.inOut' }, 0)
+    // headline text fades out as sachet drops
+    .to(['#hero-top-text','#hero-bot-text'], { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in', stagger: 0.08 }, 0.1)
+    // sub-block reveals from below
+    .to('#hero-sub-block', { opacity: 1, duration: 0.55, ease: 'power2.out' }, 0.55);
 
   // ── Page-load entrance ──
-  gsap.set(['#hero-line1','#hero-sub-block','#hero-eyebrow'], { opacity: 0 });
-  gsap.set('#hero-sachet-wrap', { opacity: 0, y: -50 });
-  gsap.timeline({ delay: 0.1 })
-    .to('#hero-sachet-wrap', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-    .to('#hero-eyebrow',     { opacity: 1, duration: 0.5 }, 0.3)
-    .to('#hero-line1',       { opacity: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power2.out' }, 0.4)
-    .to('#hero-sub-block',   { opacity: 1, duration: 0.5 }, 0.65);
+  // Both text layers start faded; canvas starts above, drops in
+  gsap.set(['#hero-top-text','#hero-bot-text'], { opacity: 0, y: 12 });
+  gsap.set('#hero-sub-block', { opacity: 0 });
+  gsap.set(state, { posY: 1.2, scale: 0.85 });
+
+  gsap.timeline({ delay: 0.15 })
+    .to(state, { posY: 0, scale: 1, duration: 0.9, ease: 'power3.out' })
+    .to(['#hero-top-text','#hero-bot-text'], { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', stagger: 0.12 }, 0.2);
 
   ScrollTrigger.refresh();
 })();
