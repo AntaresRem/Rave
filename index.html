@@ -90,10 +90,10 @@ a { text-decoration: none; color: inherit; }
 .offer-strip a { color: rgba(255,255,255,0.8); text-decoration: underline; text-underline-offset: 2px; margin-left: 8px; }
 .offer-strip + .nav { top: 36px; }
 
-/* ── HERO (scroll-animated, HydroFlow-style) ── */
+/* ── HERO — Happy Tuesday layout: text left, sachet right ── */
 #hero-section {
   position: relative;
-  height: 300vh;
+  height: 280vh;
   background: var(--bg);
 }
 #hero-sticky {
@@ -101,121 +101,77 @@ a { text-decoration: none; color: inherit; }
   top: 0;
   height: 100vh;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-/* Full-viewport sachet canvas */
-#hero-sachet-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  display: block;
-  cursor: grab;
-  z-index: 2;
-  pointer-events: auto;
-}
-#hero-sachet-canvas:active { cursor: grabbing; }
-
-/* Top header: eyebrow + CTA — always visible at the top */
-#hero-header {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  z-index: 5;
-  padding: 104px 6vw 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  pointer-events: none;
-}
-#hero-header > * { pointer-events: auto; }
-#hero-header-left { display: flex; flex-direction: column; gap: 18px; max-width: 380px; }
-#hero-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; text-align: right; }
-
-/* The two headline layers — centred vertically in viewport */
-#hero-top-text,
-#hero-bot-text {
-  position: absolute;
-  top: 0; left: 0; right: 0;
+/* LEFT column — all text content, always visible */
+#hero-left {
+  position: relative;
   z-index: 3;
-  pointer-events: none;
-  padding: 0 5vw;
-  /* vertically centre the 3-line block (each line ~0.92em, 3 lines total) */
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-#hero-bot-text { z-index: 1; }
-
-.hero-wordmark {
-  font-size: clamp(68px, 9.5vw, 136px);
-  font-weight: 900;
-  line-height: 1.0;
-  letter-spacing: -0.04em;
-  color: #1a1c1c;
-  white-space: nowrap;
-  user-select: none;
-  flex-shrink: 0;
-}
-.hero-wordmark .accent { color: var(--purple-bright); }
-.hero-wordmark .outline {
-  -webkit-text-stroke: 2px rgba(26,28,28,0.18);
-  color: transparent;
-}
-
-/*
-  Each line = 1.0em line-height over 3 lines = 3em total block.
-  Top layer shows lines 1+2 (top 66.7%), clips bottom 33.3%
-  Bot layer shows line 3 only (bottom 33.3%), clips top 66.7%
-*/
-#hero-top-text .hero-wordmark { clip-path: inset(0 0 33.3% 0); }
-#hero-bot-text  .hero-wordmark { clip-path: inset(66.7% 0 0 0); }
-
-/* Sub-block below headline: proof + CTA — slides up after drop */
-#hero-sub-block {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  z-index: 4;
-  padding: 0 5vw 6vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  justify-content: center;
+  padding: 0 0 0 6vw;
+  padding-top: 60px;
   pointer-events: none;
 }
-#hero-sub-block > * { pointer-events: auto; }
+#hero-left > * { pointer-events: auto; }
 
-/* Shared component styles */
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 10px;
   background: rgba(150,0,201,0.12); border: 1px solid rgba(150,0,201,0.3);
-  border-radius: 9999px; padding: 7px 18px;
+  border-radius: 9999px; padding: 6px 16px; margin-bottom: 28px; width: fit-content;
 }
 .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple-bright); animation: pulse-dot 2s ease-in-out infinite; }
 @keyframes pulse-dot { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(188,0,251,0.4);} 50%{opacity:0.8;box-shadow:0 0 0 6px rgba(188,0,251,0);} }
 
-.hero-sub { font-size: 15px; line-height: 1.65; color: var(--text-muted); max-width: 460px; margin: 0 auto 22px; }
-.hero-ctas { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
-.hero-proof { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; }
+.hero-h1 {
+  font-size: clamp(52px, 6.8vw, 108px);
+  font-weight: 900;
+  line-height: 0.93;
+  letter-spacing: -0.04em;
+  color: #1a1c1c;
+  margin-bottom: 28px;
+  user-select: none;
+}
+.hero-h1 .accent { color: var(--purple-bright); }
+.hero-h1 .outline {
+  -webkit-text-stroke: 2px rgba(26,28,28,0.18);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 16px; line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 380px;
+  margin-bottom: 32px;
+}
+.hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 36px; }
+.hero-proof { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .avatar-stack { display: flex; }
 .av { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--bg); background: linear-gradient(135deg,#9600c9,#bc00fb); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; margin-left: -8px; flex-shrink: 0; }
 .av:first-child { margin-left: 0; }
 
+/* RIGHT column — sachet canvas fills full height, bleeds slightly left */
+#hero-right {
+  position: relative;
+  z-index: 2; /* behind left-col text so sachet subtly overlaps at centre */
+}
+#hero-sachet-canvas {
+  position: absolute;
+  /* extend 15% to the left to create the overlap-into-text effect */
+  left: -15%;
+  top: 0;
+  width: 115%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+#hero-sachet-canvas:active { cursor: grabbing; }
+
 .hero { display: none; }
 .hero-grid { display: none; }
-.hero-h1 {
-  font-size: 76px; font-weight: 900; line-height: 0.95;
-  letter-spacing: -0.04em; color: #1a1c1c; margin-bottom: 28px;
-}
-.hero-h1 .accent { color: var(--purple-bright); }
-.hero-h1 .outline {
-  -webkit-text-stroke: 1.5px rgba(0,0,0,0.2);
-  color: transparent;
-}
-.hero-sub { font-size: 17px; line-height: 1.7; color: var(--text-muted); max-width: 440px; margin-bottom: 40px; }
-.hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
-.hero-proof { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.avatar-stack { display: flex; }
-.av { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--bg); background: linear-gradient(135deg,#9600c9,#bc00fb); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; margin-left: -8px; flex-shrink: 0; }
-.av:first-child { margin-left: 0; }
 
 /* ── PRODUCT 3D SHOWCASE ── */
 .product-showcase {
@@ -562,15 +518,16 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero { padding: 120px 20px 60px; }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
 
-  /* ── Hero animation: mobile adjustments ── */
-  #hero-section { height: 300vh; }
-  .hero-wordmark { white-space: normal; line-height: 1.0; font-size: clamp(44px, 13vw, 72px); }
-  #hero-header { flex-direction: column; gap: 12px; padding: 96px 5vw 0; }
-  #hero-header-right { align-items: flex-start; text-align: left; }
-  #hero-sub-block { padding: 0 5vw 5vh; }
-  .hero-sub { font-size: 13px; }
-  .hero-ctas { gap: 10px; }
-  .hero-ctas .btn-primary { width: 100%; text-align: center; }
+  /* ── Hero mobile: stack vertically ── */
+  #hero-section { height: 280vh; }
+  #hero-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr 44vh; }
+  #hero-left { padding: 0 5vw; padding-top: 96px; justify-content: flex-start; }
+  #hero-right { position: relative; }
+  #hero-sachet-canvas { left: 0; width: 100%; }
+  .hero-h1 { font-size: clamp(44px, 12vw, 72px); margin-bottom: 16px; }
+  .hero-sub { font-size: 14px; margin-bottom: 20px; max-width: 100%; }
+  .hero-ctas { flex-direction: column; gap: 10px; }
+  .hero-ctas .btn-primary, .hero-ctas .btn-ghost { width: 100%; text-align: center; }
 
   .product-showcase { height: 340px; order: -1; }
   .product-ring-1 { width: 280px; height: 280px; }
@@ -607,7 +564,8 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .pillars-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .hero-wordmark { font-size: clamp(52px, 14vw, 72px); }
+  .hero-h1 { font-size: clamp(38px, 12vw, 56px); }
+  #hero-sticky { grid-template-rows: 1fr 38vh; }
 }
 </style>
 </head>
@@ -649,56 +607,38 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   <a href="product.html" class="btn-primary" style="margin-top:20px;text-align:center;display:block;">SHOP NOW</a>
 </div>
 
-<!-- HERO (scroll-animated, HydroFlow-style) -->
+<!-- HERO — text left, sachet right -->
 <section id="hero-section">
   <div id="hero-sticky">
 
-    <!-- Z5: Always-visible top header — eyebrow + mini CTA -->
-    <div id="hero-header">
-      <div id="hero-header-left">
-        <div class="hero-eyebrow" id="hero-eyebrow" style="opacity:0;">
-          <span class="hero-eyebrow-dot"></span>
-          <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
+    <!-- LEFT: headline + CTA, always visible -->
+    <div id="hero-left">
+      <div class="hero-eyebrow" id="hero-eyebrow" style="opacity:0;">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="mono" style="font-size:11px;letter-spacing:0.09em;color:var(--purple-bright);text-transform:uppercase;">Cambridge PhDs + Neurosurgeon</span>
+      </div>
+      <h1 class="hero-h1" id="hero-h1" style="opacity:0;filter:blur(8px);">
+        RAVE<br/>HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub" style="opacity:0;">The electrolyte recovery system engineered by medical professionals for multi-day events. Not a sports drink. A recovery protocol.</p>
+      <div class="hero-ctas" id="hero-ctas" style="opacity:0;">
+        <a href="product.html" class="btn-primary" style="font-size:14px;padding:15px 34px;">GET STARTED — FROM £15</a>
+        <a href="science.html" class="btn-ghost">The Science →</a>
+      </div>
+      <div class="hero-proof" id="hero-proof" style="opacity:0;">
+        <div class="avatar-stack">
+          <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
         </div>
-        <p class="hero-sub" id="hero-sub-left" style="opacity:0;font-size:14px;margin:0;">The electrolyte recovery system engineered for multi-day festivals.</p>
-      </div>
-      <div id="hero-header-right" style="opacity:0;">
-        <a href="product.html" class="btn-primary" style="font-size:13px;padding:13px 28px;">GET STARTED — FROM £15</a>
-        <div class="hero-proof" style="justify-content:flex-end;">
-          <div class="avatar-stack">
-            <div class="av">JR</div><div class="av">SM</div><div class="av">TC</div><div class="av">LB</div>
-          </div>
-          <div style="text-align:right;">
-            <div style="font-size:12px;font-weight:600;color:#1a1c1c;">4,200+ recovered</div>
-            <div style="font-size:11px;color:var(--purple-bright);">★★★★★ 4.9/5</div>
-          </div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:#1a1c1c;">4,200+ festival-goers recovered</div>
+          <div style="font-size:12px;color:var(--purple-bright);margin-top:2px;">★★★★★ &nbsp;Rated 4.9 / 5</div>
         </div>
       </div>
     </div>
 
-    <!-- Z1: Behind sachet — bottom line "RIGHT." -->
-    <div id="hero-bot-text" aria-hidden="true">
-      <div class="hero-wordmark">
-        RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
-      </div>
-    </div>
-
-    <!-- Z2: Three.js sachet canvas -->
-    <canvas id="hero-sachet-canvas"></canvas>
-
-    <!-- Z3: In front of sachet — top two lines -->
-    <div id="hero-top-text" aria-hidden="true">
-      <div class="hero-wordmark">
-        RAVE HARD.<br/><span class="accent">RECOVER</span><br/><span class="outline">RIGHT.</span>
-      </div>
-    </div>
-
-    <!-- Z4: Sub-copy bottom — fades in after drop, provides "landing zone" context -->
-    <div id="hero-sub-block" style="opacity:0;">
-      <p class="hero-sub">Not a sports drink. A recovery protocol.</p>
-      <div class="hero-ctas">
-        <a href="science.html" class="btn-ghost">See the science →</a>
-      </div>
+    <!-- RIGHT: Three.js sachet canvas -->
+    <div id="hero-right">
+      <canvas id="hero-sachet-canvas"></canvas>
     </div>
 
   </div>
@@ -1506,56 +1446,35 @@ function firePulse(){}
   }
   animate();
 
-  // ══════════════════════════════════════
-  // GSAP SCROLL SEQUENCE — 3 phases over 300vh
-  // Phase 1 (0–35%):  sachet idles centred, header fades in
-  // Phase 2 (35–65%): sachet tilts & spins, top text fades out
-  // Phase 3 (65–100%): sachet rights + drops to lower-centre, sub-copy reveals
-  // ══════════════════════════════════════
-
-  // Phase 1 finish / Phase 2 — tilt & spin while scrolling
+  // ── Scroll: tilt + spin as user scrolls through hero ──
   gsap.timeline({
     scrollTrigger: {
       trigger: '#hero-section',
       start: 'top top',
-      end: '55% bottom',
-      scrub: 1.6,
+      end: 'bottom bottom',
+      scrub: 1.8,
     }
   })
-  .to(state, { rotX: -0.45, rotZ: 0.14, duration: 1, ease: 'none' }, 0)
-  .to(state, { rotY: '+=4.2', duration: 1, ease: 'none' }, 0)  // ~240° spin
-  // headline fades as sachet spins
-  .to(['#hero-top-text','#hero-bot-text'], { opacity: 0, y: -24, ease: 'none' }, 0.35);
-
-  // Phase 3 — drop into landing zone (lower half of viewport, fully visible)
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero-section',
-      start: '55% bottom',
-      end: '90% bottom',
-      scrub: 1.2,
-      onEnter()      { scrollLocked = true;  },
-      onLeave()      { scrollLocked = false; },
-      onEnterBack()  { scrollLocked = true;  },
-      onLeaveBack()  { scrollLocked = false; },
-    }
-  })
-  // rights itself and drops to bottom-centre — posY -0.7 = just below centre, fully in frame
-  .to(state, { rotX: 0, rotZ: 0, posY: -0.65, scale: 0.8, floatAmp: 0, ease: 'power2.inOut' }, 0)
-  .to('#hero-sub-block', { opacity: 1, ease: 'power2.out' }, 0.5);
+  .to(state, { rotX: -0.35, rotZ: 0.12, duration: 0.5, ease: 'none' }, 0)
+  .to(state, { rotY: '+=3.4', duration: 1, ease: 'none' }, 0)
+  // gently lift then settle back — sense of weight
+  .to(state, { posY: 0.15, duration: 0.4, ease: 'none' }, 0.15)
+  .to(state, { posY: 0, rotX: 0, rotZ: 0, duration: 0.45, ease: 'none' }, 0.55);
 
   // ── Page-load entrance ──
-  gsap.set(['#hero-top-text','#hero-bot-text'], { opacity: 0, y: 14 });
-  gsap.set(['#hero-eyebrow','#hero-sub-left','#hero-header-right','#hero-sub-block'], { opacity: 0 });
-  gsap.set(state, { posY: 0.9, scale: 0.82 });
+  gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
+  gsap.set('#hero-h1', { filter: 'blur(8px)' });
+  gsap.set(state, { posY: 0.6, scale: 0.88 });
 
-  const loadTl = gsap.timeline({ delay: 0.15 });
-  loadTl
-    .to(state, { posY: 0, scale: 1, duration: 1.0, ease: 'power3.out' })
-    .to(['#hero-top-text','#hero-bot-text'], { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', stagger: 0.1 }, 0.25)
-    .to('#hero-eyebrow',        { opacity: 1, duration: 0.5 }, 0.4)
-    .to('#hero-sub-left',       { opacity: 1, duration: 0.5 }, 0.55)
-    .to('#hero-header-right',   { opacity: 1, duration: 0.5 }, 0.65);
+  gsap.timeline({ delay: 0.12 })
+    // sachet drops in from above
+    .to(state, { posY: 0, scale: 1, duration: 0.9, ease: 'power3.out' })
+    // text reveals left-to-right sequence
+    .to('#hero-eyebrow', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.3)
+    .to('#hero-h1',      { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.45)
+    .to('#hero-sub',     { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.75)
+    .to('#hero-ctas',    { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.9)
+    .to('#hero-proof',   { opacity: 1, duration: 0.4, ease: 'power2.out' }, 1.0);
 
   ScrollTrigger.refresh();
 })();
