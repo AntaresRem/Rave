@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recovery Guide - Ravive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Geist:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "tertiary-fixed": "#e6deff",
+                "secondary-fixed": "#f9d8ff",
+                "on-surface": "#1a1c1c",
+                "surface-variant": "#e2e2e2",
+                "inverse-on-surface": "#f1f1f1",
+                "tertiary-fixed-dim": "#c9c0f5",
+                "surface-bright": "#f9f9f9",
+                "on-secondary-fixed-variant": "#75009e",
+                "on-secondary": "#ffffff",
+                "surface": "#f9f9f9",
+                "primary-fixed": "#e5e2e1",
+                "error": "#ba1a1a",
+                "on-tertiary-container": "#867eae",
+                "outline": "#747878",
+                "secondary": "#9600c9",
+                "on-tertiary-fixed": "#1c153f",
+                "secondary-container": "#bc00fb",
+                "on-secondary-fixed": "#320046",
+                "surface-container": "#eeeeee",
+                "background": "#f9f9f9",
+                "on-primary": "#ffffff",
+                "on-tertiary-fixed-variant": "#48416d",
+                "on-surface-variant": "#444748",
+                "tertiary": "#000000",
+                "surface-container-low": "#f3f3f3",
+                "primary-container": "#1c1b1b",
+                "surface-container-high": "#e8e8e8",
+                "surface-container-lowest": "#ffffff",
+                "on-error-container": "#93000a",
+                "on-error": "#ffffff",
+                "surface-tint": "#5f5e5e",
+                "surface-container-highest": "#e2e2e2",
+                "error-container": "#ffdad6",
+                "inverse-primary": "#c8c6c5",
+                "tertiary-container": "#1c153f",
+                "secondary-fixed-dim": "#ecb1ff",
+                "on-primary-fixed": "#1c1b1b",
+                "on-primary-container": "#858383",
+                "outline-variant": "#c4c7c7",
+                "primary-fixed-dim": "#c8c6c5",
+                "on-primary-fixed-variant": "#474746",
+                "inverse-surface": "#2f3131",
+                "surface-dim": "#dadada",
+                "on-secondary-container": "#fffbff",
+                "on-tertiary": "#ffffff",
+                "primary": "#000000",
+                "on-background": "#1a1c1c"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "gutter": "24px",
+                "margin-mobile": "16px",
+                "container-max": "1280px",
+                "margin-desktop": "48px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "body-lg": [
+                        "Hanken Grotesk"
+                ],
+                "label-mono": [
+                        "Geist"
+                ],
+                "display-lg": [
+                        "Hanken Grotesk"
+                ],
+                "headline-md": [
+                        "Hanken Grotesk"
+                ],
+                "body-md": [
+                        "Hanken Grotesk"
+                ],
+                "display-lg-mobile": [
+                        "Hanken Grotesk"
+                ],
+                "headline-sm": [
+                        "Hanken Grotesk"
+                ]
+        },
+        "fontSize": {
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-mono": [
+                        "13px",
+                        {
+                                "lineHeight": "1.0",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "56px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-md": [
+                        "32px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-lg-mobile": [
+                        "40px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "800"
+                        }
+                ],
+                "headline-sm": [
+                        "24px",
+                        {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .nude-theme {
+            background-color: #ffffff;
+            color: #1a1c1c;
+        }
+        .text-light-theme {
+            color: #1a1c1c;
+        }
+        .border-warm {
+            border-color: #e2e2e2;
+        }
+        .bg-warm-lavender {
+            background-color: #9600c9;
+        }
+        .text-warm-lavender {
+            color: #9600c9;
+        }
+        .radial-glow {
+            background: radial-gradient(circle at center, rgba(150, 0, 201, 0.15) 0%, transparent 70%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md selection:bg-secondary selection:text-on-secondary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface dark:bg-surface transition-colors duration-300 border-b border-surface-variant">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<a class="font-display-lg text-headline-sm md:text-headline-md text-on-surface hover:scale-105 transition-transform duration-200" href="#">Ravive</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-body-md text-body-md text-on-surface hover:text-secondary transition-colors" href="#">The Science</a>
+<a class="font-body-md text-body-md text-on-surface hover:text-secondary transition-colors" href="#">Flavours</a>
+<a class="font-body-md text-body-md text-on-surface hover:text-secondary transition-colors" href="#">Festival Bundle</a>
+<a class="font-body-md text-body-md text-secondary font-bold border-b-2 border-secondary pb-1 hover:scale-105 transition-transform duration-200" href="#">Recovery Guide</a>
+</div>
+<button class="bg-primary text-on-primary font-body-md text-body-md px-6 py-2 rounded-full hover:scale-105 transition-transform duration-200 hover:brightness-110 hidden md:block">SHOP NOW</button>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-section-padding nude-theme text-light-theme">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-padding relative">
+<div class="absolute inset-0 radial-glow z-0"></div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center space-x-2 font-label-mono text-label-mono uppercase tracking-widest text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">favorite</span>
+<span class="">Doctor-Led Care</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary leading-tight">Your 48-Hour<br/>Reset Protocol.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        Zero guilt, pure care. We’ve all been there. The lights fade, the music stops, and reality hits. This is your science-backed timeline to feeling human again, designed by medical professionals who understand the festival circuit.
+                    </p>
+<a class="inline-block bg-warm-lavender text-on-secondary font-body-md text-body-md px-8 py-4 rounded-full hover:scale-105 transition-transform duration-200" href="#download">Get the PDF Guide</a>
+</div>
+<div class="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-lg">
+<img alt="Festival morning after recovery" class="object-cover w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATeziQ6iuhm6cu0klBboppANRx2q2EulnYQ8ZQCgej31prlHazzZ-DXjMF_sBdgmJhZ3uW8gBy2xNk1hPF2liz1e2s2-1fty16_ccvwTeUMYRgVhO1ViNmfOSB8rpOSCyTl7mzuEg3c5Kljh2qtVcYqIQmBUfwlJR3yxfjPqX4h5EMlk6_-2RCBZRMgOSAMz1JbAOYFvczYHbYbKOnwe-idwG9yGqfsQ-STIPsmMESi7hlre9Tdb8xN5QmChnfl4JzeBC4hxRu0g"/>
+</div>
+</div>
+</section>
+<!-- The Timeline (Bento Grid) -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-padding">
+<div class="mb-16 text-center">
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-secondary mb-4">The Recovery Arc</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">What happens to your body, and exactly what to do about it.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- During -->
+<div class="border border-warm rounded-2xl p-8 bg-surface-bright flex flex-col h-full hover:bg-surface-container-low transition-colors shadow-sm">
+<div class="mb-6 flex justify-between items-start">
+<span class="font-label-mono text-label-mono border border-warm rounded-full px-3 py-1 text-on-surface">01 / During</span>
+<span class="material-symbols-outlined text-warm-lavender">water_drop</span>
+</div>
+<h3 class="font-headline-md text-headline-sm font-bold text-secondary mb-4">Prevention</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        Your body is actively depleting magnesium and potassium. Serotonin receptors are working overtime.
+                    </p>
+<ul class="mt-6 space-y-3 font-body-md text-sm text-on-surface-variant border-t border-warm pt-4">
+<li class="flex items-start space-x-2">
+<span class="material-symbols-outlined text-xs mt-1 text-secondary">check</span>
+<span class="">Sip water consistently, don't chug.</span>
+</li>
+</ul>
+</div>
+<!-- Before Sleep -->
+<div class="border border-warm rounded-2xl p-8 bg-surface-bright flex flex-col h-full hover:bg-surface-container-low transition-colors shadow-sm">
+<div class="mb-6 flex justify-between items-start">
+<span class="font-label-mono text-label-mono border border-warm rounded-full px-3 py-1 text-on-surface">02 / Sleep</span>
+<span class="material-symbols-outlined text-warm-lavender">bedtime</span>
+</div>
+<h3 class="font-headline-md text-headline-sm font-bold text-secondary mb-4">The Buffer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        Neurotoxicity risks peak here. Antioxidants are critical before your head hits the pillow to mitigate oxidative stress.
+                    </p>
+<ul class="mt-6 space-y-3 font-body-md text-sm text-on-surface-variant border-t border-warm pt-4">
+<li class="flex items-start space-x-2">
+<span class="material-symbols-outlined text-xs mt-1 text-secondary">check</span>
+<span class="">Take your first Ravive sachet now.</span>
+</li>
+</ul>
+</div>
+<!-- Morning After -->
+<div class="border border-warm rounded-2xl p-8 bg-surface-bright flex flex-col h-full hover:bg-surface-container-low transition-colors shadow-sm">
+<div class="mb-6 flex justify-between items-start">
+<span class="font-label-mono text-label-mono border border-warm rounded-full px-3 py-1 text-on-surface">03 / Morning</span>
+<span class="material-symbols-outlined text-warm-lavender">wb_sunny</span>
+</div>
+<h3 class="font-headline-md text-headline-sm font-bold text-secondary mb-4">Rehydration</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        Cellular dehydration and electrolyte imbalance cause the physical 'hollow' feeling. Cortisol spikes to compensate.
+                    </p>
+<ul class="mt-6 space-y-3 font-body-md text-sm text-on-surface-variant border-t border-warm pt-4">
+<li class="flex items-start space-x-2">
+<span class="material-symbols-outlined text-xs mt-1 text-secondary">check</span>
+<span class="">Electrolytes before coffee.</span>
+</li>
+</ul>
+</div>
+<!-- Day Two -->
+<div class="border border-warm rounded-2xl p-8 bg-surface-bright flex flex-col h-full hover:bg-surface-container-low transition-colors shadow-sm">
+<div class="mb-6 flex justify-between items-start">
+<span class="font-label-mono text-label-mono border border-warm rounded-full px-3 py-1 text-on-surface">04 / Day Two</span>
+<span class="material-symbols-outlined text-warm-lavender">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-sm font-bold text-secondary mb-4">Neuro-Reset</h3>
+<p class="font-body-md text-body-md text-on-surface-variant flex-grow">
+                        The emotional dip. 5-HTP and L-Tyrosine are needed to rebuild depleted serotonin and dopamine pathways.
+                    </p>
+<ul class="mt-6 space-y-3 font-body-md text-sm text-on-surface-variant border-t border-warm pt-4">
+<li class="flex items-start space-x-2">
+<span class="material-symbols-outlined text-xs mt-1 text-secondary">check</span>
+<span class="">Gentle movement, amino acids.</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Deep Dive Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-padding border-t border-warm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-4">
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-md text-secondary mb-4">The Anatomy of the Come-down</h2>
+<p class="font-body-md text-on-surface-variant">Understanding what's happening mechanically removes the anxiety. It's just chemistry, and chemistry can be balanced.</p>
+</div>
+<div class="lg:col-span-8 space-y-12">
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="bg-surface-bright p-4 rounded-full flex-shrink-0 border border-surface-variant">
+<span class="material-symbols-outlined text-warm-lavender text-3xl">battery_0_bar</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-sm text-secondary mb-2">Severe Electrolyte Depletion</h4>
+<p class="font-body-md text-on-surface-variant">Dancing for 6 hours can cause you to sweat out up to 2 liters of fluid, carrying essential sodium, potassium, and magnesium with it. This creates micro-cramping and profound fatigue.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-start">
+<div class="bg-surface-bright p-4 rounded-full flex-shrink-0 border border-surface-variant">
+<span class="material-symbols-outlined text-warm-lavender text-3xl">hub</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-sm text-secondary mb-2">Neurotransmitter Exhaustion</h4>
+<p class="font-body-md text-on-surface-variant">Your brain's reward centers have been flooded. The resulting 'empty' feeling isn't a moral failing; it's a literal lack of the chemical precursors needed to produce serotonin.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Email Capture / Download -->
+<section class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop py-section-padding" id="download">
+<div class="bg-surface-bright border border-warm rounded-3xl p-8 md:p-16 text-center shadow-md">
+<span class="material-symbols-outlined text-4xl text-warm-lavender mb-6">description</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-md text-secondary mb-4">The Complete 12-Page Protocol</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto mb-8">
+                    Get the full doctor-authored PDF guide. Includes exact supplement timing, grocery lists for recovery meals, and actionable sleep hygiene tips for the days following a festival.
+                </p>
+<form class="max-w-md mx-auto flex flex-col gap-4">
+<input class="w-full bg-transparent border-b border-warm px-4 py-3 font-body-md text-on-surface placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors rounded-none" placeholder="Enter your email" type="email"/>
+<button class="w-full bg-primary text-on-primary font-body-md text-body-md px-8 py-4 rounded-full hover:bg-primary/90 transition-colors mt-4" type="submit">
+                        SEND ME THE GUIDE
+                    </button>
+<p class="font-label-mono text-xs text-on-surface-variant mt-4">By subscribing, you agree to our privacy policy. No spam, just science.</p>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-section-padding pb-gutter bg-surface-container dark:bg-surface-container border-t border-outline-variant transition-colors duration-300">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="space-y-4">
+<h2 class="font-display-lg text-headline-sm md:text-headline-md text-primary">Ravive</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Ravive. Doctor-led, Rave-native recovery.</p>
+</div>
+<div class="flex flex-col space-y-2">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">The Science</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">Flavours</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">Festival Bundle</a>
+<a class="font-body-md text-body-md text-secondary hover:underline transition-colors" href="#">Recovery Guide</a>
+</div>
+<div class="flex flex-col space-y-2">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary hover:underline transition-colors" href="#">Shipping &amp; Returns</a>
+</div>
+</div>
+</footer>
+</body></html>

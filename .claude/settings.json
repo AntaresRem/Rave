@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "Bash(dir \"c:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\" /a)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); where.exe gh 2>&1)",
+      "Read(//c//**)",
+      "PowerShell($env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"PATH\", \"User\"\\); gh api repos/AntaresRem/Rave/pages --method POST --field source='{\"branch\":\"main\",\"path\":\"/\"}' 2>&1)",
+      "PowerShell($token = \\(git -C \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\" config --get credential.helper 2>&1\\); $token)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\\\\.github\\\\workflows\")",
+      "Bash(git credential *)",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\\\\stitch_ravevive_immersive_brand_experience\\\\ravevibe_immersive_product_experience\\\\code.html\" \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\\\\product.html\")",
+      "PowerShell(Copy-Item \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\\\\stitch_ravevive_immersive_brand_experience\\\\ravevibe_the_science_of_recovery\\\\code.html\" \"C:\\\\Users\\\\Sebastian\\\\Desktop\\\\RaVeVibe\\\\science.html\")",
+      "Bash(git checkout *)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

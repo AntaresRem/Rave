@@ -34,7 +34,7 @@ a { text-decoration: none; color: inherit; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 /* Nav */
 .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
-.nav.scrolled { background: rgba(249,249,249,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav.scrolled { background: rgba(248,248,248,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
 .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #1a1c1c; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
@@ -73,6 +73,27 @@ a { text-decoration: none; color: inherit; }
   .trust-grid { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ── SHARED POLISH (grain, reduced-motion, nav underline, button press, footer, marquee) ── */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  opacity: 0.025; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--purple-bright); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform 0.35s cubic-bezier(0.22,1,0.36,1); }
+.nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+.btn-primary:active, .btn-ghost:active { transform: translateY(0) scale(0.97); transition-duration: 0.08s; }
+.footer-links a { transition: color 0.2s, transform 0.2s; display: inline-block; width: fit-content; }
+.footer-links a:hover { transform: translateX(4px); }
+.marquee-wrap { -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  .marquee-track { animation: none !important; }
+  body::after { display: none; }
+}
 </style>
 </head>
 <body>
@@ -100,7 +121,7 @@ a { text-decoration: none; color: inherit; }
     </button>
   </div>
 </nav>
-<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(249,249,249,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
@@ -302,6 +323,26 @@ function selectBundle(id, btn) {
   bar.style.display = 'flex';
   document.getElementById('selectionLabel').textContent = labels[id];
 }
+</script>
+
+<script>
+(function(){
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!fine || reduced) return;
+  var S = 0.32, M = 10;
+  document.querySelectorAll('.btn-primary').forEach(function(btn){
+    btn.style.willChange = 'transform';
+    btn.addEventListener('mouseenter', function(){ btn.style.transition = 'transform 0.15s ease-out, background 0.3s, box-shadow 0.3s'; });
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      var dx = Math.max(-M, Math.min(M, (e.clientX-(r.left+r.width/2))*S));
+      var dy = Math.max(-M, Math.min(M, (e.clientY-(r.top+r.height/2))*S));
+      btn.style.transform = 'translate('+dx+'px,'+dy+'px)';
+    });
+    btn.addEventListener('mouseleave', function(){ btn.style.transition=''; btn.style.transform=''; });
+  });
+})();
 </script>
 </body>
 </html>
