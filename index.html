@@ -1678,73 +1678,81 @@ function firePulse(){}
   });
 
   // ════════════════════════════════════════════════════════════════
-  // FEATURE CHOREOGRAPHY — ONE pinned ScrollTrigger, ONE progress value.
-  // The section is PINNED (fixed in place) for its whole scroll length, so the
-  // box, sachet and callouts all share the viewport coordinate space — no drift.
-  // Everything is derived from a single 0→1 progress `p`, so it is perfectly
-  // reliable and rewinds exactly on scroll-up.
+  // FEATURE CHOREOGRAPHY
+  // Two cooperating triggers, both keyed to DETERMINISTIC targets (no drift):
   //
-  //   p 0.00–0.42 : sachet flies right→centre, does a full 360° spin, docks,
-  //                 scaling down to fit the box. Box frame fades in.
-  //   p 0.42–0.72 : four benefit callouts fan in one by one. Sachet STATIC.
-  //   p 0.72–1.00 : everything HOLDS, dead-still, fully docked & frontal.
-  // The canvas only hides when we leave the pinned range (onLeave/onLeaveBack).
+  //  1) FLY-IN (not pinned): as the section rises from the bottom of the screen
+  //     up to the top, the sachet glides right→centre, spins a full 360°, scales
+  //     to fit, and the box fades in. By the time the section is at the top, the
+  //     sachet is fully docked & frontal.  (start top bottom → end top top)
+  //
+  //  2) PIN + HOLD: the section pins; callouts fan in, then everything holds
+  //     dead-still until the pin releases.  (start top top → end bottom bottom)
+  //
+  // The canvas stays visible from hero through the whole feature section; it is
+  // hidden only once scrolled fully below. Scroll-up rewinds both triggers.
   // ════════════════════════════════════════════════════════════════
-  // All feature overlay elements start hidden; setLayer() drives opacity+translateY
-  // directly via inline styles (no GSAP transform, to avoid conflicts).
   const featLayers = ['#fc-1','#fc-2','#fc-3','#fc-4'];
   ['#feature-heading','#feature-slot','#feature-cta', ...featLayers].forEach(sel => {
     const el = document.querySelector(sel); if (el) el.style.opacity = '0';
   });
 
   const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
-  const smooth  = t => t * t * (3 - 2 * t);           // smoothstep ease
+  const smooth  = t => t * t * (3 - 2 * t);
   const lerp    = (a, b, t) => a + (b - a) * t;
   const mapp    = (p, a, b) => clamp01((p - a) / (b - a));
+  const TAU = Math.PI * 2;
 
-  // Capture the sachet's free-spin angle the instant docking begins, so the
-  // 360° turn starts from wherever it was and lands exactly on a front face.
+  // Capture spin at dock start so the 360° lands exactly on a front face.
   let dockStartSpin = 0, dockStarted = false;
 
+  // ── 1) FLY-IN (drives dock 0→1 as the section approaches the top) ──
   ScrollTrigger.create({
     trigger: '#feature-section',
-    start: 'top top',
-    end:   'bottom bottom',
-    pin: '#feature-sticky',          // genuinely pin the stage — no fixed-canvas drift
-    pinSpacing: true,
-    scrub: true,
-    onEnter:     () => { canvas.style.visibility = 'visible'; },
-    onEnterBack: () => { canvas.style.visibility = 'visible'; },
-    onLeave:     () => { canvas.style.visibility = 'hidden'; },  // fully below → hide
-    onLeaveBack: () => { canvas.style.visibility = 'visible'; }, // back into hero
-    onRefresh:   () => computeDockTargets(),
+    start: 'top bottom',   // section top enters from the bottom of the viewport
+    end:   'top top',      // section top reaches the top of the viewport
+    scrub: 1.2,
+    onRefresh: () => computeDockTargets(),
     onUpdate: self => {
-      const p = self.progress;
-
-      // ── Phase A: dock (0 → 0.42) ──
-      const dp = smooth(mapp(p, 0, 0.42));   // 0→1 eased dock progress
-      if (dp > 0 && !dockStarted) { dockStarted = true; dockStartSpin = heroSpinY; }
-      if (dp === 0) dockStarted = false;
+      const dp = smooth(self.progress);            // 0→1 dock progress
+      if (dp > 0.001 && !dockStarted) { dockStarted = true; dockStartSpin = heroSpinY; }
+      if (dp <= 0.001) dockStarted = false;
 
       state.dock  = dp;
       state.posX  = lerp(HERO_X, 0, dp);
       state.posY  = lerp(0, DOCK_Y, dp);
       state.scale = lerp(1, DOCK_SCALE, dp);
-      // 360° turn: from captured spin → nearest full turn + one extra rotation,
-      // ending exactly front-facing (multiple of 2π).
-      const TAU = Math.PI * 2;
-      const landing = Math.round(dockStartSpin / TAU) * TAU + TAU; // one full extra turn, front face
+      const landing = Math.round(dockStartSpin / TAU) * TAU + TAU; // +1 full turn, front face
       state.dockSpin = lerp(dockStartSpin, landing, dp);
 
-      // ── Phase B: callouts fan in (0.42 → 0.72) ──
-      const headP = smooth(mapp(p, 0.40, 0.52));
-      setLayer('#feature-heading', headP, -18);
-      setLayer('#feature-slot', smooth(mapp(p, 0.30, 0.46)), 0, true);
-      const stops = [0.46, 0.54, 0.62, 0.70];
-      featLayers.forEach((sel, i) => setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.10)), 26));
-      setLayer('#feature-cta', smooth(mapp(p, 0.70, 0.80)), 20);
+      // box frame fades in over the second half of the fly-in
+      setLayer('#feature-slot', smooth(mapp(self.progress, 0.45, 0.9)), 0, true);
+    }
+  });
 
-      // ── Phase C (0.72 → 1.0): everything already at 1, holds. Nothing to do. ──
+  // ── 2) PIN + reveal callouts + hold ──
+  ScrollTrigger.create({
+    trigger: '#feature-section',
+    start: 'top top',
+    end:   'bottom bottom',
+    pin: '#feature-sticky',
+    pinSpacing: true,
+    scrub: true,
+    onEnter:     () => { canvas.style.visibility = 'visible'; state.dock = 1; },
+    onEnterBack: () => { canvas.style.visibility = 'visible'; },
+    onLeave:     () => { canvas.style.visibility = 'hidden'; },   // fully below → hide
+    onLeaveBack: () => { canvas.style.visibility = 'visible'; },  // back toward hero
+    onUpdate: self => {
+      const p = self.progress;
+      // Keep the sachet pinned to its docked pose for the whole hold.
+      state.dock = 1; state.posX = 0; state.posY = DOCK_Y; state.scale = DOCK_SCALE;
+      state.dockSpin = Math.round(state.dockSpin / TAU) * TAU; // snap exact front
+
+      setLayer('#feature-slot', 1, 0, true);
+      setLayer('#feature-heading', smooth(mapp(p, 0.00, 0.10)), -18);
+      const stops = [0.10, 0.20, 0.30, 0.40];
+      featLayers.forEach((sel, i) => setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.12)), 26));
+      setLayer('#feature-cta', smooth(mapp(p, 0.52, 0.64)), 20);
     }
   });
 
