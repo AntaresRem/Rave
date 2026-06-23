@@ -202,13 +202,16 @@ a { text-decoration: none; color: inherit; }
 }
 #feature-heading .feat-h2 em { font-style: normal; color: var(--purple-bright); }
 
-/* The "slot" — a product display frame the sachet docks into */
+/* The "slot" — a product display frame the sachet docks into.
+   Height drives everything; width is locked to the sachet's silhouette ratio
+   (1.15 : 1.94 ≈ 0.593) so the product fits the box on all four sides.
+   JS reads the rendered height and computes the exact 3D dock scale to match. */
 #feature-slot {
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%, -48%);
-  width: clamp(220px, 22vw, 300px);
-  height: clamp(300px, 42vh, 420px);
+  transform: translate(-50%, -50%);
+  height: clamp(320px, 56vh, 480px);
+  aspect-ratio: 0.593 / 1;
   z-index: 1;          /* behind the sachet canvas (z:2) */
   border-radius: 22px;
   background:
@@ -1589,19 +1592,24 @@ function firePulse(){}
   window.addEventListener('touchend', endDrag);
 
   // ── Render loop ──
+  // `docked` freezes ALL motion (drift, float) so the product sits dead-still,
+  // facing the user, once it has slotted into the box. Good product UI.
+  let docked = false;
   const clock = new THREE.Clock();
   let elapsed = 0;
   function animate() {
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
 
-    if (!isDragging) { velX *= 0.92; state.rotY += velX + 0.0012; }
+    // Idle drift only while NOT docked and NOT being dragged
+    if (!isDragging && !docked) { velX *= 0.92; state.rotY += velX + 0.0012; }
 
     sachetGroup.rotation.x = state.rotX;
     sachetGroup.rotation.y = state.rotY;
     sachetGroup.rotation.z = state.rotZ;
     sachetGroup.position.x = state.posX;
-    sachetGroup.position.y = state.posY + Math.sin(elapsed * 0.7) * state.floatAmp;
+    // float only when not docked
+    sachetGroup.position.y = state.posY + (docked ? 0 : Math.sin(elapsed * 0.7) * state.floatAmp);
     sachetGroup.position.z = state.posZ;
     sachetGroup.scale.setScalar(state.scale);
 
@@ -1630,19 +1638,52 @@ function firePulse(){}
 
   // ════════════════════════════════════════════
   // ACT 2 — DOCK INTO THE SLOT as feature section pins
-  // Sachet glides from right → centre, rights itself, settles SMALL into the box.
-  // The slot frame fades in beneath it.
+  // Sachet glides right → centre, rights itself, and SNAPS to face the user
+  // dead-on (rotY = nearest full turn so the front label is square to camera).
   // ════════════════════════════════════════════
-  const DOCK_SCALE = 0.82; // small enough to sit inside the slot box
+  // Compute the EXACT scale that makes the sachet fill the slot box.
+  // Projected px per world-unit at the dock plane (z=0) under the live camera,
+  // then size the sachet's silhouette height to ~82% of the slot's inner height.
+  const SACHET_H = 1.99; // body 1.9 + top/bottom seals
+  let DOCK_SCALE = 0.9;
+  function computeDockScale() {
+    const slot = document.getElementById('feature-slot');
+    if (!slot) return;
+    const slotPx = slot.getBoundingClientRect().height || (window.innerHeight * 0.56);
+    const vpH = window.innerHeight;
+    const fovRad = camera.fov * Math.PI / 180;
+    const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2); // world units across full viewport height
+    const pxPerUnit = vpH / worldVisibleH;
+    const targetPx = slotPx * 0.82; // leave breathing room for the tags
+    DOCK_SCALE = targetPx / (SACHET_H * pxPerUnit);
+  }
+  computeDockScale();
+  window.addEventListener('resize', () => { computeDockScale(); if (docked) state.scale = DOCK_SCALE; });
+
+  // Stop the render-loop drift the moment docking begins (top bottom) so the
+  // scrub tween fully owns rotation — otherwise drift and tween fight each other.
+  ScrollTrigger.create({
+    trigger: '#feature-section', start: 'top bottom', end: 'bottom top',
+    onToggle: self => { docked = self.isActive; }
+  });
+
   gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4 }
+    scrollTrigger: {
+      trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4,
+      // On entering the dock window, recompute scale and snap the running rotation
+      // to the nearest whole turn so it lands at a clean front-facing 0.
+      onEnter:     () => { computeDockScale(); state._dockTurn = Math.round(state.rotY / (Math.PI * 2)) * Math.PI * 2; },
+      onEnterBack: () => { computeDockScale(); state._dockTurn = Math.round(state.rotY / (Math.PI * 2)) * Math.PI * 2; },
+    }
   })
-  .to(state, { posX: 0, posY: 0, rotX: 0, rotZ: 0, scale: DOCK_SCALE, floatAmp: 0.015, ease: 'power2.inOut' }, 0)
-  .to(state, { rotY: '+=3.0', ease: 'none' }, 0)            // spin into place
-  .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.45); // slot frame appears
+  .to(state, { posX: 0, posY: 0, rotX: 0, rotZ: 0, scale: () => DOCK_SCALE, floatAmp: 0, ease: 'power2.inOut' }, 0)
+  // settle rotY onto the nearest full turn → front face square to the user
+  .to(state, { rotY: () => (state._dockTurn ?? 0), ease: 'power2.inOut' }, 0)
+  .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.4);
 
   // ════════════════════════════════════════════
-  // ACT 3 — BENEFITS FAN OUT, then HOLD (no fade-out)
+  // ACT 3 — BENEFITS FAN OUT, then HOLD — fully static, no spin, no fade.
+  // The product stays docked & facing the user for the rest of the section.
   // ════════════════════════════════════════════
   gsap.set(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'], { y: 24 });
   gsap.timeline({
@@ -1654,18 +1695,13 @@ function firePulse(){}
   .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.46)
   .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.64)
   .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.82);
+  // No idle-spin timeline — the product holds static & frontal through the hold.
 
-  // After fully revealed it HOLDS — sachet stays docked in the slot through the
-  // pinned section, with a gentle continuous spin to keep it alive.
+  // The canvas is position:fixed, so once we scroll PAST the section it would
+  // otherwise overlap the marquee. Fade the whole scene out only in the final
+  // stretch, after a long static hold. Scrub-driven → reverses on scroll-up.
   gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: '55% top', end: '90% top', scrub: 1.6 }
-  })
-  .to(state, { rotY: '+=0.8', ease: 'none' }, 0);
-
-  // Only at the very END of the pinned section does the whole scene fade away,
-  // so the next section (marquee) can take over cleanly. Reverses on scroll-up.
-  gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: '90% top', end: 'bottom top', scrub: 1 }
+    scrollTrigger: { trigger: '#feature-section', start: '92% top', end: 'bottom top', scrub: true }
   })
   .to(state, { opacity: 0, ease: 'power1.in' }, 0)
   .to(['#feature-slot','#feature-heading','#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'],
