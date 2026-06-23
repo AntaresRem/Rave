@@ -153,25 +153,98 @@ a { text-decoration: none; color: inherit; }
 .av { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--bg); background: linear-gradient(135deg,#9600c9,#bc00fb); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; margin-left: -8px; flex-shrink: 0; }
 .av:first-child { margin-left: 0; }
 
-/* RIGHT column — sachet canvas fills full height, bleeds slightly left */
-#hero-right {
-  position: relative;
-  z-index: 2; /* behind left-col text so sachet subtly overlaps at centre */
-}
+/* RIGHT column — placeholder; canvas is now a shared fixed layer */
+#hero-right { position: relative; z-index: 2; }
+
+/* Shared sachet canvas — fixed, full viewport, spans hero + feature section.
+   Hidden until the hero comes into view; faded out after feature section. */
 #hero-sachet-canvas {
-  position: absolute;
-  /* extend 15% to the left to create the overlap-into-text effect */
-  left: -15%;
-  top: 0;
-  width: 115%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   display: block;
+  z-index: 2;
   cursor: grab;
+  pointer-events: none; /* re-enabled via JS only during hero drag window */
+  opacity: 0;
 }
-#hero-sachet-canvas:active { cursor: grabbing; }
+#hero-sachet-canvas.dragging { cursor: grabbing; }
 
 .hero { display: none; }
 .hero-grid { display: none; }
+
+/* ── FEATURE SECTION — sachet flies to centre, benefits fan out ── */
+#feature-section {
+  position: relative;
+  height: 230vh;
+  background: var(--bg);
+  z-index: 1;
+}
+#feature-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+#feature-heading {
+  position: absolute;
+  top: 12vh; left: 0; right: 0;
+  text-align: center;
+  z-index: 4;
+  padding: 0 6vw;
+  pointer-events: none;
+}
+#feature-heading .feat-h2 {
+  font-size: clamp(32px, 4.4vw, 56px);
+  font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
+  color: #1a1c1c; margin-top: 14px;
+}
+#feature-heading .feat-h2 em { font-style: normal; color: var(--purple-bright); }
+
+/* Four benefit callouts positioned around the centred sachet */
+.feat-call {
+  position: absolute;
+  width: 250px;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+}
+.feat-call .fc-num {
+  font-family: var(--mono, monospace);
+  font-size: 11px; letter-spacing: 0.16em; color: var(--purple-bright);
+  text-transform: uppercase; margin-bottom: 6px; display: block;
+}
+.feat-call .fc-title { font-size: 18px; font-weight: 800; color: #1a1c1c; margin-bottom: 6px; }
+.feat-call .fc-body { font-size: 13px; line-height: 1.55; color: var(--text-muted); }
+.feat-call .fc-dose {
+  display: inline-block; margin-top: 8px; font-family: var(--mono, monospace);
+  font-size: 10px; letter-spacing: 0.06em; color: var(--purple-bright);
+  background: rgba(150,0,201,0.1); border: 1px solid rgba(150,0,201,0.25);
+  border-radius: 6px; padding: 4px 10px;
+}
+/* connector line dot */
+.feat-call .fc-dot {
+  position: absolute; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--purple-bright); box-shadow: 0 0 12px rgba(188,0,251,0.6);
+}
+/* Position: TL, TR aligned right text, BL, BR aligned right text */
+#fc-1 { top: 30vh; left: 6vw; text-align: left; }
+#fc-1 .fc-dot { top: 6px; right: -16px; }
+#fc-2 { top: 30vh; right: 6vw; text-align: right; }
+#fc-2 .fc-dot { top: 6px; left: -16px; }
+#fc-3 { bottom: 16vh; left: 6vw; text-align: left; }
+#fc-3 .fc-dot { top: 6px; right: -16px; }
+#fc-4 { bottom: 16vh; right: 6vw; text-align: right; }
+#fc-4 .fc-dot { top: 6px; left: -16px; }
+
+#feature-cta {
+  position: absolute;
+  bottom: 6vh; left: 0; right: 0;
+  text-align: center; z-index: 5;
+  opacity: 0; pointer-events: none;
+}
+#feature-cta > * { pointer-events: auto; }
 
 /* ── PRODUCT 3D SHOWCASE ── */
 .product-showcase {
@@ -519,15 +592,29 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
 
   /* ── Hero mobile: stack vertically ── */
-  #hero-section { height: 280vh; }
-  #hero-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr 44vh; }
+  #hero-section { height: 240vh; }
+  #hero-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr 42vh; }
   #hero-left { padding: 0 5vw; padding-top: 96px; justify-content: flex-start; }
   #hero-right { position: relative; }
-  #hero-sachet-canvas { left: 0; width: 100%; }
   .hero-h1 { font-size: clamp(44px, 12vw, 72px); margin-bottom: 16px; }
   .hero-sub { font-size: 14px; margin-bottom: 20px; max-width: 100%; }
   .hero-ctas { flex-direction: column; gap: 10px; }
   .hero-ctas .btn-primary, .hero-ctas .btn-ghost { width: 100%; text-align: center; }
+
+  /* Feature section: callouts at very top & bottom, sachet centred between */
+  #feature-section { height: 220vh; }
+  #feature-heading { top: 9vh; }
+  #feature-heading .feat-h2 { font-size: clamp(26px, 7vw, 38px); }
+  .feat-call { width: 42vw; }
+  .feat-call .fc-title { font-size: 14px; }
+  .feat-call .fc-body { font-size: 11px; }
+  .feat-call .fc-dose { font-size: 8px; padding: 3px 7px; }
+  .feat-call .fc-dot { display: none; }
+  #fc-1 { top: 24vh; left: 4vw; }
+  #fc-2 { top: 24vh; right: 4vw; }
+  #fc-3 { bottom: 18vh; left: 4vw; }
+  #fc-4 { bottom: 18vh; right: 4vw; }
+  #feature-cta { bottom: 4vh; }
 
   .product-showcase { height: 340px; order: -1; }
   .product-ring-1 { width: 280px; height: 280px; }
@@ -636,11 +723,60 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
       </div>
     </div>
 
-    <!-- RIGHT: Three.js sachet canvas -->
-    <div id="hero-right">
-      <canvas id="hero-sachet-canvas"></canvas>
+    <!-- RIGHT: column reserves layout space; sachet rendered in shared canvas -->
+    <div id="hero-right"></div>
+
+  </div>
+</section>
+
+<!-- SHARED SACHET CANVAS — fixed layer spanning hero + feature section -->
+<canvas id="hero-sachet-canvas"></canvas>
+
+<!-- FEATURE SECTION — sachet flies to centre, benefits fan out around it -->
+<section id="feature-section">
+  <div id="feature-sticky">
+    <div id="feature-heading">
+      <div class="section-label" style="justify-content:center;">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">One Sachet · Six Actives</span>
+        <div class="section-label-line"></div>
+      </div>
+      <h2 class="feat-h2">Engineered to do <em>four things</em> at once.</h2>
     </div>
 
+    <!-- Benefit callouts around the centred sachet -->
+    <div class="feat-call" id="fc-1">
+      <span class="fc-num">01 — Hydration</span>
+      <div class="fc-title">Rapid Electrolytes</div>
+      <p class="fc-body">Replaces sodium &amp; potassium lost through hours of dancing. Stops micro-cramping before it starts.</p>
+      <span class="fc-dose">500mg SODIUM · 380mg K+</span>
+      <span class="fc-dot"></span>
+    </div>
+    <div class="feat-call" id="fc-2">
+      <span class="fc-num">02 — Neuroscience</span>
+      <div class="fc-title">Synaptic Support</div>
+      <p class="fc-body">B-vitamins &amp; amino acids help rebuild depleted neurotransmitter pathways overnight.</p>
+      <span class="fc-dose">B-VITAMIN COMPLEX</span>
+      <span class="fc-dot"></span>
+    </div>
+    <div class="feat-call" id="fc-3">
+      <span class="fc-num">03 — Recovery</span>
+      <div class="fc-title">Deep Rest</div>
+      <p class="fc-body">Magnesium glycinate &amp; L-theanine support quality sleep — even in a tent at a festival.</p>
+      <span class="fc-dose">200mg MAGNESIUM GLYCINATE</span>
+      <span class="fc-dot"></span>
+    </div>
+    <div class="feat-call" id="fc-4">
+      <span class="fc-num">04 — Protection</span>
+      <div class="fc-title">Antioxidant Shield</div>
+      <p class="fc-body">Counteracts oxidative stress from extended exertion &amp; environmental exposure.</p>
+      <span class="fc-dose">COCONUT WATER POWDER</span>
+      <span class="fc-dot"></span>
+    </div>
+
+    <div id="feature-cta">
+      <a href="product.html" class="btn-primary" style="font-size:14px;padding:15px 36px;">EXPLORE THE FORMULA →</a>
+    </div>
   </div>
 </section>
 
@@ -1191,15 +1327,19 @@ function firePulse(){}
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
   camera.position.set(0, 0, 6.5);
 
+  // HERO_X = sachet's resting X in the hero. Right side on desktop, centre on mobile.
+  let HERO_X = 1.85;
   function resize() {
-    const w = canvas.clientWidth || canvas.parentElement.clientWidth;
-    const h = canvas.clientHeight || canvas.parentElement.clientHeight;
+    const w = canvas.clientWidth || window.innerWidth;
+    const h = canvas.clientHeight || window.innerHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.fov = w < 600 ? 34 : 28;
-    camera.position.z = w < 600 ? 5.5 : 6.5;
+    const mobile = w < 760;
+    camera.fov = mobile ? 36 : 28;
+    camera.position.z = mobile ? 5.8 : 6.5;
     camera.updateProjectionMatrix();
+    HERO_X = mobile ? 0 : 1.85;  // centre on mobile (stacked), right on desktop
   }
   resize();
   window.addEventListener('resize', resize);
@@ -1410,18 +1550,27 @@ function firePulse(){}
   const bounce = new THREE.PointLight(0xcc44ff, 0.35, 6);
   bounce.position.set(0, -3, 1.5); scene.add(bounce);
 
-  // ── Drag to rotate (only during phase 1 idle) ──
-  let isDragging = false, lastX = 0, velX = 0;
-  let scrollLocked = false; // disable drag during scroll phases
-  canvas.addEventListener('mousedown',  e => { if (scrollLocked) return; isDragging = true; lastX = e.clientX; velX = 0; });
-  canvas.addEventListener('touchstart', e => { if (scrollLocked) return; isDragging = true; lastX = e.touches[0].clientX; velX = 0; }, { passive:true });
-  window.addEventListener('mousemove',  e => { if (!isDragging) return; velX = (e.clientX - lastX) * 0.012; sachetGroup.rotation.y += velX; lastX = e.clientX; });
-  window.addEventListener('touchmove',  e => { if (!isDragging) return; velX = (e.touches[0].clientX - lastX) * 0.012; sachetGroup.rotation.y += velX; lastX = e.touches[0].clientX; }, { passive:true });
-  window.addEventListener('mouseup',  () => { isDragging = false; });
-  window.addEventListener('touchend', () => { isDragging = false; });
-
   // ── Internal animated targets (driven by GSAP + RAF) ──
-  const state = { rotX: 0, rotY: 0, rotZ: 0, posY: 0, posZ: 0, scale: 1, floatAmp: 0.04 };
+  // posX: world-X position. Hero rest = right side (or centre on mobile).
+  const state = {
+    rotX: 0, rotY: 0, rotZ: 0,
+    posX: HERO_X, posY: 0, posZ: 0,
+    scale: 1, floatAmp: 0.04,
+    opacity: 0, // canvas fade
+  };
+
+  // ── Drag to rotate (only during hero window) ──
+  let isDragging = false, lastX = 0, velX = 0;
+  let dragEnabled = false;
+  function startDrag(x) { if (!dragEnabled) return; isDragging = true; lastX = x; velX = 0; canvas.classList.add('dragging'); }
+  function moveDrag(x)  { if (!isDragging) return; velX = (x - lastX) * 0.012; state.rotY += velX; lastX = x; }
+  function endDrag()    { isDragging = false; canvas.classList.remove('dragging'); }
+  canvas.addEventListener('mousedown',  e => startDrag(e.clientX));
+  canvas.addEventListener('touchstart', e => startDrag(e.touches[0].clientX), { passive:true });
+  window.addEventListener('mousemove',  e => moveDrag(e.clientX));
+  window.addEventListener('touchmove',  e => { if (isDragging) moveDrag(e.touches[0].clientX); }, { passive:true });
+  window.addEventListener('mouseup',  endDrag);
+  window.addEventListener('touchend', endDrag);
 
   // ── Render loop ──
   const clock = new THREE.Clock();
@@ -1430,46 +1579,79 @@ function firePulse(){}
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
 
-    if (!isDragging && !scrollLocked) {
-      velX *= 0.92;
-      state.rotY += velX + 0.0012;
-    }
+    if (!isDragging) { velX *= 0.92; state.rotY += velX + 0.0012; }
 
     sachetGroup.rotation.x = state.rotX;
     sachetGroup.rotation.y = state.rotY;
     sachetGroup.rotation.z = state.rotZ;
+    sachetGroup.position.x = state.posX;
     sachetGroup.position.y = state.posY + Math.sin(elapsed * 0.7) * state.floatAmp;
     sachetGroup.position.z = state.posZ;
     sachetGroup.scale.setScalar(state.scale);
 
+    canvas.style.opacity = state.opacity;
     renderer.render(scene, camera);
   }
   animate();
 
-  // ── Scroll: tilt + spin as user scrolls through hero ──
+  // ════════════════════════════════════════════
+  // ACT 1 — HERO: sachet sits right, tilts + spins
+  // ════════════════════════════════════════════
   gsap.timeline({
-    scrollTrigger: {
-      trigger: '#hero-section',
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 1.8,
-    }
+    scrollTrigger: { trigger: '#hero-section', start: 'top top', end: 'bottom bottom', scrub: 1.8 }
   })
-  .to(state, { rotX: -0.35, rotZ: 0.12, duration: 0.5, ease: 'none' }, 0)
-  .to(state, { rotY: '+=3.4', duration: 1, ease: 'none' }, 0)
-  // gently lift then settle back — sense of weight
-  .to(state, { posY: 0.15, duration: 0.4, ease: 'none' }, 0.15)
-  .to(state, { posY: 0, rotX: 0, rotZ: 0, duration: 0.45, ease: 'none' }, 0.55);
+  .to(state, { rotX: -0.3, rotZ: 0.1, duration: 0.5, ease: 'none' }, 0)
+  .to(state, { rotY: '+=2.6', duration: 1, ease: 'none' }, 0);
+
+  // Enable drag (+ pointer events) only while hero is the active section
+  ScrollTrigger.create({
+    trigger: '#hero-section', start: 'top top', end: 'bottom bottom',
+    onToggle: self => {
+      dragEnabled = self.isActive;
+      canvas.style.pointerEvents = self.isActive ? 'auto' : 'none';
+    }
+  });
+
+  // ════════════════════════════════════════════
+  // ACT 2 — FLY TO CENTRE as feature section pins
+  // The sachet glides from right → dead centre, rights itself, scales up.
+  // ════════════════════════════════════════════
+  gsap.timeline({
+    scrollTrigger: { trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4 }
+  })
+  .to(state, { posX: 0, posY: 0.1, rotX: 0, rotZ: 0, scale: 1.25, floatAmp: 0.02, ease: 'power2.inOut' }, 0)
+  .to(state, { rotY: '+=3.2', ease: 'none' }, 0); // continue spinning into place
+
+  // ════════════════════════════════════════════
+  // ACT 3 — BENEFITS FAN OUT around the centred sachet
+  // ════════════════════════════════════════════
+  gsap.timeline({
+    scrollTrigger: { trigger: '#feature-section', start: 'top top', end: '70% top', scrub: 1.2 }
+  })
+  .from('#feature-heading', { opacity: 0, y: -20, ease: 'power2.out' }, 0)
+  .to('#fc-1', { opacity: 1, y: 0, ease: 'power2.out' }, 0.15)
+  .to('#fc-2', { opacity: 1, y: 0, ease: 'power2.out' }, 0.30)
+  .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.45)
+  .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.60)
+  .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.78);
+  gsap.set(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'], { y: 24 });
+
+  // Slow idle spin while parked in the feature section, then fade canvas out
+  gsap.timeline({
+    scrollTrigger: { trigger: '#feature-section', start: '70% top', end: 'bottom top', scrub: 1.4 }
+  })
+  .to(state, { rotY: '+=1.4', ease: 'none' }, 0)
+  .to(state, { opacity: 0, scale: 0.9, ease: 'power2.in' }, 0.55) // fade out before marquee
+  .to(['#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta','#feature-heading'], { opacity: 0, ease: 'power2.in' }, 0.55);
 
   // ── Page-load entrance ──
   gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
   gsap.set('#hero-h1', { filter: 'blur(8px)' });
-  gsap.set(state, { posY: 0.6, scale: 0.88 });
+  gsap.set(state, { posY: 0.6, scale: 0.88, opacity: 0 });
 
   gsap.timeline({ delay: 0.12 })
-    // sachet drops in from above
-    .to(state, { posY: 0, scale: 1, duration: 0.9, ease: 'power3.out' })
-    // text reveals left-to-right sequence
+    .to(state, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0)
+    .to(state, { posY: 0, scale: 1, duration: 0.9, ease: 'power3.out' }, 0)
     .to('#hero-eyebrow', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.3)
     .to('#hero-h1',      { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.45)
     .to('#hero-sub',     { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.75)
