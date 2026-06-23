@@ -189,28 +189,27 @@ a { text-decoration: none; color: inherit; }
 }
 #feature-heading {
   position: absolute;
-  top: 12vh; left: 0; right: 0;
+  top: 11vh; left: 0; right: 0;
   text-align: center;
   z-index: 4;
   padding: 0 6vw;
   pointer-events: none;
 }
 #feature-heading .feat-h2 {
-  font-size: clamp(32px, 4.4vw, 56px);
+  font-size: clamp(26px, 3.2vw, 42px);
   font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
-  color: #1a1c1c; margin-top: 14px;
+  color: #1a1c1c; margin-top: 10px;
 }
 #feature-heading .feat-h2 em { font-style: normal; color: var(--purple-bright); }
 
 /* The "slot" — a product display frame the sachet docks into.
-   Height drives everything; width is locked to the sachet's silhouette ratio
-   (1.15 : 1.94 ≈ 0.593) so the product fits the box on all four sides.
-   JS reads the rendered height and computes the exact 3D dock scale to match. */
+   Height drives everything; width is locked to the sachet's silhouette ratio.
+   Sized + positioned to sit clear of the heading above and CTA below. */
 #feature-slot {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 57%; left: 50%;
   transform: translate(-50%, -50%);
-  height: clamp(320px, 56vh, 480px);
+  height: clamp(260px, 40vh, 380px);
   aspect-ratio: 0.593 / 1;
   z-index: 1;          /* behind the sachet canvas (z:2) */
   border-radius: 22px;
@@ -268,14 +267,14 @@ a { text-decoration: none; color: inherit; }
   position: absolute; width: 8px; height: 8px; border-radius: 50%;
   background: var(--purple-bright); box-shadow: 0 0 12px rgba(188,0,251,0.6);
 }
-/* Position: TL, TR aligned right text, BL, BR aligned right text */
-#fc-1 { top: 30vh; left: 6vw; text-align: left; }
+/* Position: TL / TR / BL / BR, clear of heading (top) and CTA (bottom) */
+#fc-1 { top: 32vh; left: 5vw; text-align: left; }
 #fc-1 .fc-dot { top: 6px; right: -16px; }
-#fc-2 { top: 30vh; right: 6vw; text-align: right; }
+#fc-2 { top: 32vh; right: 5vw; text-align: right; }
 #fc-2 .fc-dot { top: 6px; left: -16px; }
-#fc-3 { bottom: 16vh; left: 6vw; text-align: left; }
+#fc-3 { bottom: 20vh; left: 5vw; text-align: left; }
 #fc-3 .fc-dot { top: 6px; right: -16px; }
-#fc-4 { bottom: 16vh; right: 6vw; text-align: right; }
+#fc-4 { bottom: 20vh; right: 5vw; text-align: right; }
 #fc-4 .fc-dot { top: 6px; left: -16px; }
 
 #feature-cta {
@@ -1612,9 +1611,12 @@ function firePulse(){}
     // Idle drift / drag momentum only while still in the free (hero) pose
     if (free && !isDragging) { velX *= 0.92; heroSpinY += velX + 0.0012; }
 
-    // Blend rotation: free hero pose → locked frontal (0,0,0)
+    // Blend rotation: free hero pose → locked frontal, PLUS a clean 360° turn.
+    // dockTurn goes 0 → 2π across the dock; at d=1 it is 2π ≡ 0 (front face),
+    // so the sachet completes exactly one full spin and lands facing the user.
+    const dockTurn = d * Math.PI * 2;
     sachetGroup.rotation.x = state.heroRotX * (1 - d);
-    sachetGroup.rotation.y = heroSpinY * (1 - d);          // → 0 when docked
+    sachetGroup.rotation.y = heroSpinY * (1 - d) + dockTurn;   // → 2π (=front) when docked
     sachetGroup.rotation.z = state.heroRotZ * (1 - d);
 
     // Blend position: hero X → centred(0); float only in free pose
@@ -1651,17 +1653,26 @@ function firePulse(){}
   // sizing the sachet silhouette to ~80% of the slot's inner height.
   const SACHET_H = 1.99; // body 1.9 + top/bottom seals
   let DOCK_SCALE = 0.9;
-  function computeDockScale() {
+  let DOCK_Y = 0;        // world-Y so the sachet centres on the slot box
+  function computeDockTargets() {
     const slot = document.getElementById('feature-slot');
     if (!slot) return;
-    const slotPx = slot.getBoundingClientRect().height || (window.innerHeight * 0.56);
+    const r = slot.getBoundingClientRect();
     const fovRad = camera.fov * Math.PI / 180;
     const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2);
     const pxPerUnit = window.innerHeight / worldVisibleH;
+    const slotPx = r.height || (window.innerHeight * 0.44);
     DOCK_SCALE = (slotPx * 0.80) / (SACHET_H * pxPerUnit);
+    // Slot's pixel centre → world Y (camera at origin looks down -z; +Y is up)
+    const slotCentrePx = r.top + r.height / 2;          // px from top of viewport
+    const offsetPxFromCentre = (window.innerHeight / 2) - slotCentrePx; // +ve = above centre
+    DOCK_Y = offsetPxFromCentre / pxPerUnit;
   }
-  computeDockScale();
-  window.addEventListener('resize', () => { computeDockScale(); if (state.dock > 0.5) state.scale = DOCK_SCALE; });
+  computeDockTargets();
+  window.addEventListener('resize', () => {
+    computeDockTargets();
+    if (state.dock > 0.5) { state.scale = DOCK_SCALE; state.posY = DOCK_Y; }
+  });
 
   // ════════════════════════════════════════════
   // ACT 2 — DOCK: glide right → centre, blend dock 0→1 (locks frontal pose).
@@ -1671,10 +1682,10 @@ function firePulse(){}
   gsap.timeline({
     scrollTrigger: {
       trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4,
-      onRefresh: () => computeDockScale(),
+      onRefresh: () => computeDockTargets(),
     }
   })
-  .to(state, { dock: 1, posX: 0, posY: 0, scale: () => DOCK_SCALE, ease: 'power2.inOut' }, 0)
+  .to(state, { dock: 1, posX: 0, posY: () => DOCK_Y, scale: () => DOCK_SCALE, ease: 'power2.inOut' }, 0)
   .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.4);
 
   // ════════════════════════════════════════════
@@ -1691,17 +1702,26 @@ function firePulse(){}
   .to('#fc-3', { opacity: 1, y: 0, ease: 'power2.out' }, 0.46)
   .to('#fc-4', { opacity: 1, y: 0, ease: 'power2.out' }, 0.64)
   .to('#feature-cta', { opacity: 1, y: 0, ease: 'power2.out' }, 0.82);
-  // No idle-spin timeline — the product holds static & frontal through the hold.
+  // No idle-spin — the product stays docked & frontal for the ENTIRE time the
+  // feature section is on screen. It does NOT fade away mid-section.
 
-  // The canvas is position:fixed, so once we scroll PAST the section it would
-  // otherwise overlap the marquee. Fade the whole scene out only in the final
-  // stretch, after a long static hold. Scrub-driven → reverses on scroll-up.
-  gsap.timeline({
-    scrollTrigger: { trigger: '#feature-section', start: '92% top', end: 'bottom top', scrub: true }
-  })
-  .to(state, { opacity: 0, ease: 'power1.in' }, 0)
-  .to(['#feature-slot','#feature-heading','#fc-1','#fc-2','#fc-3','#fc-4','#feature-cta'],
-     { opacity: 0, ease: 'power1.in' }, 0);
+  // Visibility is a clean binary toggle, NOT a scrub: the whole scene is shown
+  // while the feature section occupies the viewport and is hidden only once the
+  // section has fully scrolled past (its bottom crosses the top of the screen).
+  // Reversing the scroll back into the section shows it again → rewind effect.
+  function setCanvas(on) {
+    gsap.to(state, { opacity: on ? 1 : 0, duration: 0.35, ease: 'power1.out' });
+    canvas.style.visibility = on ? 'visible' : 'hidden';
+  }
+  // Hide the shared canvas ONLY once we've scrolled fully BELOW the feature
+  // section. Everywhere from the hero through the feature section it stays
+  // visible (hero = flying, feature = docked). Scrolling back up re-shows it,
+  // and the scrub timelines rewind the dock automatically.
+  ScrollTrigger.create({
+    trigger: '#feature-section', start: 'bottom bottom', end: 'bottom top',
+    onLeave:     () => setCanvas(false), // passed the section going down → hide
+    onEnterBack: () => setCanvas(true),  // scrolled back up into it → show
+  });
 
   // ── Page-load entrance ──
   gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
