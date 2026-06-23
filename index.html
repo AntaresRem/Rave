@@ -1571,8 +1571,10 @@ function firePulse(){}
 
   // ── Internal animated targets (driven by GSAP + RAF) ──
   // posX: world-X position. Hero rest = right side (or centre on mobile).
+  // dock: 0 = free hero pose, 1 = locked frontal in the slot box.
   const state = {
-    rotX: 0, rotY: 0, rotZ: 0,
+    heroRotX: 0, heroRotZ: 0,   // hero tilt (blended out as dock→1)
+    dock: 0,
     posX: HERO_X, posY: 0, posZ: 0,
     scale: 1, floatAmp: 0.04,
     opacity: 0, // canvas fade
@@ -1582,7 +1584,7 @@ function firePulse(){}
   let isDragging = false, lastX = 0, velX = 0;
   let dragEnabled = false;
   function startDrag(x) { if (!dragEnabled) return; isDragging = true; lastX = x; velX = 0; canvas.classList.add('dragging'); }
-  function moveDrag(x)  { if (!isDragging) return; velX = (x - lastX) * 0.012; state.rotY += velX; lastX = x; }
+  function moveDrag(x)  { if (!isDragging) return; velX = (x - lastX) * 0.012; heroSpinY += velX; lastX = x; }
   function endDrag()    { isDragging = false; canvas.classList.remove('dragging'); }
   canvas.addEventListener('mousedown',  e => startDrag(e.clientX));
   canvas.addEventListener('touchstart', e => startDrag(e.touches[0].clientX), { passive:true });
@@ -1592,24 +1594,32 @@ function firePulse(){}
   window.addEventListener('touchend', endDrag);
 
   // ── Render loop ──
-  // `docked` freezes ALL motion (drift, float) so the product sits dead-still,
-  // facing the user, once it has slotted into the box. Good product UI.
-  let docked = false;
+  // ROTATION MODEL — one source of truth, no competing timelines:
+  //   heroSpinY : free idle/drag spin used ONLY in the hero (act 1)
+  //   state.dock: 0 = hero free pose · 1 = locked frontal pose in the box
+  // The render loop blends between the two by `dock`, so the dock ALWAYS
+  // lands at an exact front face (rotY 0) regardless of where the spin was.
+  let heroSpinY = 0;
   const clock = new THREE.Clock();
   let elapsed = 0;
   function animate() {
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
 
-    // Idle drift only while NOT docked and NOT being dragged
-    if (!isDragging && !docked) { velX *= 0.92; state.rotY += velX + 0.0012; }
+    const d = state.dock;            // 0..1 dock progress
+    const free = d < 0.999;
 
-    sachetGroup.rotation.x = state.rotX;
-    sachetGroup.rotation.y = state.rotY;
-    sachetGroup.rotation.z = state.rotZ;
+    // Idle drift / drag momentum only while still in the free (hero) pose
+    if (free && !isDragging) { velX *= 0.92; heroSpinY += velX + 0.0012; }
+
+    // Blend rotation: free hero pose → locked frontal (0,0,0)
+    sachetGroup.rotation.x = state.heroRotX * (1 - d);
+    sachetGroup.rotation.y = heroSpinY * (1 - d);          // → 0 when docked
+    sachetGroup.rotation.z = state.heroRotZ * (1 - d);
+
+    // Blend position: hero X → centred(0); float only in free pose
     sachetGroup.position.x = state.posX;
-    // float only when not docked
-    sachetGroup.position.y = state.posY + (docked ? 0 : Math.sin(elapsed * 0.7) * state.floatAmp);
+    sachetGroup.position.y = state.posY + (free ? Math.sin(elapsed * 0.7) * state.floatAmp : 0);
     sachetGroup.position.z = state.posZ;
     sachetGroup.scale.setScalar(state.scale);
 
@@ -1619,13 +1629,13 @@ function firePulse(){}
   animate();
 
   // ════════════════════════════════════════════
-  // ACT 1 — HERO: sachet sits right, tilts + spins
+  // ACT 1 — HERO: sachet sits right with a slight tilt; free idle spin (rotY)
+  // runs in the render loop. We only drive the TILT here, never rotY.
   // ════════════════════════════════════════════
   gsap.timeline({
     scrollTrigger: { trigger: '#hero-section', start: 'top top', end: 'bottom bottom', scrub: 1.8 }
   })
-  .to(state, { rotX: -0.3, rotZ: 0.1, duration: 0.5, ease: 'none' }, 0)
-  .to(state, { rotY: '+=2.6', duration: 1, ease: 'none' }, 0);
+  .to(state, { heroRotX: -0.3, heroRotZ: 0.1, ease: 'none' }, 0);
 
   // Enable drag (+ pointer events) only while hero is the active section
   ScrollTrigger.create({
@@ -1636,49 +1646,35 @@ function firePulse(){}
     }
   });
 
-  // ════════════════════════════════════════════
-  // ACT 2 — DOCK INTO THE SLOT as feature section pins
-  // Sachet glides right → centre, rights itself, and SNAPS to face the user
-  // dead-on (rotY = nearest full turn so the front label is square to camera).
-  // ════════════════════════════════════════════
-  // Compute the EXACT scale that makes the sachet fill the slot box.
+  // ── Compute the EXACT scale that makes the sachet fill the slot box ──
   // Projected px per world-unit at the dock plane (z=0) under the live camera,
-  // then size the sachet's silhouette height to ~82% of the slot's inner height.
+  // sizing the sachet silhouette to ~80% of the slot's inner height.
   const SACHET_H = 1.99; // body 1.9 + top/bottom seals
   let DOCK_SCALE = 0.9;
   function computeDockScale() {
     const slot = document.getElementById('feature-slot');
     if (!slot) return;
     const slotPx = slot.getBoundingClientRect().height || (window.innerHeight * 0.56);
-    const vpH = window.innerHeight;
     const fovRad = camera.fov * Math.PI / 180;
-    const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2); // world units across full viewport height
-    const pxPerUnit = vpH / worldVisibleH;
-    const targetPx = slotPx * 0.82; // leave breathing room for the tags
-    DOCK_SCALE = targetPx / (SACHET_H * pxPerUnit);
+    const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2);
+    const pxPerUnit = window.innerHeight / worldVisibleH;
+    DOCK_SCALE = (slotPx * 0.80) / (SACHET_H * pxPerUnit);
   }
   computeDockScale();
-  window.addEventListener('resize', () => { computeDockScale(); if (docked) state.scale = DOCK_SCALE; });
+  window.addEventListener('resize', () => { computeDockScale(); if (state.dock > 0.5) state.scale = DOCK_SCALE; });
 
-  // Stop the render-loop drift the moment docking begins (top bottom) so the
-  // scrub tween fully owns rotation — otherwise drift and tween fight each other.
-  ScrollTrigger.create({
-    trigger: '#feature-section', start: 'top bottom', end: 'bottom top',
-    onToggle: self => { docked = self.isActive; }
-  });
-
+  // ════════════════════════════════════════════
+  // ACT 2 — DOCK: glide right → centre, blend dock 0→1 (locks frontal pose).
+  // Because the render loop multiplies all hero rotation by (1-dock), at dock=1
+  // the sachet is guaranteed to face the user dead-on (front label / name).
+  // ════════════════════════════════════════════
   gsap.timeline({
     scrollTrigger: {
       trigger: '#feature-section', start: 'top bottom', end: 'top top', scrub: 1.4,
-      // On entering the dock window, recompute scale and snap the running rotation
-      // to the nearest whole turn so it lands at a clean front-facing 0.
-      onEnter:     () => { computeDockScale(); state._dockTurn = Math.round(state.rotY / (Math.PI * 2)) * Math.PI * 2; },
-      onEnterBack: () => { computeDockScale(); state._dockTurn = Math.round(state.rotY / (Math.PI * 2)) * Math.PI * 2; },
+      onRefresh: () => computeDockScale(),
     }
   })
-  .to(state, { posX: 0, posY: 0, rotX: 0, rotZ: 0, scale: () => DOCK_SCALE, floatAmp: 0, ease: 'power2.inOut' }, 0)
-  // settle rotY onto the nearest full turn → front face square to the user
-  .to(state, { rotY: () => (state._dockTurn ?? 0), ease: 'power2.inOut' }, 0)
+  .to(state, { dock: 1, posX: 0, posY: 0, scale: () => DOCK_SCALE, ease: 'power2.inOut' }, 0)
   .to('#feature-slot', { opacity: 1, ease: 'power2.out' }, 0.4);
 
   // ════════════════════════════════════════════
