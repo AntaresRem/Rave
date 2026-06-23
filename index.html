@@ -1667,9 +1667,12 @@ function firePulse(){}
     const worldVisibleH = 2 * camera.position.z * Math.tan(fovRad / 2);
     const pxPerUnit = vpH / worldVisibleH;
     const slotPx = slotHeightPx();
-    DOCK_SCALE = (slotPx * 0.80) / (SACHET_H * pxPerUnit);
+    // Fill 78% of the slot's inner height (leaves room for the tag/foot labels).
+    DOCK_SCALE = (slotPx * 0.78) / (SACHET_H * pxPerUnit);
     const slotCentrePx = SLOT_TOP_FRAC * vpH;                 // box centre from top
-    DOCK_Y = ((vpH / 2) - slotCentrePx) / pxPerUnit;          // +Y = up
+    // Centre the sachet on the box; nudge down slightly so the up-pointing tear
+    // notch doesn't make it look top-heavy → optically centred in the frame.
+    DOCK_Y = ((vpH / 2) - slotCentrePx) / pxPerUnit - 0.04 * DOCK_SCALE;
   }
   computeDockTargets();
   window.addEventListener('resize', () => {
@@ -1730,7 +1733,11 @@ function firePulse(){}
     }
   });
 
-  // ── 2) PIN + reveal callouts + hold ──
+  // ── 2) PIN: reveal callouts, HOLD, then EXIT by riding up with the box ──
+  // Instead of abruptly hiding, the final phase scrolls the sachet + box + text
+  // UP together so the whole feature gracefully leaves the top of the viewport,
+  // exactly as if it were normal page content. Canvas hides only once fully off.
+  const EXIT_START = 0.80;            // last 20% of the pin = exit glide
   ScrollTrigger.create({
     trigger: '#feature-section',
     start: 'top top',
@@ -1738,33 +1745,51 @@ function firePulse(){}
     pin: '#feature-sticky',
     pinSpacing: true,
     scrub: true,
-    onEnter:     () => { canvas.style.visibility = 'visible'; state.dock = 1; },
+    onEnter:     () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
     onEnterBack: () => { canvas.style.visibility = 'visible'; },
-    onLeave:     () => { canvas.style.visibility = 'hidden'; },   // fully below → hide
-    onLeaveBack: () => { canvas.style.visibility = 'visible'; },  // back toward hero
+    onLeaveBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
     onUpdate: self => {
       const p = self.progress;
-      // Keep the sachet pinned to its docked pose for the whole hold.
-      state.dock = 1; state.posX = 0; state.posY = DOCK_Y; state.scale = DOCK_SCALE;
-      state.dockSpin = Math.round(state.dockSpin / TAU) * TAU; // snap exact front
 
-      setLayer('#feature-slot', 1, 0, true);
-      setLayer('#feature-heading', smooth(mapp(p, 0.00, 0.10)), -18);
+      // Exit glide: 0 before EXIT_START, 0→1 after → everything rides up & out.
+      const ex = smooth(mapp(p, EXIT_START, 1.0));
+      // Lift the box + sachet UP in lock-step. Both use the SAME pixel distance
+      // (sachet converted px→world units) so they move together, never drifting.
+      const exitPx   = ex * (window.innerHeight * 1.05); // enough to clear the top
+      const pxPerUnit = window.innerHeight / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
+      const exitWorldY = exitPx / pxPerUnit;
+
+      // Sachet held docked, then lifted up & out during exit (stays in its box;
+      // the box rides up with it — it never just vanishes mid-screen).
+      state.dock = 1; state.posX = 0; state.posY = DOCK_Y + exitWorldY; state.scale = DOCK_SCALE;
+      state.dockSpin = Math.round(state.dockSpin / TAU) * TAU; // snap exact front
+      state.opacity = 1; // sachet stays fully opaque; it leaves by moving off-screen
+
+      // Box + callouts + heading + CTA reveal, hold, then lift away together.
+      const liftY = -exitPx;
+      setSlot(1, liftY);
+      setLayer('#feature-heading', smooth(mapp(p, 0.00, 0.10)), -18, false, liftY);
       const stops = [0.10, 0.20, 0.30, 0.40];
-      featLayers.forEach((sel, i) => setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.12)), 26));
-      setLayer('#feature-cta', smooth(mapp(p, 0.52, 0.64)), 20);
+      featLayers.forEach((sel, i) =>
+        setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.12)), 26, false, liftY));
+      setLayer('#feature-cta', smooth(mapp(p, 0.52, 0.64)), 20, false, liftY);
     }
   });
 
-  // Apply opacity + a small entrance translateY. The slot keeps its CSS
-  // centering transform untouched (opacityOnly), so it never jumps.
-  function setLayer(sel, t, fromY, opacityOnly) {
+  // Opacity + entrance translateY (+ shared exit liftY).
+  function setLayer(sel, t, fromY, opacityOnly, liftY = 0) {
     const el = document.querySelector(sel);
     if (!el) return;
     el.style.opacity = t;
-    if (!opacityOnly) {
-      el.style.transform = `translateY(${fromY * (1 - t)}px)`;
-    }
+    const entrance = opacityOnly ? 0 : fromY * (1 - t);
+    el.style.transform = `translateY(${entrance + liftY}px)`;
+  }
+  // The slot keeps its CSS centering translate(-50%,-50%); we only add the lift.
+  function setSlot(t, liftY = 0) {
+    const el = document.getElementById('feature-slot');
+    if (!el) return;
+    el.style.opacity = t;
+    el.style.transform = `translate(-50%, calc(-50% + ${liftY}px))`;
   }
 
   // ── Page-load entrance ──
