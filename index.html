@@ -729,6 +729,107 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero-h1 { font-size: clamp(38px, 12vw, 56px); }
   #hero-sticky { grid-template-rows: 1fr 38vh; }
 }
+
+/* ═══════════════════════════════════════════════
+   RAVIVE — DESIGN IMPROVEMENTS
+   ═══════════════════════════════════════════════ */
+
+/* ── STATS BAR — purple-tinted band ── */
+.stats-bar {
+  background: linear-gradient(180deg, rgba(150,0,201,0.03) 0%, rgba(150,0,201,0.06) 50%, rgba(150,0,201,0.03) 100%);
+  border-top: 1px solid rgba(150,0,201,0.10);
+  border-bottom: 1px solid rgba(150,0,201,0.10);
+  padding-top: 96px; padding-bottom: 96px;
+}
+.stat-val { font-size: 60px; letter-spacing: -0.05em; }
+.stat-cell { padding: 44px 32px; }
+
+/* ── DARK MECHANISM SECTION (festival-night) ── */
+.mechanism { background: #0d001f; }
+.mechanism::before {
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.04) 20%, rgba(255,255,255,0.04) 80%, transparent);
+}
+.mechanism .section-h2 { color: #fff; }
+.mechanism .section-sub { color: rgba(255,255,255,0.50); }
+.mechanism .section-label-text { color: #c44dff; }
+.mechanism .section-label-line { background: #bc00fb; }
+.pillars-grid { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
+.pillar { background: transparent; border: none; }
+.pillar:hover { background: rgba(188,0,251,0.10); }
+.pillar-tag { color: #c44dff; }
+.pillar-title { color: rgba(255,255,255,0.95); }
+.pillar-body { color: rgba(255,255,255,0.48); }
+.pillar-dose { color: rgba(188,0,251,0.65); border-color: rgba(255,255,255,0.07); }
+.pillar-icon { background: rgba(188,0,251,0.18); border-color: rgba(188,0,251,0.30); }
+.pillar:hover .pillar-icon { background: rgba(188,0,251,0.30); box-shadow: 0 0 24px rgba(188,0,251,0.40); }
+.pillar-icon span { color: #c44dff; }
+.pillar::after { background: linear-gradient(90deg, transparent, #bc00fb, transparent); }
+
+/* ── FLAVOUR SECTION ── */
+.flavours-section { background: #fafafa; }
+/* Sachet-shaped cans with foil brushed texture */
+.flavour-can { border-radius: 10px !important; position: relative; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
+.flavour-can::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255,255,255,0.06) 4px, rgba(255,255,255,0.06) 5px);
+}
+.flavour-name { font-size: 17px; font-weight: 800; }
+.flavour-card { border-radius: 20px; }
+
+/* ── DARK TESTIMONIALS ── */
+.testi-section { background: #0d001f; }
+.testi-section .section-h2 { color: #fff; }
+.testi-section .section-label-text { color: #c44dff; }
+.testi-section .section-label-line { background: #bc00fb; }
+.testi-rating-big { color: #fff; font-size: 68px; font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+.testi-stars { color: #bc00fb; font-size: 20px; margin: 6px 0 4px; }
+.testi-count { color: rgba(255,255,255,0.35); font-size: 12px; }
+.testi-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px; padding: 28px;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.testi-card:hover { background: rgba(188,0,251,0.09); border-color: rgba(188,0,251,0.28); transform: translateY(-4px); }
+.testi-card.featured { border-color: rgba(188,0,251,0.38); background: rgba(150,0,201,0.10); }
+.testi-stars-sm { color: #bc00fb; font-size: 13px; margin-bottom: 14px; letter-spacing: 2px; }
+.testi-quote { font-size: 15px; line-height: 1.68; color: rgba(255,255,255,0.70); font-style: italic; margin-bottom: 20px; }
+.testi-name { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.90); }
+.testi-venue { font-size: 10px; color: #c44dff; letter-spacing: 0.10em; text-transform: uppercase; margin-top: 2px; }
+.testi-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.verified-pill {
+  margin-left: auto;
+  background: rgba(188,0,251,0.16); border: 1px solid rgba(188,0,251,0.30);
+  color: #c44dff; font-size: 9px; font-weight: 700;
+  padding: 3px 10px; border-radius: 9999px; letter-spacing: 0.08em; white-space: nowrap;
+}
+
+/* ── FINAL CTA — deep dark close ── */
+.final-cta {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(150,0,201,0.38) 0%, transparent 65%),
+    #080012 !important;
+}
+.final-cta::before { background: linear-gradient(90deg, transparent, #bc00fb, transparent); }
+.final-cta-h { color: #fff !important; }
+.final-cta-sub { color: rgba(255,255,255,0.48) !important; }
+.trust-icon { color: rgba(255,255,255,0.38); }
+.trust-icon .material-symbols-outlined { color: rgba(188,0,251,0.65); }
+.final-cta .section-label-text { color: #c44dff; }
+.final-cta .section-label-line { background: #bc00fb; }
+
+/* ── FOOTER — dark base matching CTA ── */
+footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,0.06) !important; }
+.footer-logo { color: #fff !important; }
+.footer-desc { color: rgba(255,255,255,0.38) !important; }
+.footer-grid a { color: rgba(255,255,255,0.45) !important; transition: color 0.2s; }
+.footer-grid a:hover { color: #c44dff !important; }
+
+/* mobile adjustments */
+@media (max-width: 768px) {
+  .stat-val { font-size: 44px; }
+  .testi-rating-big { font-size: 52px; }
+}
 </style>
 </head>
 <body>
@@ -1043,7 +1144,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
     <div class="flavours-grid">
       <a href="product.html">
         <div class="flavour-card reveal reveal-delay-1">
-          <div class="flavour-can" style="background:linear-gradient(180deg,#2a004d 0%,#6600aa 100%);"></div>
+          <div class="flavour-can" style="background: linear-gradient(180deg,rgba(60,0,110,0.92) 0%,rgba(150,0,210,0.92) 100%) 0 30%/100% 38% no-repeat, linear-gradient(120deg,#1a1a1a 0%,#747474 25%,#d4d4d4 50%,#747474 75%,#1a1a1a 100%);"></div>
           <div class="flavour-name">Midnight Berry</div>
           <div class="flavour-notes">Blackberry · Açaí</div>
           <div class="flavour-price">From £5.99</div>
@@ -1052,7 +1153,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
       <a href="product.html">
         <div class="flavour-card featured reveal reveal-delay-2">
           <div class="flavour-badge">MOST POPULAR</div>
-          <div class="flavour-can" style="background:linear-gradient(180deg,#ff6600 0%,#ffcc00 100%);margin-top:20px;"></div>
+          <div class="flavour-can" style="background: linear-gradient(180deg,rgba(220,90,0,0.92) 0%,rgba(240,190,0,0.92) 100%) 0 30%/100% 38% no-repeat, linear-gradient(120deg,#1a1a1a 0%,#747474 25%,#d4d4d4 50%,#747474 75%,#1a1a1a 100%);margin-top:20px;"></div>
           <div class="flavour-name">Sunrise Citrus</div>
           <div class="flavour-notes">Mango · Passionfruit</div>
           <div class="flavour-price">From £5.99</div>
@@ -1060,7 +1161,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
       </a>
       <a href="product.html">
         <div class="flavour-card reveal reveal-delay-3">
-          <div class="flavour-can" style="background:linear-gradient(180deg,#002b1a 0%,#00aa66 100%);"></div>
+          <div class="flavour-can" style="background: linear-gradient(180deg,rgba(0,80,42,0.92) 0%,rgba(0,160,80,0.92) 100%) 0 30%/100% 38% no-repeat, linear-gradient(120deg,#1a1a1a 0%,#747474 25%,#d4d4d4 50%,#747474 75%,#1a1a1a 100%);"></div>
           <div class="flavour-name">Botanical Mint</div>
           <div class="flavour-notes">Lemon · Elderflower</div>
           <div class="flavour-price">From £5.99</div>
@@ -1222,7 +1323,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 <section class="final-cta" style="position:relative;z-index:1;">
   <div class="reveal">
     <div class="section-label" style="justify-content:center;margin-bottom:24px;"><div class="section-label-line"></div><span class="section-label-text">Start recovering properly</span><div class="section-label-line"></div></div>
-    <h2 class="final-cta-h">Your next festival<br/>is <span style="color:var(--purple-text);">coming.</span></h2>
+    <h2 class="final-cta-h">Your next festival<br/>is <span style="color:#c44dff;">coming.</span></h2>
     <p class="final-cta-sub">Don't go in unprepared. Get doctor-formulated recovery sachets delivered before your next event.</p>
     <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
       <a href="product.html" class="btn-primary" style="font-size:14px;padding:16px 44px;">SHOP NOW</a>
@@ -1268,7 +1369,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
       <div>
         <div class="footer-col-title">Contact</div>
         <div class="footer-links">
-          <a href="mailto:hello@ravive.co">hello@ravive.co</a>
+          <a href="/cdn-cgi/l/email-protection#bdd5d8d1d1d2fdcfdccbd4cbd893ded2"><span class="__cf_email__" data-cfemail="345c5158585b744655425d42511a575b">[email&#160;protected]</span></a>
           <span style="color:var(--text-dim);">London, UK</span>
         </div>
       </div>
@@ -1280,7 +1381,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── Background particle canvas ──
 (function(){
   const canvas = document.getElementById('bg-canvas');
@@ -1441,114 +1542,119 @@ function firePulse(){}
     const cx = tc.getContext('2d');
     const W = 512, H = 820;
 
-    // Foil base — metallic dark purple with horizontal shimmer bands
+    // ── ALUMINIUM FOIL BASE — horizontal metallic gradient ──
     const bg = cx.createLinearGradient(0, 0, W, 0);
-    bg.addColorStop(0,    '#0e001f');
-    bg.addColorStop(0.12, '#1e0038');
-    bg.addColorStop(0.30, '#2a0052');
-    bg.addColorStop(0.45, '#35006a');
-    bg.addColorStop(0.55, '#35006a');
-    bg.addColorStop(0.70, '#2a0052');
-    bg.addColorStop(0.88, '#1e0038');
-    bg.addColorStop(1,    '#0e001f');
+    bg.addColorStop(0,    '#161616');
+    bg.addColorStop(0.08, '#484848');
+    bg.addColorStop(0.22, '#909090');
+    bg.addColorStop(0.38, '#cccccc');
+    bg.addColorStop(0.50, '#c6c6c6');
+    bg.addColorStop(0.62, '#c4c4c4');
+    bg.addColorStop(0.78, '#828282');
+    bg.addColorStop(0.92, '#404040');
+    bg.addColorStop(1,    '#161616');
     cx.fillStyle = bg; cx.fillRect(0, 0, W, H);
 
-    // Foil specular — narrow vertical highlight strip (like real metallic sachet)
-    const fspec = cx.createLinearGradient(140, 0, 240, 0);
-    fspec.addColorStop(0,    'rgba(255,255,255,0)');
-    fspec.addColorStop(0.35, 'rgba(255,255,255,0.13)');
-    fspec.addColorStop(0.5,  'rgba(255,255,255,0.22)');
-    fspec.addColorStop(0.65, 'rgba(255,255,255,0.13)');
-    fspec.addColorStop(1,    'rgba(255,255,255,0)');
-    cx.fillStyle = fspec; cx.fillRect(0, 0, W, H);
+    // Vertical vignette — seal zones darker, belly brightest
+    const vg = cx.createLinearGradient(0, 0, 0, H);
+    vg.addColorStop(0,    'rgba(0,0,0,0.44)');
+    vg.addColorStop(0.10, 'rgba(0,0,0,0.06)');
+    vg.addColorStop(0.50, 'rgba(255,255,255,0.05)');
+    vg.addColorStop(0.90, 'rgba(0,0,0,0.06)');
+    vg.addColorStop(1,    'rgba(0,0,0,0.40)');
+    cx.fillStyle = vg; cx.fillRect(0, 0, W, H);
 
-    // Top sealed zone (above logo area)
-    cx.fillStyle = 'rgba(0,0,0,0.45)';
-    cx.fillRect(0, 0, W, 90);
-    // Top seal ridge line
-    cx.fillStyle = '#bc00fb';
-    cx.fillRect(0, 86, W, 5);
+    // Micro brushed-metal lines (simulate foil grain)
+    cx.globalAlpha = 0.055;
+    for (let by = 0; by < H; by += 4) { cx.fillStyle = by % 8 === 0 ? '#fff' : '#000'; cx.fillRect(0, by, W, 1); }
+    cx.globalAlpha = 1;
 
-    // "TEAR HERE" notch area — right side top
-    cx.strokeStyle = 'rgba(255,255,255,0.28)';
-    cx.lineWidth = 1;
+    // Off-centre specular ridge (the realistic foil catch light)
+    const spec = cx.createLinearGradient(100, 0, 280, 0);
+    spec.addColorStop(0,    'rgba(255,255,255,0)');
+    spec.addColorStop(0.42, 'rgba(255,255,255,0.10)');
+    spec.addColorStop(0.50, 'rgba(255,255,255,0.14)');
+    spec.addColorStop(0.58, 'rgba(255,255,255,0.10)');
+    spec.addColorStop(1,    'rgba(255,255,255,0)');
+    cx.fillStyle = spec; cx.fillRect(0, 0, W, H);
+
+    // ── TOP SEAL ZONE ──
+    cx.fillStyle = 'rgba(0,0,0,0.52)'; cx.fillRect(0, 0, W, 90);
+    cx.strokeStyle = 'rgba(255,255,255,0.12)'; cx.lineWidth = 1;
+    for (let sy = 10; sy < 84; sy += 8) { cx.beginPath(); cx.moveTo(0, sy); cx.lineTo(W, sy); cx.stroke(); }
+    cx.strokeStyle = 'rgba(200,200,200,0.55)'; cx.lineWidth = 2;
+    cx.beginPath(); cx.moveTo(0, 88); cx.lineTo(W, 88); cx.stroke();
+
+    // TEAR HERE
     cx.setLineDash([5, 4]);
-    cx.beginPath(); cx.moveTo(W - 60, 8); cx.lineTo(W - 60, 82);
-    cx.stroke(); cx.setLineDash([]);
-    cx.font = '600 9px Arial'; cx.fillStyle = 'rgba(255,255,255,0.38)';
-    cx.textAlign = 'center'; cx.fillText('TEAR', W - 30, 32); cx.fillText('HERE', W - 30, 44);
-    // small arrow
-    cx.beginPath(); cx.moveTo(W-30,50); cx.lineTo(W-30,66);
-    cx.moveTo(W-35,61); cx.lineTo(W-30,68); cx.lineTo(W-25,61);
-    cx.strokeStyle='rgba(255,255,255,0.3)'; cx.lineWidth=1.2; cx.stroke();
+    cx.strokeStyle = 'rgba(255,255,255,0.30)'; cx.lineWidth = 1;
+    cx.beginPath(); cx.moveTo(W - 58, 8); cx.lineTo(W - 58, 82); cx.stroke();
+    cx.setLineDash([]);
+    cx.font = '600 8px Arial'; cx.fillStyle = 'rgba(255,255,255,0.36)';
+    cx.textAlign = 'center'; cx.fillText('TEAR', W - 29, 30); cx.fillText('HERE', W - 29, 42);
 
-    // Dose/weight at top left
-    cx.font = '700 13px Arial'; cx.fillStyle = 'rgba(255,255,255,0.42)';
-    cx.textAlign = 'left'; cx.fillText('6g', 18, 38);
-    cx.font = '600 10px Arial'; cx.fillStyle = 'rgba(255,255,255,0.28)';
-    cx.fillText('NET WT', 18, 52);
+    // Weight — top left
+    cx.font = '700 13px Arial'; cx.fillStyle = 'rgba(255,255,255,0.52)';
+    cx.textAlign = 'left'; cx.fillText('6g', 16, 38);
+    cx.font = '500 9px Arial'; cx.fillStyle = 'rgba(255,255,255,0.32)';
+    cx.fillText('NET WT', 16, 52);
 
-    // ── LOGO AREA ──
-    // Purple circle behind R initial
-    cx.beginPath(); cx.arc(W/2, 200, 46, 0, Math.PI*2);
-    const circGrad = cx.createRadialGradient(W/2, 200, 8, W/2, 200, 46);
-    circGrad.addColorStop(0, 'rgba(188,0,251,0.85)');
-    circGrad.addColorStop(1, 'rgba(100,0,160,0.6)');
-    cx.fillStyle = circGrad; cx.fill();
-    // "R" letter
-    cx.font = '900 52px Arial Black'; cx.fillStyle = '#fff';
-    cx.textAlign = 'center'; cx.fillText('R', W/2+2, 218);
+    // ── LOGO ZONE ──
+    const halo = cx.createRadialGradient(W/2, 196, 0, W/2, 196, 88);
+    halo.addColorStop(0, 'rgba(170,0,230,0.22)'); halo.addColorStop(1, 'rgba(170,0,230,0)');
+    cx.fillStyle = halo; cx.fillRect(0, 108, W, 176);
+    cx.beginPath(); cx.arc(W/2, 196, 44, 0, Math.PI*2);
+    const cg = cx.createRadialGradient(W/2-10, 186, 4, W/2, 196, 44);
+    cg.addColorStop(0, '#d040ff'); cg.addColorStop(1, '#6400a0');
+    cx.fillStyle = cg; cx.fill();
+    cx.strokeStyle = 'rgba(220,220,220,0.40)'; cx.lineWidth = 1.5;
+    cx.beginPath(); cx.arc(W/2, 196, 44, 0, Math.PI*2); cx.stroke();
+    cx.font = '900 50px Arial Black'; cx.fillStyle = '#fff';
+    cx.textAlign = 'center'; cx.fillText('R', W/2+2, 214);
 
-    // Brand name
-    cx.font = '900 54px Arial Black, sans-serif';
-    cx.fillStyle = '#ffffff';
-    cx.shadowColor = 'rgba(188,0,251,0.7)'; cx.shadowBlur = 18;
-    cx.textAlign = 'center'; cx.fillText('RAVIVE', W/2, 306);
+    // RAVIVE wordmark — dark on silver reads cleanly
+    cx.font = '900 56px Arial Black, sans-serif';
+    cx.fillStyle = '#1a002e';
+    cx.shadowColor = 'rgba(110,0,180,0.28)'; cx.shadowBlur = 7;
+    cx.textAlign = 'center'; cx.fillText('RAVIVE', W/2, 302);
     cx.shadowBlur = 0;
+    cx.font = '400 14px Arial'; cx.fillStyle = 'rgba(30,30,30,0.62)';
+    cx.fillText('Recovery Electrolytes', W/2, 326);
+    cx.strokeStyle = 'rgba(150,0,200,0.30)'; cx.lineWidth = 1;
+    cx.beginPath(); cx.moveTo(56, 346); cx.lineTo(W-56, 346); cx.stroke();
 
-    // Tagline
-    cx.font = '400 15px Arial'; cx.fillStyle = 'rgba(255,255,255,0.46)';
-    cx.fillText('Recovery Electrolytes', W/2, 332);
+    // ── FLAVOUR BAND — the one vivid brand colour ──
+    const fb = cx.createLinearGradient(0, 363, 0, 410);
+    fb.addColorStop(0, '#9600c9'); fb.addColorStop(1, '#6800a0');
+    cx.fillStyle = fb; cx.fillRect(0, 363, W, 46);
+    cx.fillStyle = 'rgba(255,255,255,0.08)'; cx.fillRect(0, 363, W, 18);
+    cx.font = '800 15px Arial'; cx.fillStyle = '#fff';
+    cx.textAlign = 'center'; cx.fillText('MIDNIGHT BERRY', W/2, 392);
 
-    // Thin divider
-    cx.strokeStyle = 'rgba(188,0,251,0.38)'; cx.lineWidth = 1;
-    cx.beginPath(); cx.moveTo(60, 352); cx.lineTo(W-60, 352); cx.stroke();
-
-    // Flavour colour band
-    cx.fillStyle = '#9600c9';
-    cx.fillRect(0, 368, W, 44);
-    cx.font = '800 16px Arial'; cx.fillStyle = '#fff';
-    cx.textAlign = 'center'; cx.fillText('MIDNIGHT BERRY', W/2, 396);
-
-    // Key benefits — compact list
-    const benefits = [
-      ['⬡', '500mg Sodium'],
-      ['⬡', '380mg Potassium'],
-      ['⬡', 'Magnesium Glycinate'],
-      ['⬡', 'Zero Sugar · 15 kcal'],
-    ];
+    // ── INGREDIENT LIST on foil ──
+    const facts = ['500mg Sodium','380mg Potassium','Magnesium Glycinate','Zero Sugar · 15 kcal'];
     cx.textAlign = 'left';
-    benefits.forEach(([dot, text], i) => {
-      const y = 452 + i * 38;
-      cx.font = '600 13px Arial'; cx.fillStyle = 'rgba(188,0,251,0.75)';
-      cx.fillText('•', 52, y);
-      cx.font = '500 14px Arial'; cx.fillStyle = 'rgba(255,255,255,0.65)';
-      cx.fillText(text, 70, y);
+    facts.forEach((t, i) => {
+      const fy = 450 + i * 40;
+      if (i > 0) { cx.strokeStyle='rgba(0,0,0,0.10)'; cx.lineWidth=1; cx.beginPath(); cx.moveTo(44,fy-14); cx.lineTo(W-44,fy-14); cx.stroke(); }
+      cx.font='700 12px Arial'; cx.fillStyle='rgba(130,0,190,0.82)'; cx.fillText('▸', 48, fy);
+      cx.font='500 13px Arial'; cx.fillStyle='rgba(22,22,22,0.72)'; cx.fillText(t, 66, fy);
     });
 
-    // Horizontal rule
-    cx.strokeStyle = 'rgba(255,255,255,0.1)'; cx.lineWidth = 1;
-    cx.beginPath(); cx.moveTo(40, 614); cx.lineTo(W-40, 614); cx.stroke();
-
     // Bottom info
-    cx.font = '600 10px Arial'; cx.fillStyle = 'rgba(255,255,255,0.28)';
-    cx.textAlign = 'center';
-    cx.fillText('DOCTOR-FORMULATED  ·  CAMBRIDGE', W/2, 640);
-    cx.fillText('ravive.co  ·  hello@ravive.co', W/2, 658);
+    cx.strokeStyle='rgba(0,0,0,0.10)'; cx.lineWidth=1;
+    cx.beginPath(); cx.moveTo(36,614); cx.lineTo(W-36,614); cx.stroke();
+    cx.font='600 9px Arial'; cx.fillStyle='rgba(30,30,30,0.50)';
+    cx.textAlign='center';
+    cx.fillText('DOCTOR-FORMULATED  ·  CAMBRIDGE', W/2, 636);
+    cx.fillText('ravive.co  ·  hello@ravive.co', W/2, 652);
 
-    // Bottom sealed zone
-    cx.fillStyle = 'rgba(0,0,0,0.4)'; cx.fillRect(0, H - 80, W, 80);
-    cx.fillStyle = '#9600c9'; cx.fillRect(0, H - 76, W, 4);
+    // ── BOTTOM SEAL ZONE ──
+    cx.fillStyle='rgba(0,0,0,0.52)'; cx.fillRect(0, H-84, W, 84);
+    cx.strokeStyle='rgba(255,255,255,0.12)'; cx.lineWidth=1;
+    for (let by2=H-78; by2<H-10; by2+=8) { cx.beginPath(); cx.moveTo(0,by2); cx.lineTo(W,by2); cx.stroke(); }
+    cx.strokeStyle='rgba(200,200,200,0.50)'; cx.lineWidth=2;
+    cx.beginPath(); cx.moveTo(0,H-84); cx.lineTo(W,H-84); cx.stroke();
 
     return new THREE.CanvasTexture(tc);
   }
@@ -1558,77 +1664,126 @@ function firePulse(){}
     const tc = document.createElement('canvas');
     tc.width = 512; tc.height = 820;
     const cx = tc.getContext('2d');
-    cx.fillStyle = '#180030'; cx.fillRect(0, 0, 512, 820);
-    // subtle shimmer
-    const sh = cx.createLinearGradient(150, 0, 200, 0);
-    sh.addColorStop(0,'rgba(255,255,255,0)');
-    sh.addColorStop(0.5,'rgba(255,255,255,0.06)');
-    sh.addColorStop(1,'rgba(255,255,255,0)');
-    cx.fillStyle = sh; cx.fillRect(0,0,512,820);
-    cx.fillStyle = '#9600c9'; cx.fillRect(0, 86, 512, 4);
-    cx.fillRect(0, 816, 512, 4);
-    cx.font = '700 13px Arial'; cx.fillStyle = 'rgba(255,255,255,0.32)';
-    cx.textAlign = 'center'; cx.fillText('NUTRITION FACTS', 256, 180);
-    const nrows = [['Serving', '1 sachet (6g)'],['Calories','15'],['Sodium','500mg 22%DV'],['Potassium','380mg 8%DV'],['Magnesium','60mg 14%DV'],['Total Carbs','3g 1%DV'],['Sugars','0g'],['Protein','0g']];
-    nrows.forEach(([l,v],i) => {
-      const y = 220 + i * 38;
-      cx.strokeStyle='rgba(255,255,255,0.08)'; cx.lineWidth=1;
-      if(i>0){cx.beginPath(); cx.moveTo(40,y-14); cx.lineTo(472,y-14); cx.stroke();}
-      cx.font='500 13px Arial'; cx.fillStyle='rgba(255,255,255,0.42)'; cx.textAlign='left'; cx.fillText(l, 44, y);
-      cx.textAlign='right'; cx.fillText(v, 468, y);
+    // Silver foil back
+    const bgb = cx.createLinearGradient(0, 0, 512, 0);
+    bgb.addColorStop(0,'#161616'); bgb.addColorStop(0.2,'#686868');
+    bgb.addColorStop(0.5,'#c8c8c8'); bgb.addColorStop(0.8,'#686868'); bgb.addColorStop(1,'#161616');
+    cx.fillStyle=bgb; cx.fillRect(0,0,512,820);
+    const vgb=cx.createLinearGradient(0,0,0,820);
+    vgb.addColorStop(0,'rgba(0,0,0,0.50)'); vgb.addColorStop(0.12,'rgba(0,0,0,0.04)');
+    vgb.addColorStop(0.88,'rgba(0,0,0,0.04)'); vgb.addColorStop(1,'rgba(0,0,0,0.50)');
+    cx.fillStyle=vgb; cx.fillRect(0,0,512,820);
+    cx.globalAlpha=0.05;
+    for(let bb=0;bb<820;bb+=4){cx.fillStyle=bb%8===0?'#fff':'#000';cx.fillRect(0,bb,512,1);}
+    cx.globalAlpha=1;
+    cx.fillStyle='rgba(0,0,0,0.50)'; cx.fillRect(0,0,512,90);
+    cx.fillStyle='rgba(0,0,0,0.50)'; cx.fillRect(0,730,512,90);
+    cx.strokeStyle='rgba(180,180,180,0.45)'; cx.lineWidth=2;
+    cx.beginPath(); cx.moveTo(0,88); cx.lineTo(512,88); cx.stroke();
+    cx.beginPath(); cx.moveTo(0,732); cx.lineTo(512,732); cx.stroke();
+    cx.font='700 14px Arial'; cx.fillStyle='rgba(20,20,20,0.62)';
+    cx.textAlign='center'; cx.fillText('NUTRITION FACTS',256,178);
+    cx.strokeStyle='rgba(0,0,0,0.20)'; cx.lineWidth=2;
+    cx.beginPath(); cx.moveTo(40,188); cx.lineTo(472,188); cx.stroke();
+    const nrows=[['Serving','1 sachet (6g)'],['Calories','15'],['Sodium','500mg 22%DV'],['Potassium','380mg 8%DV'],['Magnesium','60mg 14%DV'],['Total Carbs','3g 1%DV'],['Sugars','0g'],['Protein','0g']];
+    nrows.forEach(([l,v],i)=>{
+      const ny=222+i*38;
+      cx.strokeStyle='rgba(0,0,0,0.10)'; cx.lineWidth=1;
+      if(i>0){cx.beginPath();cx.moveTo(40,ny-14);cx.lineTo(472,ny-14);cx.stroke();}
+      cx.font='500 13px Arial'; cx.fillStyle='rgba(20,20,20,0.62)'; cx.textAlign='left'; cx.fillText(l,44,ny);
+      cx.textAlign='right'; cx.fillText(v,468,ny);
     });
-    cx.font='600 10px Arial'; cx.fillStyle='rgba(255,255,255,0.2)';
-    cx.textAlign='center'; cx.fillText('RAVIVE RECOVERY ELECTROLYTES  ·  ravive.co', 256, 540);
+    cx.font='600 10px Arial'; cx.fillStyle='rgba(20,20,20,0.42)';
+    cx.textAlign='center'; cx.fillText('RAVIVE RECOVERY ELECTROLYTES  ·  ravive.co',256,540);
     return new THREE.CanvasTexture(tc);
   }
 
-  // ── Sachet geometry — realistic flat foil sachet proportions ──
-  // Real single-serve sachet: ~80mm wide × 130mm tall × 5mm thick
-  // Three.js units: 1.15 W × 1.9 H × 0.055 D
+  // ── Procedural foil micro-crinkle (bump map) — gives the metallic surface
+  // gentle undulating sheen so light reads as a soft gradient across the belly
+  // instead of a single flat facet. This is what reads as "real foil". ──
+  function makeFoilBump() {
+    const c = document.createElement('canvas'); c.width = c.height = 256;
+    const x = c.getContext('2d');
+    x.fillStyle = '#808080'; x.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 150; i++) {
+      const gx = Math.random() * 256, gy = Math.random() * 256;
+      const r = 10 + Math.random() * 48;
+      const light = Math.random() > 0.5, a = 0.05 + Math.random() * 0.10;
+      const g = x.createRadialGradient(gx, gy, 0, gx, gy, r);
+      g.addColorStop(0, light ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`);
+      g.addColorStop(1, 'rgba(128,128,128,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(gx, gy, r, 0, Math.PI * 2); x.fill();
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 3);
+    return t;
+  }
+  const foilBump = makeFoilBump();
+
+  // ── Sachet geometry — realistic PILLOW foil sachet ──
+  // A real single-serve electrolyte sachet is stuffed with powder: the belly
+  // puffs out and tapers to thin, flat, heat-crimped borders on all four sides.
+  // We start from a finely-subdivided box and displace the front/back faces
+  // outward by a smooth "belly" profile (flat across the sealed border, rising
+  // to a broad plateau in the middle), then re-compute normals so the curved
+  // surface shades smoothly.
   const sachetGroup = new THREE.Group();
 
-  const SW = 1.15, SH = 1.9, SD = 0.055;
+  const SW = 1.15, SH = 1.9, SD = 0.05;
+  const PUFF = 0.14;        // half-thickness added at the belly
+  const BORDER_X = 0.10;    // flat sealed border (fraction of half-width)
+  const BORDER_Y = 0.085;   // flat sealed border (fraction of half-height)
 
-  const bodyGeo = new THREE.BoxGeometry(SW, SH, SD, 1, 1, 1);
-  const frontMat = new THREE.MeshPhongMaterial({ map: makeFrontTex(), shininess: 220, specular: new THREE.Color(0x9944cc) });
-  const backMat  = new THREE.MeshPhongMaterial({ map: makeBackTex(),  shininess: 120, specular: new THREE.Color(0x662299) });
-  const edgeMat  = new THREE.MeshPhongMaterial({ color: 0x1a0030, shininess: 60 });
+  const smoothstep = t => (t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t));
+  function bellyProf(a, border) {
+    a = Math.abs(a);
+    if (a >= 1 - border) return 0;
+    const t = (1 - border - a) / (1 - border);   // 0 at seal edge → 1 at centre
+    return smoothstep(Math.min(1, t / 0.42));     // quick ramp, then plateau
+  }
+
+  const bodyGeo = new THREE.BoxGeometry(SW, SH, SD, 48, 82, 1);
+  (function puffBody() {
+    const p = bodyGeo.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const vx = p.getX(i), vy = p.getY(i), vz = p.getZ(i);
+      const f = bellyProf(vx / (SW / 2), BORDER_X) * bellyProf(vy / (SH / 2), BORDER_Y);
+      const dir = vz > 0 ? 1 : vz < 0 ? -1 : 0;
+      p.setZ(i, vz + dir * f * PUFF);
+    }
+    bodyGeo.computeVertexNormals();
+  })();
+
+  const frontMat = new THREE.MeshPhongMaterial({ map: makeFrontTex(), shininess: 80, specular: new THREE.Color(0xb0b0b8), bumpMap: foilBump, bumpScale: 0.008 });
+  const backMat  = new THREE.MeshPhongMaterial({ map: makeBackTex(),  shininess: 170, specular: new THREE.Color(0xc0c0c8), bumpMap: foilBump, bumpScale: 0.010 });
+  const edgeMat  = new THREE.MeshPhongMaterial({ color: 0x1e1e20, shininess: 140, specular: new THREE.Color(0xa8a8a8), bumpMap: foilBump, bumpScale: 0.022 });
   // face order: +x, -x, +y, -y, +z(front), -z(back)
   const body = new THREE.Mesh(bodyGeo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
   sachetGroup.add(body);
 
-  const sealMat = new THREE.MeshPhongMaterial({ color: 0x6600aa, shininess: 160, specular: new THREE.Color(0xcc88ff) });
+  // ── Flat dark-metal heat seals — clean flush strips on all four edges ──
+  const sealMat = new THREE.MeshPhongMaterial({ color: 0x181818, shininess: 120, specular: new THREE.Color(0xb0b0b0), bumpMap: foilBump, bumpScale: 0.026 });
+  const topSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.076, SD + 0.005), sealMat);
+  topSeal.position.y = SH / 2 - 0.038; sachetGroup.add(topSeal);
+  const botSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.076, SD + 0.005), sealMat);
+  botSeal.position.y = -(SH / 2 - 0.038); sachetGroup.add(botSeal);
+  const lSeal = new THREE.Mesh(new THREE.BoxGeometry(0.044, SH, SD + 0.005), sealMat);
+  lSeal.position.x = -(SW / 2 - 0.022); sachetGroup.add(lSeal);
+  const rSeal = new THREE.Mesh(new THREE.BoxGeometry(0.044, SH, SD + 0.005), sealMat);
+  rSeal.position.x = (SW / 2 - 0.022); sachetGroup.add(rSeal);
 
-  // Top heat seal — thin embossed ridge
-  const topSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.09, SD + 0.025), sealMat);
-  topSeal.position.y = SH / 2 - 0.02;
-  sachetGroup.add(topSeal);
-
-  // Bottom seal
-  const botSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.09, SD + 0.025), sealMat);
-  botSeal.position.y = -(SH / 2 - 0.02);
-  sachetGroup.add(botSeal);
-
-  // Side seals
-  const sideSealGeo = new THREE.BoxGeometry(0.048, SH, SD + 0.022);
-  [-SW/2 + 0.012, SW/2 - 0.012].forEach(x => {
-    const s = new THREE.Mesh(sideSealGeo, sealMat);
-    s.position.x = x;
-    sachetGroup.add(s);
-  });
-
-  // Tear notch — tiny triangle cutout stub on top right
-  const notch = new THREE.Mesh(new THREE.ConeGeometry(0.028, 0.06, 3), new THREE.MeshPhongMaterial({ color: 0xbc00fb }));
+  // Tear notch — small V-notch on top-right seal edge.
+  const notch = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.07, 3), new THREE.MeshPhongMaterial({ color: 0xbc00fb, shininess: 120 }));
   notch.rotation.z = Math.PI;
-  notch.position.set(SW/2 - 0.18, SH/2 + 0.04, SD/2 + 0.01);
+  notch.position.set(SW / 2 - 0.2, SH / 2 + 0.03, 0);
   sachetGroup.add(notch);
 
   scene.add(sachetGroup);
 
   // ── Lighting — studio product shot feel ──
-  scene.add(new THREE.AmbientLight(0xccbbee, 0.55));
+  scene.add(new THREE.AmbientLight(0xd8d8e8, 0.55));
   // Key: upper-right, white, sharp — main foil highlight
-  const key = new THREE.DirectionalLight(0xffffff, 3.2);
+  const key = new THREE.DirectionalLight(0xfff5ee, 1.4);
   key.position.set(2, 5, 4); scene.add(key);
   // Fill: left-side, cool purple
   const fill = new THREE.DirectionalLight(0xbb77ff, 0.9);
