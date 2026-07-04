@@ -17,6 +17,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button, input, select, textarea { font-family: inherit; }
+::selection { background: rgba(150,0,201,0.22); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--purple-bright); outline-offset: 3px; border-radius: 4px; }
 .mono { font-family: 'Geist Mono', monospace; }
 a { text-decoration: none; color: inherit; }
 .btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
@@ -26,7 +29,7 @@ a { text-decoration: none; color: inherit; }
 .section-label { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .section-label-line { width: 24px; height: 1px; background: var(--purple); }
 .section-label-text { font-size: 11px; letter-spacing: 0.16em; color: var(--purple-text); text-transform: uppercase; }
-.section-h2 { font-size: 48px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
+.section-h2 { font-size: clamp(32px, 4.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; text-wrap: balance; }
 .section-h2 em { font-style: italic; color: var(--purple-text); }
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -35,7 +38,7 @@ a { text-decoration: none; color: inherit; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 /* Nav */
 .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
-.nav.scrolled { background: rgba(248,248,248,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav.scrolled { background: rgba(248,248,248,0.92); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
 .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #1a1c1c; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
@@ -43,7 +46,8 @@ a { text-decoration: none; color: inherit; }
 .nav-link.active { color: var(--purple-text); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
-#mobileMenu.open { display: flex; }
+#mobileMenu.open { display: flex; animation: menu-in 0.28s cubic-bezier(0.22,1,0.36,1); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 /* Flavour chip */
 .flavour-chip { cursor: pointer; padding: 10px 18px; border-radius: 9999px; font-size: 13px; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); transition: all 0.25s; display: flex; align-items: center; gap: 10px; }
 .flavour-chip.active { border-color: var(--purple); background: rgba(150,0,201,0.12); color: var(--text); }
@@ -59,15 +63,25 @@ a { text-decoration: none; color: inherit; }
 .qty-pack:hover { border-color: rgba(150,0,201,0.4); }
 /* Trust */
 .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+/* Tablet — reduce density before the single-column collapse */
+@media (max-width: 1024px) {
+  .bundle-card { padding: 28px; }
+  .trust-grid { grid-template-columns: 1fr 1fr !important; row-gap: 40px !important; }
+  .section-pad { padding-left: 32px !important; padding-right: 32px !important; }
+}
+/* Narrow phones — shorten the offer strip so it never wraps under the nav */
+@media (max-width: 640px) {
+  .offer-strip { font-size: 10px !important; letter-spacing: 0.03em !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .offer-prefix, .offer-suffix { display: none; }
+}
 @media (max-width: 768px) {
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-d { display: none !important; }
   .mobile-btn { display: flex !important; }
-  .hero-pad { padding: 100px 20px 60px !important; }
+  .hero-pad { padding: 128px 20px 60px !important; }
   .bundles-grid { grid-template-columns: 1fr !important; }
   .trust-grid { grid-template-columns: 1fr 1fr !important; }
   .section-pad { padding: 60px 20px !important; }
-  .section-h2 { font-size: 32px !important; }
   .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
 }
 @media (max-width: 480px) {
@@ -100,8 +114,8 @@ body::after {
 <body>
 
 <!-- OFFER STRIP -->
-<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono">
-  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono offer-strip">
+  <span class="offer-prefix">LAUNCH OFFER: </span>3 FREE SACHETS<span class="offer-suffix"> WITH YOUR FIRST ORDER</span>
   <a href="#" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
 </div>
 
@@ -117,12 +131,12 @@ body::after {
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
-    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#1a1c1c;">
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:12px;color:#1a1c1c;" aria-label="Menu">
       <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
     </button>
   </div>
 </nav>
-<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+<div id="mobileMenu" style="position:fixed;top:104px;left:0;right:0;z-index:99;max-height:calc(100dvh - 104px);overflow-y:auto;flex-direction:column;background:rgba(248,248,248,0.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
@@ -138,7 +152,7 @@ body::after {
       <span style="width:6px;height:6px;border-radius:50%;background:var(--purple-bright);display:block;"></span>
       <span class="mono" style="font-size:11px;letter-spacing:0.1em;color:var(--purple-text);">BUILD YOUR LOADOUT</span>
     </div>
-    <h1 class="reveal reveal-delay-1" style="font-size:64px;font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.95;margin-bottom:20px;">Choose your level of <em style="font-style:italic;color:var(--purple-text);">recovery.</em></h1>
+    <h1 class="reveal reveal-delay-1" style="font-size:clamp(38px,7vw,64px);font-weight:900;letter-spacing:-0.04em;color:#1a1c1c;line-height:0.98;margin-bottom:20px;text-wrap:balance;">Choose your level of <em style="font-style:italic;color:var(--purple-text);">recovery.</em></h1>
     <p class="reveal reveal-delay-2" style="font-size:17px;color:var(--text-muted);line-height:1.7;max-width:480px;margin:0 auto;">Subscribe for seamless delivery before the next event. Cancel anytime. No lock-in.</p>
   </div>
 </section>
@@ -161,9 +175,9 @@ body::after {
       </div>
       <div class="mono" style="display:inline-block;font-size:10px;font-weight:700;color:#fff;background:#15803d;letter-spacing:0.06em;padding:4px 12px;border-radius:9999px;margin-bottom:24px;">SAVE £3</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Single weekend coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Standard shipping</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix any 1 flavour</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Single weekend coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Standard shipping</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix any 1 flavour</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('solo',this)">SELECT SOLO</button>
     </div>
@@ -175,19 +189,19 @@ body::after {
         <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(188,0,251,0.35) 0%,transparent 65%);"></div>
         <div style="width:64px;height:116px;background:linear-gradient(180deg,rgba(255,255,255,0.25) 0%,rgba(188,0,251,0.4) 100%);border-radius:32px;border:1px solid rgba(255,255,255,0.25);box-shadow:0 0 60px rgba(188,0,251,0.6),0 0 120px rgba(150,0,201,0.3);position:relative;z-index:1;"></div>
       </div>
-      <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:6px;">Season Pass</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:16px;">30 SACHETS / MONTH</div>
+      <div class="mono" style="font-size:10px;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px;">Season Pass</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">30 SACHETS / MONTH</div>
       <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px;">
-        <span style="font-size:48px;font-weight:900;color:#fff;letter-spacing:-0.04em;line-height:1;">£40</span>
-        <span style="font-size:14px;font-weight:400;color:rgba(255,255,255,0.3);">/mo</span>
+        <span style="font-size:48px;font-weight:900;color:#1a1c1c;letter-spacing:-0.04em;line-height:1;">£40</span>
+        <span style="font-size:14px;font-weight:400;color:var(--text-muted);">/mo</span>
         <span style="font-size:16px;color:var(--purple);text-decoration:line-through;">£50</span>
       </div>
       <div class="mono" style="font-size:10px;color:var(--purple-text);letter-spacing:0.08em;margin-bottom:28px;">SAVE 20% + FREE SHIPPING</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Full month coverage</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Priority delivery</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix up to 3 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Cancel anytime</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Full month coverage</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Priority delivery</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix up to 3 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Cancel anytime</li>
       </ul>
       <button style="background:var(--purple);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:16px;border-radius:9999px;border:none;cursor:pointer;width:100%;transition:all 0.3s;" onmouseover="this.style.background='var(--purple-bright)';this.style.boxShadow='0 0 30px rgba(188,0,251,0.5)'" onmouseout="this.style.background='var(--purple)';this.style.boxShadow='none'" onclick="selectBundle('season',this)">SUBSCRIBE &amp; SAVE</button>
     </div>
@@ -210,9 +224,9 @@ body::after {
       </div>
       <div class="mono" style="display:inline-block;font-size:10px;font-weight:700;color:#fff;background:#15803d;letter-spacing:0.06em;padding:4px 12px;border-radius:9999px;margin-bottom:24px;">SAVE 15%</div>
       <ul style="list-style:none;flex:1;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Share with the crew</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix 2 flavours</li>
-        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.45);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Free shipping included</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Share with the crew</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Mix 2 flavours</li>
+        <li style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-muted);"><span class="material-symbols-outlined" style="font-size:15px;color:var(--purple-text);">check</span>Free shipping included</li>
       </ul>
       <button class="btn-ghost" style="width:100%;text-align:center;" onclick="selectBundle('squad',this)">SELECT SQUAD</button>
     </div>
@@ -323,7 +337,11 @@ function selectBundle(id, btn) {
   const bar = document.getElementById('selectionBar');
   bar.style.display = 'flex';
   document.getElementById('selectionLabel').textContent = labels[id];
+  bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+document.querySelectorAll('#mobileMenu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
 </script>
 
 <script>

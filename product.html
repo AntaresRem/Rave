@@ -16,6 +16,9 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Hanken Grotesk', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button, input, select, textarea { font-family: inherit; }
+::selection { background: rgba(150,0,201,0.22); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--purple-bright); outline-offset: 3px; border-radius: 4px; }
 .mono { font-family: 'Geist Mono', monospace; }
 a { text-decoration: none; color: inherit; }
 .btn-primary { background: var(--purple); color: #fff; font-size: 13px; letter-spacing: 0.1em; font-weight: 700; padding: 14px 32px; border-radius: 9999px; border: none; cursor: pointer; transition: all 0.3s; display: inline-block; }
@@ -26,7 +29,7 @@ a { text-decoration: none; color: inherit; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 /* Nav */
 .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: all 0.4s; }
-.nav.scrolled { background: rgba(248,248,248,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav.scrolled { background: rgba(248,248,248,0.92); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
 .nav-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; color: #1a1c1c; }
 .nav-links { display: flex; align-items: center; gap: 36px; }
 .nav-link { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
@@ -34,7 +37,8 @@ a { text-decoration: none; color: inherit; }
 .nav-link.active { color: var(--purple-text); }
 .mobile-btn { display: none; }
 #mobileMenu { display: none; }
-#mobileMenu.open { display: flex; }
+#mobileMenu.open { display: flex; animation: menu-in 0.28s cubic-bezier(0.22,1,0.36,1); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 /* Tabs */
 .flavour-tab { cursor: pointer; padding: 11px 22px; border-radius: 9999px; font-size: 14px; font-weight: 600; transition: all 0.25s; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); }
 .flavour-tab.active { background: var(--purple); color: #fff; border-color: var(--purple); box-shadow: 0 0 24px rgba(150,0,201,0.4); }
@@ -48,18 +52,27 @@ a { text-decoration: none; color: inherit; }
 /* Stat cards */
 .stat-mini { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 10px; text-align: center; }
 /* Swatch */
-.swatch { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+.swatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
 .swatch.active { border-color: var(--purple-text); box-shadow: 0 0 8px rgba(188,0,251,0.6); transform: scale(1.15); }
+/* Tablet — tighten the two-column panel before it collapses */
+@media (max-width: 1024px) {
+  .flavour-panel.active { gap: 48px; }
+  .section-pad { padding-left: 32px !important; padding-right: 32px !important; }
+}
+/* Narrow phones — shorten the offer strip so it never wraps under the nav */
+@media (max-width: 640px) {
+  .offer-strip { font-size: 10px !important; letter-spacing: 0.03em !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .offer-prefix, .offer-suffix { display: none; }
+}
 @media (max-width: 768px) {
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-d { display: none !important; }
   .mobile-btn { display: flex !important; }
-  #tabs-bar { padding: 16px 20px !important; }
+  #tabs-bar { padding: 12px 20px !important; }
   .flavour-panel.active { grid-template-columns: 1fr !important; gap: 40px !important; }
   .section-pad { padding: 48px 20px !important; }
   .stats-row { grid-template-columns: 1fr 1fr !important; }
   .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
-  h1.prod-title { font-size: 30px !important; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr !important; }
@@ -91,8 +104,8 @@ body::after {
 <body>
 
 <!-- OFFER STRIP -->
-<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono">
-  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+<div style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;font-weight:600;letter-spacing:0.06em;" class="mono offer-strip">
+  <span class="offer-prefix">LAUNCH OFFER: </span>3 FREE SACHETS<span class="offer-suffix"> WITH YOUR FIRST ORDER</span>
   <a href="shop.html" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
 </div>
 
@@ -108,12 +121,12 @@ body::after {
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="product.html" class="btn-primary nav-cta-d" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
-    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#1a1c1c;">
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:12px;color:#1a1c1c;" aria-label="Menu">
       <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
     </button>
   </div>
 </nav>
-<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+<div id="mobileMenu" style="position:fixed;top:104px;left:0;right:0;z-index:99;max-height:calc(100dvh - 104px);overflow-y:auto;flex-direction:column;background:rgba(248,248,248,0.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">Flavours</a>
@@ -152,7 +165,7 @@ body::after {
     </div>
     <div>
       <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--purple-text);text-transform:uppercase;margin-bottom:10px;">MOST POPULAR</div>
-      <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Passionfruit &amp; Mango</h1>
+      <h1 class="prod-title" style="font-size:clamp(30px,4vw,40px);font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;text-wrap:balance;">Passionfruit &amp; Mango</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A tropical, restorative blend designed to replenish essential salts and minerals lost during peak physical exertion. Smooth, sophisticated, and perfectly balanced.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
         <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
@@ -211,7 +224,7 @@ body::after {
     </div>
     <div>
       <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">DEEP &amp; BOLD</div>
-      <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Blackberry &amp; Açaí</h1>
+      <h1 class="prod-title" style="font-size:clamp(30px,4vw,40px);font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;text-wrap:balance;">Blackberry &amp; Açaí</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A deep, antioxidant-rich blend. Dark berry notes with a smooth finish. Rich in polyphenols to combat oxidative stress from long nights.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
         <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
@@ -250,7 +263,7 @@ body::after {
     </div>
     <div>
       <div class="mono" style="font-size:10px;letter-spacing:0.14em;color:var(--text-muted);text-transform:uppercase;margin-bottom:10px;">CLEAN &amp; FRESH</div>
-      <h1 class="prod-title" style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;">Lemon &amp; Elderflower</h1>
+      <h1 class="prod-title" style="font-size:clamp(30px,4vw,40px);font-weight:900;letter-spacing:-0.03em;color:#1a1c1c;margin-bottom:12px;line-height:1.1;text-wrap:balance;">Lemon &amp; Elderflower</h1>
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.7;">A crisp, botanical blend with a gentle effervescence. Light on the palate and easy to drink even when you're feeling rough. The gentle option.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;" class="stats-row">
         <div class="stat-mini"><div class="mono" style="font-size:20px;font-weight:700;color:var(--purple-text);">15</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;" class="mono">CALORIES</div></div>
@@ -305,6 +318,9 @@ body::after {
 <script>
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll',()=>{ nav.classList.toggle('scrolled', window.scrollY > 40); },{passive:true});
+document.querySelectorAll('#mobileMenu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
 function switchFlavour(id, tabEl) {
   document.querySelectorAll('.flavour-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.flavour-tab').forEach(t=>t.classList.remove('active'));

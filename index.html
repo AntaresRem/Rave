@@ -33,6 +33,11 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+button, input, select, textarea { font-family: inherit; }
+::selection { background: rgba(150,0,201,0.22); }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--purple-bright); outline-offset: 3px; border-radius: 4px;
+}
 .mono { font-family: 'Geist Mono', monospace; }
 a { text-decoration: none; color: inherit; }
 
@@ -93,6 +98,7 @@ body::after {
 }
 .nav.scrolled {
   background: rgba(248,248,248,0.92);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
 }
@@ -110,7 +116,8 @@ body::after {
 .nav-link.active { color: var(--purple-text); }
 .nav-link.active::after { transform: scaleX(1); }
 #mobileMenu { display: none; }
-#mobileMenu.open { display: flex; }
+#mobileMenu.open { display: flex; animation: menu-in 0.28s cubic-bezier(0.22,1,0.36,1); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 .mobile-btn { display: none; }
 
 /* ── OFFER STRIP ── */
@@ -133,6 +140,7 @@ body::after {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh; /* iOS Safari: avoid the URL-bar jump */
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -196,6 +204,7 @@ body::after {
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   display: block;
   z-index: 2;
   cursor: grab;
@@ -437,7 +446,7 @@ body::after {
 }
 .mechanism-inner { max-width: 1280px; margin: 0 auto; }
 .mechanism-header { text-align: center; margin-bottom: 80px; }
-.section-h2 { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; }
+.section-h2 { font-size: clamp(34px, 4.5vw, 52px); font-weight: 900; letter-spacing: -0.03em; color: #1a1c1c; line-height: 1.05; text-wrap: balance; }
 .section-h2 em { font-style: italic; color: var(--purple-text); }
 .section-sub { font-size: 16px; color: var(--text-muted); max-width: 480px; margin: 16px auto 0; line-height: 1.7; }
 .pillars-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; }
@@ -470,7 +479,7 @@ body::after {
 .compare-section { padding: 120px 48px; background: var(--surface); }
 .compare-inner { max-width: 1100px; margin: 0 auto; }
 .compare-header { margin-bottom: 56px; }
-.compare-wrap { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; }
+.compare-wrap { border: 1px solid var(--border); border-radius: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; }
 table.cmp { width: 100%; border-collapse: collapse; }
 table.cmp th { padding: 22px 24px; font-size: 13px; font-weight: 700; text-align: left; background: rgba(0,0,0,0.03); color: #1a1c1c; }
 /* Ravive column elevated as the clear winner — gradient header + accent rule */
@@ -625,7 +634,7 @@ table.cmp tr:hover td.col-rv { background: rgba(150,0,201,0.12); }
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
   background: linear-gradient(90deg, transparent, var(--purple), transparent);
 }
-.final-cta-h { font-size: 60px; font-weight: 900; letter-spacing: -0.04em; color: #1a1c1c; margin-bottom: 20px; line-height: 1.05; }
+.final-cta-h { font-size: clamp(36px, 6vw, 60px); font-weight: 900; letter-spacing: -0.04em; color: #1a1c1c; margin-bottom: 20px; line-height: 1.05; text-wrap: balance; }
 .final-cta-sub { font-size: 17px; color: var(--text-muted); max-width: 500px; margin: 0 auto 48px; line-height: 1.7; }
 .trust-icons { display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 48px; flex-wrap: wrap; }
 .trust-icon { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
@@ -660,6 +669,22 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 #bg-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.12; }
 
 /* ── RESPONSIVE ── */
+/* Tablet — grids breathe before collapsing to single column */
+@media (max-width: 1100px) {
+  .pillars-grid { grid-template-columns: 1fr 1fr; }
+  .testi-grid { grid-template-columns: 1fr 1fr; }
+  .science-inner { gap: 56px; }
+  .feat-call { width: 200px; }
+  .bundle-card { padding: 28px; }
+  .mechanism, .compare-section, .science-section, .flavours-section,
+  .testi-section, .bundles-section, .faq-section, .final-cta { padding-left: 32px; padding-right: 32px; }
+  .stats-bar { padding-left: 32px; padding-right: 32px; }
+}
+/* Narrow phones — shorten the offer strip so it never wraps under the nav */
+@media (max-width: 640px) {
+  .offer-strip { font-size: 10px !important; letter-spacing: 0.03em !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .offer-prefix, .offer-suffix { display: none; }
+}
 @media (max-width: 768px) {
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-desktop { display: none !important; }
@@ -670,11 +695,12 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   /* ── Hero mobile: stack vertically ── */
   #hero-section { height: 240vh; }
   #hero-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr 42vh; }
-  #hero-left { padding: 0 5vw; padding-top: 96px; justify-content: flex-start; }
+  #hero-left { padding: 0 5vw; padding-top: 112px; justify-content: flex-start; }
   #hero-right { position: relative; }
+  .hero-eyebrow { margin-bottom: 16px; }
   .hero-h1 { font-size: clamp(44px, 12vw, 72px); margin-bottom: 16px; }
   .hero-sub { font-size: 14px; margin-bottom: 20px; max-width: 100%; }
-  .hero-ctas { flex-direction: column; gap: 10px; }
+  .hero-ctas { flex-direction: column; gap: 10px; margin-bottom: 24px; }
   .hero-ctas .btn-primary, .hero-ctas .btn-ghost { width: 100%; text-align: center; }
 
   /* Feature section: callouts at very top & bottom, sachet centred between */
@@ -702,7 +728,6 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .stats-bar { padding: 40px 20px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .mechanism { padding: 80px 20px; }
-  .section-h2 { font-size: 36px; }
   .pillars-grid { grid-template-columns: 1fr 1fr; }
   .compare-section { padding: 80px 20px; }
   .science-section { padding: 80px 20px; }
@@ -716,7 +741,6 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .bundles-grid { grid-template-columns: 1fr; }
   .faq-section { padding: 80px 20px; }
   .final-cta { padding: 80px 20px; }
-  .final-cta-h { font-size: 36px; }
   .trust-icons { gap: 20px; }
   footer { padding: 60px 20px 24px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -741,7 +765,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   border-bottom: 1px solid rgba(150,0,201,0.10);
   padding-top: 96px; padding-bottom: 96px;
 }
-.stat-val { font-size: 60px; letter-spacing: -0.05em; }
+.stat-val { font-size: clamp(40px, 5vw, 60px); letter-spacing: -0.05em; }
 .stat-cell { padding: 44px 32px; }
 
 /* ── DARK MECHANISM SECTION (festival-night) ── */
@@ -781,7 +805,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
 .testi-section .section-h2 { color: #fff; }
 .testi-section .section-label-text { color: #c44dff; }
 .testi-section .section-label-line { background: #bc00fb; }
-.testi-rating-big { color: #fff; font-size: 68px; font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+.testi-rating-big { color: #fff; font-size: clamp(48px, 6vw, 68px); font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
 .testi-stars { color: #bc00fb; font-size: 20px; margin: 6px 0 4px; }
 .testi-count { color: rgba(255,255,255,0.35); font-size: 12px; }
 .testi-card {
@@ -825,11 +849,6 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
 .footer-grid a { color: rgba(255,255,255,0.45) !important; transition: color 0.2s; }
 .footer-grid a:hover { color: #c44dff !important; }
 
-/* mobile adjustments */
-@media (max-width: 768px) {
-  .stat-val { font-size: 44px; }
-  .testi-rating-big { font-size: 52px; }
-}
 </style>
 </head>
 <body>
@@ -838,7 +857,7 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
 
 <!-- OFFER STRIP -->
 <div class="offer-strip mono" style="position:fixed;top:0;left:0;right:0;z-index:101;background:var(--purple);color:#fff;text-align:center;padding:8px 20px;font-size:11px;letter-spacing:0.06em;">
-  LAUNCH OFFER: 3 FREE SACHETS WITH YOUR FIRST ORDER
+  <span class="offer-prefix">LAUNCH OFFER: </span>3 FREE SACHETS<span class="offer-suffix"> WITH YOUR FIRST ORDER</span>
   <a href="shop.html" style="color:rgba(255,255,255,0.75);text-decoration:underline;text-underline-offset:2px;margin-left:12px;">CLAIM NOW →</a>
 </div>
 
@@ -854,14 +873,14 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="product.html" class="btn-primary nav-cta-desktop" style="font-size:12px;padding:11px 24px;">SHOP NOW</a>
-    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:8px;color:#fff;" aria-label="Menu">
+    <button onclick="document.getElementById('mobileMenu').classList.toggle('open')" class="mobile-btn" style="background:none;border:none;cursor:pointer;padding:12px;" aria-label="Menu">
       <svg width="22" height="18" viewBox="0 0 22 18" fill="none"><rect width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="8" width="22" height="2" rx="1" fill="#1a1c1c"/><rect y="16" width="22" height="2" rx="1" fill="#1a1c1c"/></svg>
     </button>
   </div>
 </nav>
 
 <!-- MOBILE MENU -->
-<div id="mobileMenu" style="position:fixed;top:100px;left:0;right:0;z-index:99;flex-direction:column;background:rgba(248,248,248,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
+<div id="mobileMenu" style="position:fixed;top:104px;left:0;right:0;z-index:99;max-height:calc(100dvh - 104px);overflow-y:auto;flex-direction:column;background:rgba(248,248,248,0.98);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:4px;">
   <a href="index.html" style="padding:13px 0;font-size:16px;color:var(--purple-text);border-bottom:1px solid var(--border);display:block;font-weight:600;">Home</a>
   <a href="science.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">The Science</a>
   <a href="product.html" style="padding:13px 0;font-size:16px;color:var(--text-muted);border-bottom:1px solid var(--border);display:block;">Flavours</a>
@@ -1273,15 +1292,15 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
       </div>
       <div class="bundle-card featured reveal reveal-delay-2">
         <div class="bundle-badge">BEST VALUE</div>
-        <div class="bundle-name" style="color:rgba(255,255,255,0.5);">Season Pass</div>
-        <div class="bundle-count" style="color:rgba(255,255,255,0.3);">30 SACHETS / MONTH</div>
+        <div class="bundle-name">Season Pass</div>
+        <div class="bundle-count">30 SACHETS / MONTH</div>
         <div class="bundle-price"><span class="bundle-price-main">£40</span><span class="bundle-price-sub">/mo</span><span class="bundle-price-was">£50</span></div>
         <div class="bundle-save purple mono" style="letter-spacing:0.08em;">SAVE 20% + FREE SHIPPING</div>
         <ul class="bundle-features">
-          <li class="bundle-feature" style="color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined">check</span>Full month coverage</li>
-          <li class="bundle-feature" style="color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined">check</span>Priority delivery</li>
-          <li class="bundle-feature" style="color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined">check</span>Mix up to 3 flavours</li>
-          <li class="bundle-feature" style="color:rgba(255,255,255,0.6);"><span class="material-symbols-outlined">check</span>Cancel anytime</li>
+          <li class="bundle-feature"><span class="material-symbols-outlined">check</span>Full month coverage</li>
+          <li class="bundle-feature"><span class="material-symbols-outlined">check</span>Priority delivery</li>
+          <li class="bundle-feature"><span class="material-symbols-outlined">check</span>Mix up to 3 flavours</li>
+          <li class="bundle-feature"><span class="material-symbols-outlined">check</span>Cancel anytime</li>
         </ul>
         <a href="shop.html" class="bundle-cta filled">SUBSCRIBE &amp; SAVE</a>
       </div>
@@ -1369,8 +1388,8 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
       <div>
         <div class="footer-col-title">Contact</div>
         <div class="footer-links">
-          <a href="/cdn-cgi/l/email-protection#bdd5d8d1d1d2fdcfdccbd4cbd893ded2"><span class="__cf_email__" data-cfemail="345c5158585b744655425d42511a575b">[email&#160;protected]</span></a>
-          <span style="color:var(--text-dim);">London, UK</span>
+          <a href="mailto:hello@ravive.co">hello@ravive.co</a>
+          <span style="color:rgba(255,255,255,0.3);">London, UK</span>
         </div>
       </div>
     </div>
@@ -1381,7 +1400,7 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── Background particle canvas ──
 (function(){
   const canvas = document.getElementById('bg-canvas');
@@ -1440,6 +1459,11 @@ const nav = document.getElementById('mainNav');
 window.addEventListener('scroll',()=>{
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, {passive:true});
+
+// ── Mobile menu: close after choosing a destination ──
+document.querySelectorAll('#mobileMenu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
 
 // ── Scroll reveal ──
 const revealEls = document.querySelectorAll('.reveal');
@@ -1518,19 +1542,32 @@ function firePulse(){}
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
   camera.position.set(0, 0, 6.5);
 
-  // HERO_X = sachet's resting X in the hero. Right side on desktop, centre on mobile.
-  let HERO_X = 1.85;
+  // Hero rest pose. Desktop: right side, full size. Mobile: the layout stacks
+  // text on top with the bottom ~42vh reserved for the sachet, so drop it into
+  // that zone and shrink it — otherwise it renders centre-screen over the text.
+  let HERO_X = 1.85, HERO_Y = 0, HERO_SCALE = 1;
   function resize() {
     const w = canvas.clientWidth || window.innerWidth;
     const h = canvas.clientHeight || window.innerHeight;
     if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    const mobile = w < 760;
+    const mobile = w <= 768;         // keep in lock-step with the CSS breakpoint
     camera.fov = mobile ? 36 : 28;
     camera.position.z = mobile ? 5.8 : 6.5;
     camera.updateProjectionMatrix();
-    HERO_X = mobile ? 0 : 1.85;  // centre on mobile (stacked), right on desktop
+    if (mobile) {
+      // stacked layout: centre horizontally, anchor to the bottom zone, shrink
+      HERO_X = 0; HERO_Y = -1.35; HERO_SCALE = 0.46;
+    } else {
+      // two-column layout: derive the rest pose from the camera frustum so the
+      // sachet stays fully on screen at any window width (narrow windows used
+      // to push it past the right edge entirely)
+      const hw = camera.position.z * Math.tan(camera.fov * Math.PI / 360) * camera.aspect;
+      HERO_SCALE = Math.min(1, Math.max(0.55, (hw - 0.55) / 2.0));
+      HERO_X = Math.min(1.85, hw - 0.75 * HERO_SCALE - 0.05);
+      HERO_Y = 0;
+    }
   }
   resize();
   window.addEventListener('resize', resize);
@@ -1801,8 +1838,8 @@ function firePulse(){}
   const state = {
     heroRotX: 0, heroRotZ: 0,   // hero tilt (blended out as dock→1)
     dock: 0, dockSpin: 0,        // dock progress + controlled landing spin
-    posX: HERO_X, posY: 0, posZ: 0,
-    scale: 1, floatAmp: 0.04,
+    posX: HERO_X, posY: HERO_Y, posZ: 0,
+    scale: HERO_SCALE, floatAmp: 0.04,
     opacity: 0, // canvas fade
   };
 
@@ -1921,6 +1958,7 @@ function firePulse(){}
   window.addEventListener('resize', () => {
     computeDockTargets();
     if (state.dock > 0.5) { state.scale = DOCK_SCALE; state.posY = DOCK_Y; }
+    else if (state.dock <= 0.001) { state.posX = HERO_X; state.posY = HERO_Y; state.scale = HERO_SCALE; }
   });
   measureSachet();        // measure visual centre/height of the built geometry
   computeDockTargets();   // initial dock targets
@@ -1968,8 +2006,8 @@ function firePulse(){}
 
       state.dock  = dp;
       state.posX  = lerp(HERO_X, 0, dp);
-      state.posY  = lerp(0, DOCK_Y, dp);
-      state.scale = lerp(1, DOCK_SCALE, dp);
+      state.posY  = lerp(HERO_Y, DOCK_Y, dp);
+      state.scale = lerp(HERO_SCALE, DOCK_SCALE, dp);
       // Full 360° spin into a front face — unless reduced motion, then no spin.
       const landing = REDUCED
         ? Math.round(dockStartSpin / TAU) * TAU
@@ -2048,15 +2086,15 @@ function firePulse(){}
   if (REDUCED) {
     // No animated entrance: reveal text instantly, place sachet at rest, opaque.
     gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 1, filter: 'none' });
-    state.opacity = 1; state.scale = 1; state.posY = 0;
+    state.opacity = 1; state.scale = HERO_SCALE; state.posY = HERO_Y;
   } else {
     gsap.set(['#hero-eyebrow','#hero-h1','#hero-sub','#hero-ctas','#hero-proof'], { opacity: 0 });
     gsap.set('#hero-h1', { filter: 'blur(8px)' });
-    gsap.set(state, { posY: 0.6, scale: 0.88, opacity: 0 });
+    gsap.set(state, { posY: HERO_Y + 0.6, scale: HERO_SCALE * 0.88, opacity: 0 });
 
     gsap.timeline({ delay: 0.12 })
       .to(state, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0)
-      .to(state, { posY: 0, scale: 1, duration: 0.9, ease: 'power3.out' }, 0)
+      .to(state, { posY: HERO_Y, scale: HERO_SCALE, duration: 0.9, ease: 'power3.out' }, 0)
       .to('#hero-eyebrow', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.3)
       .to('#hero-h1',      { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.45)
       .to('#hero-sub',     { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.75)
