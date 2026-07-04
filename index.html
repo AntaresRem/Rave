@@ -153,8 +153,9 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 0 0 6vw;
-  padding-top: 60px;
+  /* top padding must clear the fixed offer strip + nav (104px) so centred
+     content can never rise underneath them on short windows */
+  padding: 124px 0 24px 6vw;
   pointer-events: none;
 }
 #hero-left > * { pointer-events: auto; }
@@ -1536,11 +1537,49 @@ function firePulse(){}
   // ── Renderer ──
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // 1.5 instead of 2: on a full-viewport canvas the retina pass is the single
+  // most expensive thing on the page, and 1.5 is visually indistinguishable
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
 
   const scene  = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
   camera.position.set(0, 0, 6.5);
+
+  // ── Studio environment map — this is what makes foil read as real metal.
+  // A tiny equirect "photo studio": key softbox upper-right, tall fill left,
+  // purple bounce below. PMREM-filtered so rough metal picks up soft blooms. ──
+  function makeStudioEnv() {
+    const c = document.createElement('canvas'); c.width = 512; c.height = 256;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0, 0, 0, 256);
+    g.addColorStop(0, '#42424c'); g.addColorStop(0.45, '#1b1b21'); g.addColorStop(1, '#08080c');
+    x.fillStyle = g; x.fillRect(0, 0, 512, 256);
+    function softbox(cx0, cy0, w, h, a) {
+      const rg = x.createRadialGradient(cx0, cy0, 0, cx0, cy0, Math.max(w, h));
+      rg.addColorStop(0, `rgba(255,252,246,${a})`);
+      rg.addColorStop(0.45, `rgba(255,252,246,${a * 0.45})`);
+      rg.addColorStop(1, 'rgba(255,252,246,0)');
+      x.fillStyle = rg; x.fillRect(cx0 - w * 2, cy0 - h * 2, w * 4, h * 4);
+    }
+    softbox(352, 64, 96, 42, 0.95);   // key — hard-ish top-right strip light
+    softbox(110, 112, 56, 88, 0.45);  // fill — tall soft panel on the left
+    softbox(256, 30, 200, 18, 0.30);  // overhead strip
+    const pg = x.createRadialGradient(256, 226, 0, 256, 226, 170);
+    pg.addColorStop(0, 'rgba(150,0,220,0.45)'); pg.addColorStop(1, 'rgba(150,0,220,0)');
+    x.fillStyle = pg; x.fillRect(0, 110, 512, 146);
+    const t = new THREE.CanvasTexture(c);
+    t.mapping = THREE.EquirectangularReflectionMapping;
+    return t;
+  }
+  let envMap = null;
+  try {
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    envMap = pmrem.fromEquirectangular(makeStudioEnv()).texture;
+    pmrem.dispose();
+  } catch (e) { /* env is an enhancement — lights alone still work */ }
 
   // Hero rest pose. Desktop: right side, full size. Mobile: the layout stacks
   // text on top with the bottom ~42vh reserved for the sachet, so drop it into
@@ -1575,8 +1614,9 @@ function firePulse(){}
   // ── Sachet front texture (512×820 — tall narrow foil sachet) ──
   function makeFrontTex() {
     const tc = document.createElement('canvas');
-    tc.width = 512; tc.height = 820;
+    tc.width = 1024; tc.height = 1640;   // 2x for crisp label type
     const cx = tc.getContext('2d');
+    cx.scale(2, 2);                      // draw in the original 512×820 space
     const W = 512, H = 820;
 
     // ── ALUMINIUM FOIL BASE — horizontal metallic gradient ──
@@ -1614,6 +1654,22 @@ function firePulse(){}
     spec.addColorStop(0.58, 'rgba(255,255,255,0.10)');
     spec.addColorStop(1,    'rgba(255,255,255,0)');
     cx.fillStyle = spec; cx.fillRect(0, 0, W, H);
+
+    // Diagonal crinkle streaks — real foil is never optically flat; these
+    // faint creases sell the material long before you read the label
+    for (let i = 0; i < 18; i++) {
+      const sx = Math.random() * W, sy = 100 + Math.random() * (H - 200);
+      const len = 60 + Math.random() * 170;
+      const ang = (Math.random() < 0.5 ? 0.9 : -0.9) + (Math.random() * 0.6 - 0.3);
+      const ex = sx + Math.cos(ang) * len, ey = sy + Math.sin(ang) * len;
+      const light = Math.random() > 0.45, a = 0.035 + Math.random() * 0.05;
+      const grad = cx.createLinearGradient(sx, sy, ex, ey);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(0.5, light ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      cx.strokeStyle = grad; cx.lineWidth = 0.8 + Math.random() * 2.2;
+      cx.beginPath(); cx.moveTo(sx, sy); cx.lineTo(ex, ey); cx.stroke();
+    }
 
     // ── TOP SEAL ZONE ──
     cx.fillStyle = 'rgba(0,0,0,0.52)'; cx.fillRect(0, 0, W, 90);
@@ -1693,14 +1749,18 @@ function firePulse(){}
     cx.strokeStyle='rgba(200,200,200,0.50)'; cx.lineWidth=2;
     cx.beginPath(); cx.moveTo(0,H-84); cx.lineTo(W,H-84); cx.stroke();
 
-    return new THREE.CanvasTexture(tc);
+    const t = new THREE.CanvasTexture(tc);
+    t.encoding = THREE.sRGBEncoding;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
   }
 
   // Back texture — nutrition facts style
   function makeBackTex() {
     const tc = document.createElement('canvas');
-    tc.width = 512; tc.height = 820;
+    tc.width = 1024; tc.height = 1640;
     const cx = tc.getContext('2d');
+    cx.scale(2, 2);
     // Silver foil back
     const bgb = cx.createLinearGradient(0, 0, 512, 0);
     bgb.addColorStop(0,'#161616'); bgb.addColorStop(0.2,'#686868');
@@ -1732,7 +1792,10 @@ function firePulse(){}
     });
     cx.font='600 10px Arial'; cx.fillStyle='rgba(20,20,20,0.42)';
     cx.textAlign='center'; cx.fillText('RAVIVE RECOVERY ELECTROLYTES  ·  ravive.co',256,540);
-    return new THREE.CanvasTexture(tc);
+    const t = new THREE.CanvasTexture(tc);
+    t.encoding = THREE.sRGBEncoding;
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    return t;
   }
 
   // ── Procedural foil micro-crinkle (bump map) — gives the metallic surface
@@ -1791,15 +1854,18 @@ function firePulse(){}
     bodyGeo.computeVertexNormals();
   })();
 
-  const frontMat = new THREE.MeshPhongMaterial({ map: makeFrontTex(), shininess: 80, specular: new THREE.Color(0xb0b0b8), bumpMap: foilBump, bumpScale: 0.008 });
-  const backMat  = new THREE.MeshPhongMaterial({ map: makeBackTex(),  shininess: 170, specular: new THREE.Color(0xc0c0c8), bumpMap: foilBump, bumpScale: 0.010 });
-  const edgeMat  = new THREE.MeshPhongMaterial({ color: 0x1e1e20, shininess: 140, specular: new THREE.Color(0xa8a8a8), bumpMap: foilBump, bumpScale: 0.022 });
+  // PBR metal + the studio env map = believable foil. Metalness stays just
+  // under 1 so the printed label ink still reads; roughness lets the softbox
+  // reflections bloom across the belly instead of mirroring.
+  const frontMat = new THREE.MeshStandardMaterial({ map: makeFrontTex(), metalness: 0.86, roughness: 0.38, envMap, envMapIntensity: 1.15, bumpMap: foilBump, bumpScale: 0.0065 });
+  const backMat  = new THREE.MeshStandardMaterial({ map: makeBackTex(),  metalness: 0.9,  roughness: 0.33, envMap, envMapIntensity: 1.2,  bumpMap: foilBump, bumpScale: 0.008 });
+  const edgeMat  = new THREE.MeshStandardMaterial({ color: 0x232326, metalness: 0.9, roughness: 0.5, envMap, envMapIntensity: 1.0, bumpMap: foilBump, bumpScale: 0.02 });
   // face order: +x, -x, +y, -y, +z(front), -z(back)
   const body = new THREE.Mesh(bodyGeo, [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
   sachetGroup.add(body);
 
   // ── Flat dark-metal heat seals — clean flush strips on all four edges ──
-  const sealMat = new THREE.MeshPhongMaterial({ color: 0x181818, shininess: 120, specular: new THREE.Color(0xb0b0b0), bumpMap: foilBump, bumpScale: 0.026 });
+  const sealMat = new THREE.MeshStandardMaterial({ color: 0x1c1c1e, metalness: 0.85, roughness: 0.55, envMap, envMapIntensity: 0.9, bumpMap: foilBump, bumpScale: 0.024 });
   const topSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.076, SD + 0.005), sealMat);
   topSeal.position.y = SH / 2 - 0.038; sachetGroup.add(topSeal);
   const botSeal = new THREE.Mesh(new THREE.BoxGeometry(SW, 0.076, SD + 0.005), sealMat);
@@ -1810,26 +1876,23 @@ function firePulse(){}
   rSeal.position.x = (SW / 2 - 0.022); sachetGroup.add(rSeal);
 
   // Tear notch — small V-notch on top-right seal edge.
-  const notch = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.07, 3), new THREE.MeshPhongMaterial({ color: 0xbc00fb, shininess: 120 }));
+  const notch = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.07, 3), new THREE.MeshStandardMaterial({ color: 0xbc00fb, metalness: 0.35, roughness: 0.4, envMap }));
   notch.rotation.z = Math.PI;
   notch.position.set(SW / 2 - 0.2, SH / 2 + 0.03, 0);
   sachetGroup.add(notch);
 
   scene.add(sachetGroup);
 
-  // ── Lighting — studio product shot feel ──
-  scene.add(new THREE.AmbientLight(0xd8d8e8, 0.55));
-  // Key: upper-right, white, sharp — main foil highlight
-  const key = new THREE.DirectionalLight(0xfff5ee, 1.4);
+  // ── Lighting — the env map now carries most of the illumination; the
+  // directionals just shape the key highlight and the violet rim ──
+  scene.add(new THREE.AmbientLight(0xd8d8e8, 0.25));
+  const key = new THREE.DirectionalLight(0xfff5ee, 1.05);
   key.position.set(2, 5, 4); scene.add(key);
-  // Fill: left-side, cool purple
-  const fill = new THREE.DirectionalLight(0xbb77ff, 0.9);
+  const fill = new THREE.DirectionalLight(0xbb77ff, 0.45);
   fill.position.set(-4, 1, 2); scene.add(fill);
-  // Rim: back-right, violet — separates sachet from bg
-  const rim = new THREE.DirectionalLight(0x9900ff, 1.2);
+  const rim = new THREE.DirectionalLight(0x9900ff, 0.85);
   rim.position.set(3, -1, -4); scene.add(rim);
-  // Under bounce — subtle warm purple
-  const bounce = new THREE.PointLight(0xcc44ff, 0.35, 6);
+  const bounce = new THREE.PointLight(0xcc44ff, 0.25, 6);
   bounce.position.set(0, -3, 1.5); scene.add(bounce);
 
   // ── Internal animated targets (driven by GSAP + RAF) ──
@@ -1865,9 +1928,20 @@ function firePulse(){}
   let heroSpinY = 0;
   const clock = new THREE.Clock();
   let elapsed = 0;
+  let appliedOpacity = -1;
   function animate() {
     requestAnimationFrame(animate);
     elapsed += clock.getDelta();
+
+    // Write opacity only when it changes, and skip ALL scene + GPU work while
+    // the canvas is invisible (before the hero entrance, and after the feature
+    // section has scrolled past). A full-viewport WebGL pass is the most
+    // expensive thing on the page — never pay for it when nothing shows.
+    if (state.opacity !== appliedOpacity) {
+      canvas.style.opacity = state.opacity;
+      appliedOpacity = state.opacity;
+    }
+    if (state.opacity <= 0.004 || canvas.style.visibility === 'hidden') return;
 
     const d = state.dock;            // 0..1 dock progress
     const free = d <= 0;             // only truly free before docking starts
@@ -1889,7 +1963,6 @@ function firePulse(){}
     sachetGroup.position.z = state.posZ;
     sachetGroup.scale.setScalar(state.scale);
 
-    canvas.style.opacity = state.opacity;
     renderer.render(scene, camera);
   }
   animate();
@@ -2031,15 +2104,16 @@ function firePulse(){}
     pin: '#feature-sticky',
     pinSpacing: true,
     scrub: true,
-    onEnter:     () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
-    onEnterBack: () => { canvas.style.visibility = 'visible'; },
+    // computeDockTargets reads a live rect (forced reflow) — do it on section
+    // entry/refresh only, never per scroll frame; the pinned rect is stable.
+    onEnter:     () => { canvas.style.visibility = 'visible'; state.opacity = 1; computeDockTargets(); },
+    onEnterBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; computeDockTargets(); },
     onLeaveBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
+    // Once the feature exits the top, stop paying for the full-screen WebGL
+    // layer entirely — this was dragging scroll FPS down for the rest of the page.
+    onLeave:     () => { state.opacity = 0; canvas.style.visibility = 'hidden'; },
     onUpdate: self => {
       const p = self.progress;
-
-      // While the box is at REST (before the exit glide), re-measure & align the
-      // sachet to its live rect each frame — guarantees dead-centre in the box.
-      if (p < EXIT_START) computeDockTargets();
 
       // Exit glide: 0 before EXIT_START, 0→1 after → everything rides up & out.
       const ex = smooth(mapp(p, EXIT_START, 1.0));
@@ -2053,7 +2127,8 @@ function firePulse(){}
       // the box rides up with it — it never just vanishes mid-screen).
       state.dock = 1; state.posX = 0; state.posY = DOCK_Y + exitWorldY; state.scale = DOCK_SCALE;
       state.dockSpin = Math.round(state.dockSpin / TAU) * TAU; // snap exact front
-      state.opacity = 1; // sachet stays fully opaque; it leaves by moving off-screen
+      // opacity is owned by the enter/leave callbacks — setting it here would
+      // race with onLeave and keep the hidden canvas rendering forever
 
       // Box + callouts + heading + CTA reveal, hold, then lift away together.
       const liftY = -exitPx;
