@@ -23,8 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      # Upload only the site itself — not node_modules, design scratch
+      # folders, or git internals. Keeps the artifact tiny and deploys fast.
+      - name: Stage site files
+        run: |
+          mkdir _site
+          cp *.html *.css *.js _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
