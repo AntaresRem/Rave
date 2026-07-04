@@ -704,19 +704,22 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero-ctas { flex-direction: column; gap: 10px; margin-bottom: 24px; }
   .hero-ctas .btn-primary, .hero-ctas .btn-ghost { width: 100%; text-align: center; }
 
-  /* Feature section: callouts at very top & bottom, sachet centred between */
+  /* Feature section: callouts at very top & bottom, sachet centred between.
+     The slot shrinks and everything gets its own vertical band so nothing
+     overlaps: heading / callout row 1 / slot / callout row 2 / CTA. */
   #feature-section { height: 220vh; }
-  #feature-heading { top: 9vh; }
-  #feature-heading .feat-h2 { font-size: clamp(26px, 7vw, 38px); }
+  #feature-heading { top: 8vh; }
+  #feature-heading .feat-h2 { font-size: clamp(24px, 6.4vw, 38px); }
   .feat-call { width: 42vw; }
   .feat-call .fc-title { font-size: 14px; }
   .feat-call .fc-body { font-size: 11px; }
-  .feat-call .fc-dose { font-size: 8px; padding: 3px 7px; }
+  .feat-call .fc-dose { display: none; } /* reclaim vertical space on phones */
   .feat-call .fc-dot { display: none; }
-  #fc-1 { top: 24vh; left: 4vw; }
-  #fc-2 { top: 24vh; right: 4vw; }
-  #fc-3 { bottom: 18vh; left: 4vw; }
-  #fc-4 { bottom: 18vh; right: 4vw; }
+  #feature-slot { top: 54%; height: clamp(170px, 26vh, 240px); } /* mirrored in slotMetrics() */
+  #fc-1 { top: 22vh; left: 4vw; }
+  #fc-2 { top: 22vh; right: 4vw; }
+  #fc-3 { bottom: 15vh; left: 4vw; }
+  #fc-4 { bottom: 15vh; right: 4vw; }
   #feature-cta { bottom: 4vh; }
 
   .product-showcase { height: 340px; order: -1; }
@@ -1413,7 +1416,8 @@ footer { background: #080012 !important; border-top: 1px solid rgba(255,255,255,
   }
   function init(){
     particles = [];
-    for(let i=0;i<60;i++){
+    const N = W <= 768 ? 32 : 60;  // the connection pass is O(n²) — halve it on phones
+    for(let i=0;i<N;i++){
       particles.push({
         x:Math.random()*W, y:Math.random()*H,
         r:Math.random()*1.5+0.5,
@@ -1991,7 +1995,7 @@ function firePulse(){}
   // The slot is pinned at CSS top:57% of the sticky stage with height clamp(...).
   // We derive its centre + height DETERMINISTICALLY (not from a live rect, which
   // is unreliable before the pin), so the maths is correct at any scroll point.
-  const SLOT_TOP_FRAC = 0.57;  // matches CSS #feature-slot top (fallback only)
+  const SLOT_TOP_FRAC = 0.57;  // must match CSS #feature-slot top
   let DOCK_SCALE = 0.9;
   let DOCK_Y = 0;
 
@@ -2006,14 +2010,19 @@ function firePulse(){}
   }
 
   function slotMetrics() {
-    // Prefer the LIVE box rect (ground truth once it exists / is pinned).
-    const el = document.getElementById('feature-slot');
+    // Compute the slot's PINNED-state geometry deterministically from its CSS
+    // (top: 57%, height: clamp(260px, 40vh, 380px)). A live rect is only
+    // correct once the pin is active — during the fly-in approach the slot
+    // still sits a full screen below the viewport, which used to send the
+    // sachet diving off the bottom of the screen and then snapping into the
+    // box the moment the pin engaged. Deterministic maths = smooth landing,
+    // and zero layout reads.
     const vpH = window.innerHeight;
-    if (el) {
-      const r = el.getBoundingClientRect();
-      if (r.height > 0) return { centrePx: r.top + r.height / 2, heightPx: r.height };
+    if (window.innerWidth <= 768) {
+      // mirrors the mobile CSS: top 54%, height clamp(170px, 26vh, 240px)
+      return { centrePx: 0.54 * vpH, heightPx: Math.max(170, Math.min(0.26 * vpH, 240)) };
     }
-    const h = Math.max(260, Math.min(0.40 * vpH, 380)); // CSS clamp fallback
+    const h = Math.max(260, Math.min(0.40 * vpH, 380)); // mirrors the CSS clamp
     return { centrePx: SLOT_TOP_FRAC * vpH, heightPx: h };
   }
 
@@ -2146,8 +2155,12 @@ function firePulse(){}
     const el = document.querySelector(sel);
     if (!el) return;
     el.style.opacity = t;
-    const entrance = opacityOnly ? 0 : fromY * (1 - t);
-    el.style.transform = `translateY(${entrance + liftY}px)`;
+    // opacityOnly callers (the slot during fly-in) must NOT have their
+    // transform touched — writing translateY(0) would wipe the slot's CSS
+    // centring translate(-50%,-50%) and shift the box down-right until the
+    // pin re-centred it.
+    if (opacityOnly) return;
+    el.style.transform = `translateY(${fromY * (1 - t) + liftY}px)`;
   }
   // The slot keeps its CSS centering translate(-50%,-50%); we only add the lift.
   function setSlot(t, liftY = 0) {
