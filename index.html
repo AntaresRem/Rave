@@ -225,8 +225,13 @@ body::after {
   z-index: 1;
 }
 #feature-sticky {
-  position: relative;   /* ScrollTrigger pins this; do NOT use CSS sticky too */
+  /* CSS sticky (like the hero): holds while the section scrolls, then leaves
+     the top NATURALLY with its content still visible — no dead blank stage
+     between this section and the next. */
+  position: sticky;
+  top: 0;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 #feature-heading {
@@ -2108,73 +2113,71 @@ function firePulse(){}
     }
   });
 
-  // ── 2) PIN: reveal callouts, HOLD, then EXIT by riding up with the box ──
-  // Instead of abruptly hiding, the final phase scrolls the sachet + box + text
-  // UP together so the whole feature gracefully leaves the top of the viewport,
-  // exactly as if it were normal page content. Canvas hides only once fully off.
-  const EXIT_START = 0.80;            // last 20% of the pin = exit glide
+  // ── 2) HOLD: the sticky stage holds while the callouts cascade in ──
+  // #feature-sticky is CSS-sticky (no GSAP pin, no pin spacer): when the
+  // section ends it scrolls out naturally WITH its content visible — the next
+  // section enters right behind it, so there is no dead blank gap any more.
+  // The reveals are spread across the whole hold so each callout has a long,
+  // gentle window instead of popping in.
   ScrollTrigger.create({
     trigger: '#feature-section',
     start: 'top top',
     end:   'bottom bottom',
-    pin: '#feature-sticky',
-    pinSpacing: true,
     scrub: true,
-    // computeDockTargets reads a live rect (forced reflow) — do it on section
-    // entry/refresh only, never per scroll frame; the pinned rect is stable.
     onEnter:     () => { canvas.style.visibility = 'visible'; state.opacity = 1; computeDockTargets(); },
     onEnterBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; computeDockTargets(); },
     onLeaveBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; },
-    // Once the feature exits the top, stop paying for the full-screen WebGL
-    // layer entirely — this was dragging scroll FPS down for the rest of the page.
-    onLeave:     () => { state.opacity = 0; canvas.style.visibility = 'hidden'; },
     onUpdate: self => {
       const p = self.progress;
 
-      // Exit glide: 0 before EXIT_START, 0→1 after → everything rides up & out.
-      const ex = smooth(mapp(p, EXIT_START, 1.0));
-      // Lift the box + sachet UP in lock-step. Both use the SAME pixel distance
-      // (sachet converted px→world units) so they move together, never drifting.
-      const exitPx   = ex * (window.innerHeight * 1.05); // enough to clear the top
-      const pxPerUnit = window.innerHeight / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
-      const exitWorldY = exitPx / pxPerUnit;
-
-      // Sachet held docked, then lifted up & out during exit (stays in its box;
-      // the box rides up with it — it never just vanishes mid-screen).
-      state.dock = 1; state.posX = 0; state.posY = DOCK_Y + exitWorldY; state.scale = DOCK_SCALE;
+      // Sachet held perfectly docked in its box for the whole hold.
+      state.dock = 1; state.posX = 0; state.posY = DOCK_Y; state.scale = DOCK_SCALE;
       state.dockSpin = Math.round(state.dockSpin / TAU) * TAU; // snap exact front
-      // opacity is owned by the enter/leave callbacks — setting it here would
-      // race with onLeave and keep the hidden canvas rendering forever
 
-      // Box + callouts + heading + CTA reveal, hold, then lift away together.
-      const liftY = -exitPx;
-      setSlot(1, liftY);
-      setLayer('#feature-heading', smooth(mapp(p, 0.00, 0.10)), -18, false, liftY);
-      const stops = [0.10, 0.20, 0.30, 0.40];
+      setSlot(1);
+      setLayer('#feature-heading', smooth(mapp(p, 0.00, 0.14)), -18);
+      const stops = [0.14, 0.30, 0.46, 0.62];   // long, overlapping windows
       featLayers.forEach((sel, i) =>
-        setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.12)), 26, false, liftY));
-      setLayer('#feature-cta', smooth(mapp(p, 0.52, 0.64)), 20, false, liftY);
+        setLayer(sel, smooth(mapp(p, stops[i], stops[i] + 0.24)), 30));
+      setLayer('#feature-cta', smooth(mapp(p, 0.76, 0.92)), 20);
     }
   });
 
-  // Opacity + entrance translateY (+ shared exit liftY).
-  function setLayer(sel, t, fromY, opacityOnly, liftY = 0) {
+  // ── 3) NATURAL EXIT: the sticky scrolls off the top like normal content;
+  // the sachet follows the slot 1:1 in pixels so it stays inside its box all
+  // the way out, then the WebGL layer shuts off entirely. ──
+  ScrollTrigger.create({
+    trigger: '#feature-section',
+    start: 'bottom bottom',   // the moment the sticky starts leaving
+    end:   'bottom top',      // fully scrolled off
+    scrub: true,
+    onEnterBack: () => { canvas.style.visibility = 'visible'; state.opacity = 1; computeDockTargets(); },
+    onLeave:     () => { state.opacity = 0; canvas.style.visibility = 'hidden'; },
+    onUpdate: self => {
+      const exitPx = self.progress * window.innerHeight; // page px scrolled since release
+      const pxPerUnit = window.innerHeight / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
+      state.dock = 1; state.posX = 0; state.scale = DOCK_SCALE;
+      state.posY = DOCK_Y + exitPx / pxPerUnit;
+      state.dockSpin = Math.round(state.dockSpin / TAU) * TAU;
+    }
+  });
+
+  // Opacity + entrance translateY.
+  function setLayer(sel, t, fromY, opacityOnly) {
     const el = document.querySelector(sel);
     if (!el) return;
     el.style.opacity = t;
     // opacityOnly callers (the slot during fly-in) must NOT have their
     // transform touched — writing translateY(0) would wipe the slot's CSS
-    // centring translate(-50%,-50%) and shift the box down-right until the
-    // pin re-centred it.
+    // centring translate(-50%,-50%) and shift the box down-right.
     if (opacityOnly) return;
-    el.style.transform = `translateY(${fromY * (1 - t) + liftY}px)`;
+    el.style.transform = `translateY(${fromY * (1 - t)}px)`;
   }
-  // The slot keeps its CSS centering translate(-50%,-50%); we only add the lift.
-  function setSlot(t, liftY = 0) {
+  // The slot keeps its CSS centering translate(-50%,-50%).
+  function setSlot(t) {
     const el = document.getElementById('feature-slot');
     if (!el) return;
     el.style.opacity = t;
-    el.style.transform = `translate(-50%, calc(-50% + ${liftY}px))`;
   }
 
   // ── Page-load entrance ──
