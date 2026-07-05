@@ -70,6 +70,7 @@ a { text-decoration: none; color: inherit; }
   .offer-prefix, .offer-suffix { display: none; }
 }
 @media (max-width: 768px) {
+  body::after { display: none; } /* grain layer costs real compositing time on phones */
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-d { display: none !important; }
   .mobile-btn { display: flex !important; }

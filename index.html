@@ -133,7 +133,7 @@ body::after {
 /* ── HERO — Happy Tuesday layout: text left, sachet right ── */
 #hero-section {
   position: relative;
-  height: 280vh;
+  height: 150vh; /* short hold — the sachet should reach its box quickly */
   background: var(--bg);
 }
 #hero-sticky {
@@ -220,7 +220,7 @@ body::after {
 /* ── FEATURE SECTION — sachet flies to centre, benefits fan out ── */
 #feature-section {
   position: relative;
-  height: 210vh;
+  height: 160vh; /* pin long enough to read the callouts, no dead scroll */
   background: var(--bg);
   z-index: 1;
 }
@@ -687,6 +687,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .offer-prefix, .offer-suffix { display: none; }
 }
 @media (max-width: 768px) {
+  body::after { display: none; } /* grain layer costs real compositing time on phones */
   .nav { padding: 0 20px; }
   .nav-links, .nav-cta-desktop { display: none !important; }
   .mobile-btn { display: flex !important; }
@@ -694,7 +695,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
 
   /* ── Hero mobile: stack vertically ── */
-  #hero-section { height: 240vh; }
+  #hero-section { height: 140vh; }
   #hero-sticky { grid-template-columns: 1fr; grid-template-rows: 1fr 42vh; }
   #hero-left { padding: 0 5vw; padding-top: 112px; justify-content: flex-start; }
   #hero-right { position: relative; }
@@ -707,7 +708,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   /* Feature section: callouts at very top & bottom, sachet centred between.
      The slot shrinks and everything gets its own vertical band so nothing
      overlaps: heading / callout row 1 / slot / callout row 2 / CTA. */
-  #feature-section { height: 220vh; }
+  #feature-section { height: 160vh; }
   #feature-heading { top: 8vh; }
   #feature-heading .feat-h2 { font-size: clamp(24px, 6.4vw, 38px); }
   .feat-call { width: 42vw; }
@@ -1539,7 +1540,13 @@ function firePulse(){}
   const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ── Renderer ──
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  // MSAA only on standard-density screens: on retina/mobile the extra samples
+  // cost real frame time and the density already hides the aliasing.
+  const renderer = new THREE.WebGLRenderer({
+    canvas, alpha: true,
+    antialias: (window.devicePixelRatio || 1) <= 1.25,
+    powerPreference: 'high-performance',
+  });
   renderer.setClearColor(0x000000, 0);
   // 1.5 instead of 2: on a full-viewport canvas the retina pass is the single
   // most expensive thing on the page, and 1.5 is visually indistinguishable
@@ -2180,17 +2187,35 @@ function firePulse(){}
     gsap.set('#hero-h1', { filter: 'blur(8px)' });
     gsap.set(state, { posY: HERO_Y + 0.6, scale: HERO_SCALE * 0.88, opacity: 0 });
 
-    gsap.timeline({ delay: 0.12 })
-      .to(state, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0)
-      .to(state, { posY: HERO_Y, scale: HERO_SCALE, duration: 0.9, ease: 'power3.out' }, 0)
-      .to('#hero-eyebrow', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.3)
-      .to('#hero-h1',      { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.45)
-      .to('#hero-sub',     { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.75)
-      .to('#hero-ctas',    { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.9)
-      .to('#hero-proof',   { opacity: 1, duration: 0.4, ease: 'power2.out' }, 1.0);
+    // Start the entrance only once the page can actually keep up with it:
+    // after the webfonts have applied (or 700ms, whichever is first) and two
+    // rendered frames have gone by. Starting it mid-load made the whole
+    // sequence stutter and then race to catch up.
+    let entranceStarted = false;
+    function startEntrance() {
+      if (entranceStarted) return;
+      entranceStarted = true;
+      gsap.timeline({ delay: 0.1 })
+        .to(state, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 0)
+        .to(state, { posY: HERO_Y, scale: HERO_SCALE, duration: 0.9, ease: 'power3.out' }, 0)
+        .to('#hero-eyebrow', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.3)
+        .to('#hero-h1',      { opacity: 1, filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' }, 0.45)
+        .to('#hero-sub',     { opacity: 1, duration: 0.45, ease: 'power2.out' }, 0.75)
+        .to('#hero-ctas',    { opacity: 1, duration: 0.4, ease: 'power2.out' }, 0.9)
+        .to('#hero-proof',   { opacity: 1, duration: 0.4, ease: 'power2.out' }, 1.0);
+    }
+    Promise.race([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise(r => setTimeout(r, 700)),
+    ]).then(() => requestAnimationFrame(() => requestAnimationFrame(startEntrance)));
   }
 
   ScrollTrigger.refresh();
+  // Re-measure once everything has actually loaded — trigger positions taken
+  // mid-load are wrong once webfonts/layout settle, which made the scroll
+  // choreography jump/race on a cold visit.
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+  if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
 })();
 </script>
 </body>
