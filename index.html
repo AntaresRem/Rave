@@ -144,6 +144,13 @@ body::after {
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  /* above the sachet canvas (z:2): sticky creates its own stacking context,
+     so this is the only way hero TEXT can win an overlap with the sachet
+     (matters on short phones where the bottom zone is tight). Pointer events
+     fall through to the canvas so drag-to-rotate still works — interactive
+     children re-enable themselves via `#hero-left > *`. */
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* LEFT column — all text content, always visible */
@@ -257,6 +264,7 @@ body::after {
   top: 57%; left: 50%;
   transform: translate(-50%, -50%);
   height: clamp(260px, 40vh, 380px);
+  height: clamp(260px, 40dvh, 380px); /* dvh matches JS innerHeight on phones */
   aspect-ratio: 0.593 / 1;
   z-index: 1;          /* behind the sachet canvas (z:2) */
   border-radius: 22px;
@@ -283,9 +291,9 @@ body::after {
   text-transform: uppercase; color: var(--purple-text); white-space: nowrap;
 }
 #feature-slot .slot-foot {
-  position: absolute; bottom: 14px; left: 0; right: 0; text-align: center;
+  position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
   font-family: var(--mono, monospace); font-size: 10px; letter-spacing: 0.1em;
-  color: var(--text-muted);
+  color: var(--text-muted); white-space: nowrap; /* never wrap up into the sachet */
 }
 
 /* Four benefit callouts positioned around the centred sachet */
@@ -721,7 +729,7 @@ footer { background: #1a1c1c; padding: 72px 48px 32px; border-top: 1px solid rgb
   .feat-call .fc-body { font-size: 11px; }
   .feat-call .fc-dose { display: none; } /* reclaim vertical space on phones */
   .feat-call .fc-dot { display: none; }
-  #feature-slot { top: 54%; height: clamp(170px, 26vh, 240px); } /* mirrored in slotMetrics() */
+  #feature-slot { top: 54%; height: clamp(170px, 26vh, 240px); height: clamp(170px, 26dvh, 240px); } /* mirrored in slotMetrics() */
   #fc-1 { top: 22vh; left: 4vw; }
   #fc-2 { top: 22vh; right: 4vw; }
   #fc-3 { bottom: 15vh; left: 4vw; }
@@ -1612,8 +1620,18 @@ function firePulse(){}
     camera.position.z = mobile ? 5.8 : 6.5;
     camera.updateProjectionMatrix();
     if (mobile) {
-      // stacked layout: centre horizontally, anchor to the bottom zone, shrink
-      HERO_X = 0; HERO_Y = -1.35; HERO_SCALE = 0.46;
+      // Stacked layout: size the sachet to the pixel budget BELOW the text
+      // stack (eyebrow/headline/sub/CTAs/proof end ≈610px), park it in the
+      // bottom-RIGHT corner — the same side as the desktop hero, so the
+      // fly-in is the same right-to-centre move on every device.
+      const pxPerUnit = h / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
+      const budget = Math.max(130, h - 610);
+      const sachetPx = Math.min(budget - 12, 235);
+      HERO_SCALE = sachetPx / (1.9 * pxPerUnit);
+      const centrePx = h - 12 - sachetPx / 2;   // 12px bottom margin
+      HERO_Y = (h / 2 - centrePx) / pxPerUnit;
+      const hw = camera.position.z * Math.tan(camera.fov * Math.PI / 360) * camera.aspect;
+      HERO_X = Math.max(0, hw - 0.75 * HERO_SCALE - 0.05);
     } else {
       // two-column layout: derive the rest pose from the camera frustum so the
       // sachet stays fully on screen at any window width (narrow windows used
@@ -1992,13 +2010,20 @@ function firePulse(){}
   })
   .to(state, { heroRotX: -0.3, heroRotZ: 0.1, ease: 'none' }, 0);
 
-  // Enable drag (+ pointer events) only while hero is the active section
+  // Enable drag (+ pointer events) only while the hero is on screen.
+  // Gate on progress (not isActive — undefined until the first scroll,
+  // which left drag permanently off on load).
+  const applyDragState = self => {
+    const on = self.progress < 1;
+    if (on === dragEnabled) return;
+    dragEnabled = on;
+    canvas.style.pointerEvents = on ? 'auto' : 'none';
+  };
   ScrollTrigger.create({
     trigger: '#hero-section', start: 'top top', end: 'bottom bottom',
-    onToggle: self => {
-      dragEnabled = self.isActive;
-      canvas.style.pointerEvents = self.isActive ? 'auto' : 'none';
-    }
+    onToggle: applyDragState,
+    onRefresh: applyDragState,
+    onUpdate: applyDragState,
   });
 
   // ── Compute the EXACT scale that makes the sachet fill the slot box ──
@@ -2011,14 +2036,14 @@ function firePulse(){}
   let DOCK_SCALE = 0.9;
   let DOCK_Y = 0;
 
-  // Measure the sachet group's true geometric centre + height (accounts for the
-  // tear notch on top), so we align its VISUAL centre — not the origin — to the
-  // box. Computed once after the geometry is built.
-  let sachetCY = 0, sachetH = 1.99;
+  // Measure the FOIL BODY only (not the tear notch): centring on the full
+  // group's bounding box let the notch push the body a few px low in the box,
+  // which read as "not quite centred". The body is what the eye centres on.
+  let sachetCY = 0, sachetH = 1.9;
   function measureSachet() {
-    const box = new THREE.Box3().setFromObject(sachetGroup);
+    const box = new THREE.Box3().setFromObject(body);
     sachetCY = (box.max.y + box.min.y) / 2;   // offset of visual centre from origin
-    sachetH  = box.max.y - box.min.y;          // full visual height in world units
+    sachetH  = box.max.y - box.min.y;          // body height in world units
   }
 
   function slotMetrics() {
@@ -2042,8 +2067,12 @@ function firePulse(){}
     const vpH = window.innerHeight;
     const pxPerUnit = vpH / (2 * camera.position.z * Math.tan(camera.fov * Math.PI / 360));
     const { centrePx, heightPx } = slotMetrics();
-    // Scale so the sachet's visual height fills 80% of the box height.
-    DOCK_SCALE = (heightPx * 0.80) / (sachetH * pxPerUnit);
+    // Fill 80% of the box, but never intrude on the tag (top) and foot
+    // (bottom) label bands — ~32px each. On the small mobile slot the flat
+    // 80% rule was taller than the space between the labels, so the sachet
+    // covered the foot text and looked off-centre.
+    const fitPx = Math.min(heightPx * 0.80, heightPx - 64);
+    DOCK_SCALE = fitPx / (sachetH * pxPerUnit);
     // World Y at the box centre, MINUS the scaled centre-offset so the sachet's
     // visual middle (not its origin) lands exactly on the box's middle.
     const boxCentreWorldY = ((vpH / 2) - centrePx) / pxPerUnit;
